@@ -7,8 +7,8 @@
 // Load and render graph data
 async function initializeVisualization() {
     try {
-        // Load graph data
-        const response = await fetch('/data/entities.json');
+        // Load graph data (relative path for GitHub Pages subdirectory)
+        const response = await fetch('data/entities.json');
         const graphData = await response.json();
 
         // Transform data for vis.js
@@ -172,7 +172,7 @@ function isGitHubPages() {
  */
 async function loadLastUpdated() {
     try {
-        const response = await fetch('/last-updated.json');
+        const response = await fetch('last-updated.json');
         const data = await response.json();
         const date = new Date(data.lastUpdated);
         const formatted = date.toLocaleString('en-US', {
