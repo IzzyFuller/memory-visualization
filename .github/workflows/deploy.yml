@@ -20,28 +20,17 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build-and-deploy:
+  # Build job
+  build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
-        with:
-          submodules: false
 
       - name: Copy data to public directory
         run: |
           cp -r data public/
-          echo "Contents of public/ after copy:"
-          ls -la public/
-          echo "Contents of public/data/:"
-          ls -la public/data/ || echo "data directory not found!"
-
-      - name: Add last updated timestamp
-        run: |
           echo "{ \"lastUpdated\": \"$(date -u +"%Y-%m-%dT%H:%M:%SZ")\" }" > public/last-updated.json
-          echo "Final public/ contents:"
-          ls -la public/
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
@@ -51,6 +40,14 @@ jobs:
         with:
           path: './public'
 
+  # Deployment job
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
