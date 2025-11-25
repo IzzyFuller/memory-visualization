@@ -8,7 +8,7 @@
 async function initializeVisualization() {
     try {
         // Load graph data
-        const response = await fetch('../data/entities.json');
+        const response = await fetch('/data/entities.json');
         const graphData = await response.json();
 
         // Transform data for vis.js
