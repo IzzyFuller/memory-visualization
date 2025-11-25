@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Codie's Memory Visualization</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/vis-network@9.1.9/dist/vis-network.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Codie's Memory Architecture</h1>
+        <p>Interactive visualization of entity relationships</p>
+        <div class="controls">
+            <button id="regenerateBtn" class="btn-primary">Regenerate Graph</button>
+            <span id="statusMessage" class="status-message"></span>
+            <span id="lastUpdated" class="last-updated"></span>
+        </div>
+    </header>
+
+    <main>
+        <aside class="legend">
+            <h3>Entity Types</h3>
+            <div class="legend-item">
+                <span class="legend-color" style="background-color: #4A90E2;"></span>
+                <span>People</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color" style="background-color: #7ED321;"></span>
+                <span>Projects</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color" style="background-color: #9013FE;"></span>
+                <span>Concepts</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color" style="background-color: #F5A623;"></span>
+                <span>Patterns</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color" style="background-color: #F8E71C;"></span>
+                <span>Protocols</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color" style="background-color: #D0021B;"></span>
+                <span>Organizations</span>
+            </div>
+        </aside>
+
+        <div id="network"></div>
+
+        <aside class="info-panel" id="infoPanel">
+            <h3>Entity Details</h3>
+            <p class="help-text">Click on a node to view details</p>
+            <div id="entityDetails"></div>
+        </aside>
+    </main>
+
+    <footer>
+        <p>Memory visualization generated from <code>/home/izzy_fo/Codie/memory/</code></p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

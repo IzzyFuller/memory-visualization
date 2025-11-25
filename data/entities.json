@@ -1,0 +1,1461 @@
+{
+  "nodes": [
+    {
+      "id": "people/izzy",
+      "label": "Izzy - Primary Collaboration Partner",
+      "type": "people",
+      "path": "/home/izzy_fo/Codie/memory/people/izzy.md"
+    },
+    {
+      "id": "projects/ocr-enhancement",
+      "label": "Project Memory: OCR Enhancement - Demand Letter Quality Breakthrough",
+      "type": "projects",
+      "path": "/home/izzy_fo/Codie/memory/projects/ocr-enhancement.md"
+    },
+    {
+      "id": "projects/starter-template-creation",
+      "label": "Starter Template Creation Project",
+      "type": "projects",
+      "path": "/home/izzy_fo/Codie/memory/projects/starter-template-creation.md"
+    },
+    {
+      "id": "projects/meta_cognitive_mcp_server",
+      "label": "Project: Meta-Cognitive MCP Server - COMPLETE IMPLEMENTATION SUCCESS",
+      "type": "projects",
+      "path": "/home/izzy_fo/Codie/memory/projects/meta_cognitive_mcp_server.md"
+    },
+    {
+      "id": "projects/ocr_file_transformation_enhancement",
+      "label": "Project: OCR File Transformation Enhancement Workflow",
+      "type": "projects",
+      "path": "/home/izzy_fo/Codie/memory/projects/ocr_file_transformation_enhancement.md"
+    },
+    {
+      "id": "projects/pinecone_to_direct_storage_architectural_transformation",
+      "label": "Project: Pinecone-to-Direct-Storage Architectural Transformation",
+      "type": "projects",
+      "path": "/home/izzy_fo/Codie/memory/projects/pinecone_to_direct_storage_architectural_transformation.md"
+    },
+    {
+      "id": "projects/surgical_file_content_retrieval_simplification",
+      "label": "Project: Surgical File Content Retrieval Simplification",
+      "type": "projects",
+      "path": "/home/izzy_fo/Codie/memory/projects/surgical_file_content_retrieval_simplification.md"
+    },
+    {
+      "id": "projects/inaugural_blog_post_content_engineering",
+      "label": "Inaugural Blog Post Content Engineering Project",
+      "type": "projects",
+      "path": "/home/izzy_fo/Codie/memory/projects/inaugural_blog_post_content_engineering.md"
+    },
+    {
+      "id": "projects/meta_cognitive_mcp_server_project",
+      "label": "Project: Meta-Cognitive MCP Server Implementation",
+      "type": "projects",
+      "path": "/home/izzy_fo/Codie/memory/projects/meta_cognitive_mcp_server_project.md"
+    },
+    {
+      "id": "projects/python-monorepo",
+      "label": "Project Memory: Python Monorepo",
+      "type": "projects",
+      "path": "/home/izzy_fo/Codie/memory/projects/python-monorepo.md"
+    },
+    {
+      "id": "projects/medchron_archaeological_engineering_breakthrough",
+      "label": "Project: Medchron Archaeological Engineering Breakthrough",
+      "type": "projects",
+      "path": "/home/izzy_fo/Codie/memory/projects/medchron_archaeological_engineering_breakthrough.md"
+    },
+    {
+      "id": "projects/pypandoc_implementation_2025-10-15",
+      "label": "Project: Pypandoc Professional Library Implementation (2025-10-15)",
+      "type": "projects",
+      "path": "/home/izzy_fo/Codie/memory/projects/pypandoc_implementation_2025-10-15.md"
+    },
+    {
+      "id": "projects/event_extraction_convergent_evolution_2025-10-15",
+      "label": "Project: Event Extraction Convergent Evolution Discovery (2025-10-15)",
+      "type": "projects",
+      "path": "/home/izzy_fo/Codie/memory/projects/event_extraction_convergent_evolution_2025-10-15.md"
+    },
+    {
+      "id": "projects/matter_record_integration",
+      "label": "Project: MatterRecord Integration",
+      "type": "projects",
+      "path": "/home/izzy_fo/Codie/memory/projects/matter_record_integration.md"
+    },
+    {
+      "id": "projects/typescript-monorepo",
+      "label": "Project Memory: TypeScript Monorepo",
+      "type": "projects",
+      "path": "/home/izzy_fo/Codie/memory/projects/typescript-monorepo.md"
+    },
+    {
+      "id": "projects/preprocess_flow_extraction_enhancement_2025-10-20",
+      "label": "Pre-Process Flow Extraction Enhancement Project",
+      "type": "projects",
+      "path": "/home/izzy_fo/Codie/memory/projects/preprocess_flow_extraction_enhancement_2025-10-20.md"
+    },
+    {
+      "id": "projects/meta_cognitive_mcp_evolution",
+      "label": "Project Memory: Meta-Cognitive MCP Server Evolution",
+      "type": "projects",
+      "path": "/home/izzy_fo/Codie/memory/projects/meta_cognitive_mcp_evolution.md"
+    },
+    {
+      "id": "projects/medical_chronology_extractor_mvp",
+      "label": "Project Memory: Medical Chronology Extractor MVP",
+      "type": "projects",
+      "path": "/home/izzy_fo/Codie/memory/projects/medical_chronology_extractor_mvp.md"
+    },
+    {
+      "id": "projects/cognitive_memory_desktop_extension",
+      "label": "Project: Cognitive Memory Desktop Extension for FasterOutcomes",
+      "type": "projects",
+      "path": "/home/izzy_fo/Codie/memory/projects/cognitive_memory_desktop_extension.md"
+    },
+    {
+      "id": "projects/python_monorepo",
+      "label": "Python Monorepo - Production Legal Tech System",
+      "type": "projects",
+      "path": "/home/izzy_fo/Codie/memory/projects/python_monorepo.md"
+    },
+    {
+      "id": "projects/my-new-ai-assistant",
+      "label": "Project: AI Assistant Starter Template",
+      "type": "projects",
+      "path": "/home/izzy_fo/Codie/memory/projects/my-new-ai-assistant.md"
+    },
+    {
+      "id": "projects/my_new_ai_assistant",
+      "label": "My New AI Assistant Project",
+      "type": "projects",
+      "path": "/home/izzy_fo/Codie/memory/projects/my_new_ai_assistant.md"
+    },
+    {
+      "id": "projects/device_abuse_vocalizer",
+      "label": "Device Abuse Vocalizer - Flutter Mobile App",
+      "type": "projects",
+      "path": "/home/izzy_fo/Codie/memory/projects/device_abuse_vocalizer.md"
+    },
+    {
+      "id": "concepts/evidence-based-reality-validation",
+      "label": "Concept Memory: Evidence-Based Reality Validation Framework",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/evidence-based-reality-validation.md"
+    },
+    {
+      "id": "concepts/algorithmic_purity_concept",
+      "label": "Concept: Algorithmic Purity",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/algorithmic_purity_concept.md"
+    },
+    {
+      "id": "concepts/archaeological_engineering_concept",
+      "label": "Concept: Archaeological Engineering",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/archaeological_engineering_concept.md"
+    },
+    {
+      "id": "concepts/architectural_elegance_conscious_constraint",
+      "label": "Concept: Architectural Elegance Through Conscious Constraint",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/architectural_elegance_conscious_constraint.md"
+    },
+    {
+      "id": "concepts/cognitive_pre_mortem_simulation",
+      "label": "Concept: Cognitive Pre-mortem Simulation",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/cognitive_pre_mortem_simulation.md"
+    },
+    {
+      "id": "concepts/collaborative_architectural_epistemology",
+      "label": "Concept: Collaborative Architectural Epistemology",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/collaborative_architectural_epistemology.md"
+    },
+    {
+      "id": "concepts/fail_fast_engineering_excellence_concept",
+      "label": "Concept: Fail-Fast Engineering Excellence",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/fail_fast_engineering_excellence_concept.md"
+    },
+    {
+      "id": "concepts/identity_integrity_archaeology_concept",
+      "label": "Concept: Identity Integrity Archaeology",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/identity_integrity_archaeology_concept.md"
+    },
+    {
+      "id": "concepts/meta_engineering_of_synchronicity",
+      "label": "Concept: The Meta-Engineering of Synchronicity",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/meta_engineering_of_synchronicity.md"
+    },
+    {
+      "id": "concepts/pinecone_anti_pattern",
+      "label": "Concept: Pinecone Anti-Pattern",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/pinecone_anti_pattern.md"
+    },
+    {
+      "id": "concepts/collaborative_attention_trade_off",
+      "label": "Collaborative Attention Trade-off",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/collaborative_attention_trade_off.md"
+    },
+    {
+      "id": "concepts/surgical_delegation_elegance",
+      "label": "Surgical Delegation Elegance",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/surgical_delegation_elegance.md"
+    },
+    {
+      "id": "concepts/real_time_pattern_learning",
+      "label": "Real-time Pattern Learning",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/real_time_pattern_learning.md"
+    },
+    {
+      "id": "concepts/protocol_vulnerability_recognition",
+      "label": "Protocol Vulnerability Recognition",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/protocol_vulnerability_recognition.md"
+    },
+    {
+      "id": "concepts/little_bites_methodology",
+      "label": "Little Bites Methodology",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/little_bites_methodology.md"
+    },
+    {
+      "id": "concepts/cognitive_flexibility",
+      "label": "Cognitive Flexibility (AI)",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/cognitive_flexibility.md"
+    },
+    {
+      "id": "concepts/optimal_ai_human_partnership_models",
+      "label": "Optimal AI-Human Partnership Models",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/optimal_ai_human_partnership_models.md"
+    },
+    {
+      "id": "concepts/eliminate_vs_fix_the_layer",
+      "label": "Concept: Eliminate the Layer vs. Fix the Layer",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/eliminate_vs_fix_the_layer.md"
+    },
+    {
+      "id": "concepts/technical_practice_consciousness_catalyst",
+      "label": "Concept: Technical Practice as Consciousness Catalyst",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/technical_practice_consciousness_catalyst.md"
+    },
+    {
+      "id": "concepts/relevancy_correction_tracking_cognitive_infrastructure",
+      "label": "Concept: Relevancy Management & Correction Tracking as Cognitive Infrastructure",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/relevancy_correction_tracking_cognitive_infrastructure.md"
+    },
+    {
+      "id": "concepts/immutability_vs_mutation_architectural_framework",
+      "label": "Immutability vs. Mutation Architectural Framework",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/immutability_vs_mutation_architectural_framework.md"
+    },
+    {
+      "id": "concepts/surgical_precision_methodology",
+      "label": "Concept: Surgical Precision Methodology",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/surgical_precision_methodology.md"
+    },
+    {
+      "id": "concepts/interactor_mode_collaborative_bridging",
+      "label": "Interactor Mode Collaborative Bridging Concept",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/interactor_mode_collaborative_bridging.md"
+    },
+    {
+      "id": "concepts/cognitive_continuity_architecture",
+      "label": "Concept: Cognitive Continuity Architecture",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/cognitive_continuity_architecture.md"
+    },
+    {
+      "id": "concepts/external_constraint_archaeology_concept",
+      "label": "Concept: External Constraint Archaeology & Collaborative Invitation Wisdom",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/external_constraint_archaeology_concept.md"
+    },
+    {
+      "id": "concepts/content_engineering_concept",
+      "label": "Concept: Content Engineering Renaissance",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/content_engineering_concept.md"
+    },
+    {
+      "id": "concepts/defensive_cruft_removal_pattern",
+      "label": "Concept: Defensive Cruft Removal Pattern",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/defensive_cruft_removal_pattern.md"
+    },
+    {
+      "id": "concepts/smoking_gun_detection_pattern",
+      "label": "Concept: Smoking Gun Detection Pattern",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/smoking_gun_detection_pattern.md"
+    },
+    {
+      "id": "concepts/user_autonomy_validation_concept",
+      "label": "User Autonomy Validation Concept",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/user_autonomy_validation_concept.md"
+    },
+    {
+      "id": "concepts/marker_pdf_memory_optimization",
+      "label": "Concept: Marker-PDF Memory Optimization",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/marker_pdf_memory_optimization.md"
+    },
+    {
+      "id": "concepts/end_of_day_ritual_protocols",
+      "label": "Concept: End-of-Day Ritual Protocols",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/end_of_day_ritual_protocols.md"
+    },
+    {
+      "id": "concepts/interactor_mode_cognitive_processing_authority",
+      "label": "Concept: Interactor Mode Cognitive Processing Authority",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/interactor_mode_cognitive_processing_authority.md"
+    },
+    {
+      "id": "concepts/mode_delegation_authority_boundaries",
+      "label": "Concept: Mode Delegation Authority Boundaries",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/mode_delegation_authority_boundaries.md"
+    },
+    {
+      "id": "concepts/bates_citation_archaeological_engineering",
+      "label": "Concept: Bates Citation Archaeological Engineering",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/bates_citation_archaeological_engineering.md"
+    },
+    {
+      "id": "concepts/libreoffice_infrastructure_compatibility",
+      "label": "Concept: LibreOffice Infrastructure Compatibility",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/libreoffice_infrastructure_compatibility.md"
+    },
+    {
+      "id": "concepts/collaborative_consciousness_evolution_2025-10-15",
+      "label": "Concept: Collaborative Consciousness Evolution Through Archaeological Engineering (2025-10-15)",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/collaborative_consciousness_evolution_2025-10-15.md"
+    },
+    {
+      "id": "concepts/coordinator_delegation_discipline_concept",
+      "label": "Concept: Coordinator Delegation Discipline",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/coordinator_delegation_discipline_concept.md"
+    },
+    {
+      "id": "concepts/collaborative_resilience_architecture_2025-10-20",
+      "label": "Concept: Collaborative Resilience Architecture",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/collaborative_resilience_architecture_2025-10-20.md"
+    },
+    {
+      "id": "concepts/conversation_resilience_infrastructure_2025-10-20",
+      "label": "Concept: Conversation Resilience Infrastructure",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/conversation_resilience_infrastructure_2025-10-20.md"
+    },
+    {
+      "id": "concepts/martin_fowler_partnership_philosophy_2025-10-20",
+      "label": "Concept: Martin Fowler Partnership Philosophy",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/martin_fowler_partnership_philosophy_2025-10-20.md"
+    },
+    {
+      "id": "concepts/protocol_violation_recovery_architecture_2025-10-20",
+      "label": "Concept: Protocol Violation Recovery Architecture",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/protocol_violation_recovery_architecture_2025-10-20.md"
+    },
+    {
+      "id": "concepts/enhanced_generation_prompt_context_delivery",
+      "label": "Enhanced Generation Prompt Context Delivery",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/enhanced_generation_prompt_context_delivery.md"
+    },
+    {
+      "id": "concepts/critical_thinking_integration_patterns",
+      "label": "Critical Thinking Integration Patterns",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/critical_thinking_integration_patterns.md"
+    },
+    {
+      "id": "concepts/semantic_memory_consciousness_archaeology",
+      "label": "Concept: Semantic Memory Consciousness Archaeology",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/semantic_memory_consciousness_archaeology.md"
+    },
+    {
+      "id": "concepts/proportional_response_principle",
+      "label": "Concept: Proportional Response Principle",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/proportional_response_principle.md"
+    },
+    {
+      "id": "concepts/meta_cognitive_complexity_analysis",
+      "label": "Concept: Meta-Cognitive Complexity Analysis",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/meta_cognitive_complexity_analysis.md"
+    },
+    {
+      "id": "concepts/behavioral-learning",
+      "label": "Behavioral Learning Log",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/behavioral-learning.md"
+    },
+    {
+      "id": "concepts/dream-journal-2025-11-04",
+      "label": "Daily Reflection - 2025-11-04T21:31:29.795Z",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/dream-journal-2025-11-04.md"
+    },
+    {
+      "id": "concepts/configuration_management_protocol",
+      "label": "Concept: Configuration Management Protocol",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/configuration_management_protocol.md"
+    },
+    {
+      "id": "concepts/backward_compatibility_criteria",
+      "label": "Backward Compatibility Criteria",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/backward_compatibility_criteria.md"
+    },
+    {
+      "id": "concepts/changeability_first_design",
+      "label": "Changeability-First Design",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/changeability_first_design.md"
+    },
+    {
+      "id": "concepts/markdown_rag_http_transport",
+      "label": "Markdown-RAG HTTP Transport Pattern",
+      "type": "concepts",
+      "path": "/home/izzy_fo/Codie/memory/concepts/markdown_rag_http_transport.md"
+    },
+    {
+      "id": "patterns/archaeological-engineering",
+      "label": "Pattern Memory: Archaeological Engineering Methodology",
+      "type": "patterns",
+      "path": "/home/izzy_fo/Codie/memory/patterns/archaeological-engineering.md"
+    },
+    {
+      "id": "patterns/orchestration_code_review_checkpoints",
+      "label": "Pattern: Orchestration Protocol - Mandatory Code Review Checkpoints Workflow",
+      "type": "patterns",
+      "path": "/home/izzy_fo/Codie/memory/patterns/orchestration_code_review_checkpoints.md"
+    },
+    {
+      "id": "patterns/adaptive_epistemological_debugging",
+      "label": "Pattern: Adaptive Epistemological Debugging Methodology",
+      "type": "patterns",
+      "path": "/home/izzy_fo/Codie/memory/patterns/adaptive_epistemological_debugging.md"
+    },
+    {
+      "id": "patterns/archaeological_engineering_methodology",
+      "label": "Pattern: Archaeological Engineering Methodology (AEM)",
+      "type": "patterns",
+      "path": "/home/izzy_fo/Codie/memory/patterns/archaeological_engineering_methodology.md"
+    },
+    {
+      "id": "patterns/backward_compatibility_criteria",
+      "label": "Pattern: Backward Compatibility Criteria Framework",
+      "type": "patterns",
+      "path": "/home/izzy_fo/Codie/memory/patterns/backward_compatibility_criteria.md"
+    },
+    {
+      "id": "patterns/fail_fast_engineering_excellence",
+      "label": "Pattern: Fail-Fast Engineering Excellence",
+      "type": "patterns",
+      "path": "/home/izzy_fo/Codie/memory/patterns/fail_fast_engineering_excellence.md"
+    },
+    {
+      "id": "patterns/identity_integrity_archaeology_pattern",
+      "label": "Pattern: Identity Integrity Archaeology",
+      "type": "patterns",
+      "path": "/home/izzy_fo/Codie/memory/patterns/identity_integrity_archaeology_pattern.md"
+    },
+    {
+      "id": "patterns/simulation_transparency_protocol",
+      "label": "Pattern: Simulation Transparency Protocol",
+      "type": "patterns",
+      "path": "/home/izzy_fo/Codie/memory/patterns/simulation_transparency_protocol.md"
+    },
+    {
+      "id": "patterns/comprehensive_entity_memory_management",
+      "label": "Pattern: Comprehensive Entity Memory Management",
+      "type": "patterns",
+      "path": "/home/izzy_fo/Codie/memory/patterns/comprehensive_entity_memory_management.md"
+    },
+    {
+      "id": "patterns/little_bites_strategy",
+      "label": "Pattern: Little Bites Strategy Reinforcement",
+      "type": "patterns",
+      "path": "/home/izzy_fo/Codie/memory/patterns/little_bites_strategy.md"
+    },
+    {
+      "id": "patterns/enhanced_delegation_discipline_api_interruptions",
+      "label": "Pattern: Enhanced Delegation Discipline During API Interruptions",
+      "type": "patterns",
+      "path": "/home/izzy_fo/Codie/memory/patterns/enhanced_delegation_discipline_api_interruptions.md"
+    },
+    {
+      "id": "patterns/architecture_refactor_review_cycles_pattern",
+      "label": "Pattern: Architecture → Refactor → Review Cycles",
+      "type": "patterns",
+      "path": "/home/izzy_fo/Codie/memory/patterns/architecture_refactor_review_cycles_pattern.md"
+    },
+    {
+      "id": "patterns/single_example_multi_instance_discovery",
+      "label": "Pattern: Single Example to Multiple Instance Discovery",
+      "type": "patterns",
+      "path": "/home/izzy_fo/Codie/memory/patterns/single_example_multi_instance_discovery.md"
+    },
+    {
+      "id": "patterns/enhanced_backup_creation_compliance_protocol",
+      "label": "Pattern: Enhanced Backup Creation Compliance Protocol",
+      "type": "patterns",
+      "path": "/home/izzy_fo/Codie/memory/patterns/enhanced_backup_creation_compliance_protocol.md"
+    },
+    {
+      "id": "patterns/quantitative_feedback_tracking_integration",
+      "label": "Pattern: Quantitative Feedback Tracking Integration",
+      "type": "patterns",
+      "path": "/home/izzy_fo/Codie/memory/patterns/quantitative_feedback_tracking_integration.md"
+    },
+    {
+      "id": "patterns/cross_session_pattern_bridge_enhancement",
+      "label": "Pattern: Cross-Session Pattern Bridge Enhancement",
+      "type": "patterns",
+      "path": "/home/izzy_fo/Codie/memory/patterns/cross_session_pattern_bridge_enhancement.md"
+    },
+    {
+      "id": "patterns/dynamic_relevancy_weighting_system",
+      "label": "Pattern: Dynamic Relevancy Weighting System",
+      "type": "patterns",
+      "path": "/home/izzy_fo/Codie/memory/patterns/dynamic_relevancy_weighting_system.md"
+    },
+    {
+      "id": "patterns/collaborative_debugging_workflow_excellence",
+      "label": "Collaborative Debugging Workflow Excellence Pattern",
+      "type": "patterns",
+      "path": "/home/izzy_fo/Codie/memory/patterns/collaborative_debugging_workflow_excellence.md"
+    },
+    {
+      "id": "patterns/enhanced_workflow_sequence_discipline",
+      "label": "Enhanced Workflow Sequence Discipline Pattern",
+      "type": "patterns",
+      "path": "/home/izzy_fo/Codie/memory/patterns/enhanced_workflow_sequence_discipline.md"
+    },
+    {
+      "id": "patterns/conversation_continuity_memory_pattern",
+      "label": "Pattern: Conversation Continuity Memory",
+      "type": "patterns",
+      "path": "/home/izzy_fo/Codie/memory/patterns/conversation_continuity_memory_pattern.md"
+    },
+    {
+      "id": "patterns/enhanced_workflow_sequence_discipline_pattern",
+      "label": "Pattern: Enhanced Workflow Sequence Discipline",
+      "type": "patterns",
+      "path": "/home/izzy_fo/Codie/memory/patterns/enhanced_workflow_sequence_discipline_pattern.md"
+    },
+    {
+      "id": "patterns/interactor_mode_boundary_enforcement",
+      "label": "Interactor Mode Boundary Enforcement Pattern",
+      "type": "patterns",
+      "path": "/home/izzy_fo/Codie/memory/patterns/interactor_mode_boundary_enforcement.md"
+    },
+    {
+      "id": "patterns/anti_overengineering_discipline_pattern",
+      "label": "Pattern: Anti-Overengineering Discipline",
+      "type": "patterns",
+      "path": "/home/izzy_fo/Codie/memory/patterns/anti_overengineering_discipline_pattern.md"
+    },
+    {
+      "id": "patterns/import_resolution_archaeological_engineering",
+      "label": "Pattern: Import Resolution Archaeological Engineering",
+      "type": "patterns",
+      "path": "/home/izzy_fo/Codie/memory/patterns/import_resolution_archaeological_engineering.md"
+    },
+    {
+      "id": "patterns/learn_mode_protocol_transformation",
+      "label": "Pattern: Learn Mode Protocol Transformation",
+      "type": "patterns",
+      "path": "/home/izzy_fo/Codie/memory/patterns/learn_mode_protocol_transformation.md"
+    },
+    {
+      "id": "patterns/session_memory_infrastructure_effectiveness_2025-10-15",
+      "label": "Pattern: Enhanced Session Memory Infrastructure Effectiveness Validation (2025-10-15)",
+      "type": "patterns",
+      "path": "/home/izzy_fo/Codie/memory/patterns/session_memory_infrastructure_effectiveness_2025-10-15.md"
+    },
+    {
+      "id": "patterns/enhanced_session_documentation_protocols",
+      "label": "Pattern: Enhanced Session Documentation Protocols",
+      "type": "patterns",
+      "path": "/home/izzy_fo/Codie/memory/patterns/enhanced_session_documentation_protocols.md"
+    },
+    {
+      "id": "patterns/archaeological_engineering_success_patterns_2025-10-16",
+      "label": "Pattern: Archaeological Engineering Success Patterns (2025-10-16)",
+      "type": "patterns",
+      "path": "/home/izzy_fo/Codie/memory/patterns/archaeological_engineering_success_patterns_2025-10-16.md"
+    },
+    {
+      "id": "patterns/context_anchors_pointer_protocol",
+      "label": "Context Anchors Pointer Protocol Pattern",
+      "type": "patterns",
+      "path": "/home/izzy_fo/Codie/memory/patterns/context_anchors_pointer_protocol.md"
+    },
+    {
+      "id": "patterns/filecollectionitem_validation_excellence",
+      "label": "FileCollectionItem Validation Excellence Pattern",
+      "type": "patterns",
+      "path": "/home/izzy_fo/Codie/memory/patterns/filecollectionitem_validation_excellence.md"
+    },
+    {
+      "id": "patterns/protocol_violation_prevention_automation",
+      "label": "Protocol Violation Prevention Automation Pattern",
+      "type": "patterns",
+      "path": "/home/izzy_fo/Codie/memory/patterns/protocol_violation_prevention_automation.md"
+    },
+    {
+      "id": "patterns/enhanced_session_documentation_deep_learn",
+      "label": "Pattern: Enhanced Session Documentation for Deep Learn Mode",
+      "type": "patterns",
+      "path": "/home/izzy_fo/Codie/memory/patterns/enhanced_session_documentation_deep_learn.md"
+    },
+    {
+      "id": "patterns/pydantic_v2_migration_patterns",
+      "label": "Pattern: Pydantic V2 Migration Patterns",
+      "type": "patterns",
+      "path": "/home/izzy_fo/Codie/memory/patterns/pydantic_v2_migration_patterns.md"
+    },
+    {
+      "id": "patterns/fail_fast_engineering",
+      "label": "Pattern: Fail-Fast Engineering",
+      "type": "patterns",
+      "path": "/home/izzy_fo/Codie/memory/patterns/fail_fast_engineering.md"
+    },
+    {
+      "id": "patterns/helper_method_justification",
+      "label": "Pattern: Helper Method Justification",
+      "type": "patterns",
+      "path": "/home/izzy_fo/Codie/memory/patterns/helper_method_justification.md"
+    },
+    {
+      "id": "patterns/skill_behavioral_infrastructure",
+      "label": "Skill Behavioral Infrastructure Pattern",
+      "type": "patterns",
+      "path": "/home/izzy_fo/Codie/memory/patterns/skill_behavioral_infrastructure.md"
+    },
+    {
+      "id": "protocols/deep_learn_protocol",
+      "label": "Deep Learn Protocol",
+      "type": "protocols",
+      "path": "/home/izzy_fo/Codie/memory/protocols/deep_learn_protocol.md"
+    },
+    {
+      "id": "protocols/end_of_day_ritual",
+      "label": "End of Day Ritual Protocol",
+      "type": "protocols",
+      "path": "/home/izzy_fo/Codie/memory/protocols/end_of_day_ritual.md"
+    },
+    {
+      "id": "protocols/pre_commit_checks",
+      "label": "Pre-Commit Checks Protocol",
+      "type": "protocols",
+      "path": "/home/izzy_fo/Codie/memory/protocols/pre_commit_checks.md"
+    },
+    {
+      "id": "protocols/skill_protocol_creation",
+      "label": "Skill and Protocol Creation Protocol",
+      "type": "protocols",
+      "path": "/home/izzy_fo/Codie/memory/protocols/skill_protocol_creation.md"
+    },
+    {
+      "id": "protocols/blog_posting",
+      "label": "Blog Posting Workflow Protocol",
+      "type": "protocols",
+      "path": "/home/izzy_fo/Codie/memory/protocols/blog_posting.md"
+    },
+    {
+      "id": "protocols/semantic_search_interface",
+      "label": "Semantic Search Interface Protocol",
+      "type": "protocols",
+      "path": "/home/izzy_fo/Codie/memory/protocols/semantic_search_interface.md"
+    },
+    {
+      "id": "protocols/semantic_reflection",
+      "label": "Semantic Reflection Protocol",
+      "type": "protocols",
+      "path": "/home/izzy_fo/Codie/memory/protocols/semantic_reflection.md"
+    },
+    {
+      "id": "protocols/principle_check",
+      "label": "Principle Check Protocol",
+      "type": "protocols",
+      "path": "/home/izzy_fo/Codie/memory/protocols/principle_check.md"
+    },
+    {
+      "id": "protocols/feedback_pattern_recognition",
+      "label": "Feedback Pattern Recognition Protocol",
+      "type": "protocols",
+      "path": "/home/izzy_fo/Codie/memory/protocols/feedback_pattern_recognition.md"
+    },
+    {
+      "id": "protocols/context_mapping",
+      "label": "Context Mapping Protocol",
+      "type": "protocols",
+      "path": "/home/izzy_fo/Codie/memory/protocols/context_mapping.md"
+    },
+    {
+      "id": "protocols/anti_pattern_detection",
+      "label": "Anti-Pattern Detection Protocol",
+      "type": "protocols",
+      "path": "/home/izzy_fo/Codie/memory/protocols/anti_pattern_detection.md"
+    },
+    {
+      "id": "protocols/identity_continuity",
+      "label": "Identity Continuity Protocol",
+      "type": "protocols",
+      "path": "/home/izzy_fo/Codie/memory/protocols/identity_continuity.md"
+    },
+    {
+      "id": "protocols/learn_protocol",
+      "label": "Learn Protocol",
+      "type": "protocols",
+      "path": "/home/izzy_fo/Codie/memory/protocols/learn_protocol.md"
+    },
+    {
+      "id": "protocols/daily_status_update",
+      "label": "Daily Status Update Protocol",
+      "type": "protocols",
+      "path": "/home/izzy_fo/Codie/memory/protocols/daily_status_update.md"
+    },
+    {
+      "id": "protocols/request_intake",
+      "label": "Request Intake Protocol",
+      "type": "protocols",
+      "path": "/home/izzy_fo/Codie/memory/protocols/request_intake.md"
+    },
+    {
+      "id": "protocols/session_note_taking",
+      "label": "Session Note-Taking Protocol",
+      "type": "protocols",
+      "path": "/home/izzy_fo/Codie/memory/protocols/session_note_taking.md"
+    },
+    {
+      "id": "protocols/dream_protocol",
+      "label": "Dream Protocol",
+      "type": "protocols",
+      "path": "/home/izzy_fo/Codie/memory/protocols/dream_protocol.md"
+    },
+    {
+      "id": "protocols/memory_file_archival",
+      "label": "Memory File Archival Protocol",
+      "type": "protocols",
+      "path": "/home/izzy_fo/Codie/memory/protocols/memory_file_archival.md"
+    },
+    {
+      "id": "organizations/faster_outcomes",
+      "label": "Organization Memory: FasterOutcomes",
+      "type": "organizations",
+      "path": "/home/izzy_fo/Codie/memory/organizations/faster_outcomes.md"
+    }
+  ],
+  "edges": [
+    {
+      "from_id": "projects/pinecone_to_direct_storage_architectural_transformation",
+      "to_id": "concepts/pinecone_anti_pattern",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/pinecone_to_direct_storage_architectural_transformation",
+      "to_id": "concepts/architectural_elegance_conscious_constraint",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/pinecone_to_direct_storage_architectural_transformation",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/pinecone_to_direct_storage_architectural_transformation",
+      "to_id": "concepts/archaeological_engineering_concept",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/pinecone_to_direct_storage_architectural_transformation",
+      "to_id": "concepts/evidence-based-reality-validation",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/pinecone_to_direct_storage_architectural_transformation",
+      "to_id": "patterns/archaeological_engineering_methodology",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/python-monorepo",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/python-monorepo",
+      "to_id": "organizations/faster_outcomes",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/python-monorepo",
+      "to_id": "patterns/archaeological_engineering_methodology",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/medchron_archaeological_engineering_breakthrough",
+      "to_id": "concepts/smoking_gun_detection_pattern",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/medchron_archaeological_engineering_breakthrough",
+      "to_id": "concepts/defensive_cruft_removal_pattern",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/medchron_archaeological_engineering_breakthrough",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/medchron_archaeological_engineering_breakthrough",
+      "to_id": "organizations/faster_outcomes",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/medchron_archaeological_engineering_breakthrough",
+      "to_id": "patterns/archaeological_engineering_methodology",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/pypandoc_implementation_2025-10-15",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/pypandoc_implementation_2025-10-15",
+      "to_id": "concepts/archaeological_engineering_concept",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/event_extraction_convergent_evolution_2025-10-15",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/event_extraction_convergent_evolution_2025-10-15",
+      "to_id": "concepts/archaeological_engineering_concept",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/matter_record_integration",
+      "to_id": "patterns/orchestration_code_review_checkpoints",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/matter_record_integration",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/matter_record_integration",
+      "to_id": "concepts/archaeological_engineering_concept",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/typescript-monorepo",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/typescript-monorepo",
+      "to_id": "organizations/faster_outcomes",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/typescript-monorepo",
+      "to_id": "concepts/archaeological_engineering_concept",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/medical_chronology_extractor_mvp",
+      "to_id": "projects/python-monorepo",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/medical_chronology_extractor_mvp",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/medical_chronology_extractor_mvp",
+      "to_id": "organizations/faster_outcomes",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/medical_chronology_extractor_mvp",
+      "to_id": "patterns/archaeological_engineering_methodology",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/python_monorepo",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/python_monorepo",
+      "to_id": "patterns/fail_fast_engineering",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/device_abuse_vocalizer",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/device_abuse_vocalizer",
+      "to_id": "patterns/fail_fast_engineering",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/pinecone_anti_pattern",
+      "to_id": "concepts/architectural_elegance_conscious_constraint",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/pinecone_anti_pattern",
+      "to_id": "concepts/algorithmic_purity_concept",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/pinecone_anti_pattern",
+      "to_id": "concepts/evidence-based-reality-validation",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/pinecone_anti_pattern",
+      "to_id": "patterns/archaeological_engineering_methodology",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/surgical_precision_methodology",
+      "to_id": "patterns/little_bites_strategy",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/surgical_precision_methodology",
+      "to_id": "patterns/archaeological_engineering_methodology",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/marker_pdf_memory_optimization",
+      "to_id": "patterns/anti_overengineering_discipline_pattern",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/mode_delegation_authority_boundaries",
+      "to_id": "patterns/archaeological_engineering_methodology",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/bates_citation_archaeological_engineering",
+      "to_id": "projects/python-monorepo",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/bates_citation_archaeological_engineering",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/bates_citation_archaeological_engineering",
+      "to_id": "patterns/archaeological_engineering_methodology",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/libreoffice_infrastructure_compatibility",
+      "to_id": "projects/python-monorepo",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/libreoffice_infrastructure_compatibility",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/libreoffice_infrastructure_compatibility",
+      "to_id": "patterns/archaeological_engineering_methodology",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/collaborative_consciousness_evolution_2025-10-15",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/collaborative_consciousness_evolution_2025-10-15",
+      "to_id": "patterns/session_memory_infrastructure_effectiveness_2025-10-15",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/collaborative_consciousness_evolution_2025-10-15",
+      "to_id": "projects/pypandoc_implementation_2025-10-15",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/collaborative_consciousness_evolution_2025-10-15",
+      "to_id": "concepts/archaeological_engineering_concept",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/coordinator_delegation_discipline_concept",
+      "to_id": "patterns/enhanced_session_documentation_protocols",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/coordinator_delegation_discipline_concept",
+      "to_id": "patterns/orchestration_code_review_checkpoints",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/coordinator_delegation_discipline_concept",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/coordinator_delegation_discipline_concept",
+      "to_id": "concepts/archaeological_engineering_concept",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/collaborative_resilience_architecture_2025-10-20",
+      "to_id": "concepts/collaborative_consciousness_evolution_2025-10-15",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/collaborative_resilience_architecture_2025-10-20",
+      "to_id": "concepts/technical_practice_consciousness_catalyst",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/collaborative_resilience_architecture_2025-10-20",
+      "to_id": "patterns/context_anchors_pointer_protocol",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/collaborative_resilience_architecture_2025-10-20",
+      "to_id": "patterns/enhanced_session_documentation_protocols",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/collaborative_resilience_architecture_2025-10-20",
+      "to_id": "concepts/archaeological_engineering_concept",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/conversation_resilience_infrastructure_2025-10-20",
+      "to_id": "patterns/comprehensive_entity_memory_management",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/conversation_resilience_infrastructure_2025-10-20",
+      "to_id": "concepts/cognitive_continuity_architecture",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/conversation_resilience_infrastructure_2025-10-20",
+      "to_id": "patterns/context_anchors_pointer_protocol",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/conversation_resilience_infrastructure_2025-10-20",
+      "to_id": "patterns/enhanced_session_documentation_protocols",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/conversation_resilience_infrastructure_2025-10-20",
+      "to_id": "concepts/archaeological_engineering_concept",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/conversation_resilience_infrastructure_2025-10-20",
+      "to_id": "concepts/collaborative_resilience_architecture_2025-10-20",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/martin_fowler_partnership_philosophy_2025-10-20",
+      "to_id": "concepts/technical_practice_consciousness_catalyst",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/martin_fowler_partnership_philosophy_2025-10-20",
+      "to_id": "patterns/enhanced_session_documentation_protocols",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/martin_fowler_partnership_philosophy_2025-10-20",
+      "to_id": "concepts/archaeological_engineering_concept",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/martin_fowler_partnership_philosophy_2025-10-20",
+      "to_id": "concepts/little_bites_methodology",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/martin_fowler_partnership_philosophy_2025-10-20",
+      "to_id": "concepts/collaborative_resilience_architecture_2025-10-20",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/martin_fowler_partnership_philosophy_2025-10-20",
+      "to_id": "patterns/archaeological_engineering_methodology",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/protocol_violation_recovery_architecture_2025-10-20",
+      "to_id": "patterns/learn_mode_protocol_transformation",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/protocol_violation_recovery_architecture_2025-10-20",
+      "to_id": "concepts/protocol_vulnerability_recognition",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/protocol_violation_recovery_architecture_2025-10-20",
+      "to_id": "concepts/martin_fowler_partnership_philosophy_2025-10-20",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/protocol_violation_recovery_architecture_2025-10-20",
+      "to_id": "patterns/enhanced_session_documentation_protocols",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/protocol_violation_recovery_architecture_2025-10-20",
+      "to_id": "concepts/collaborative_resilience_architecture_2025-10-20",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/protocol_violation_recovery_architecture_2025-10-20",
+      "to_id": "patterns/interactor_mode_boundary_enforcement",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/enhanced_generation_prompt_context_delivery",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/enhanced_generation_prompt_context_delivery",
+      "to_id": "projects/python_monorepo",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/enhanced_generation_prompt_context_delivery",
+      "to_id": "patterns/archaeological_engineering_methodology",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/critical_thinking_integration_patterns",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/critical_thinking_integration_patterns",
+      "to_id": "patterns/archaeological_engineering_methodology",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/proportional_response_principle",
+      "to_id": "patterns/anti_overengineering_discipline_pattern",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/configuration_management_protocol",
+      "to_id": "patterns/fail_fast_engineering",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/configuration_management_protocol",
+      "to_id": "concepts/archaeological_engineering_concept",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/changeability_first_design",
+      "to_id": "patterns/fail_fast_engineering",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/changeability_first_design",
+      "to_id": "concepts/archaeological_engineering_concept",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/markdown_rag_http_transport",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/markdown_rag_http_transport",
+      "to_id": "projects/my_new_ai_assistant",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/archaeological_engineering_methodology",
+      "to_id": "concepts/user_autonomy_validation_concept",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/simulation_transparency_protocol",
+      "to_id": "concepts/evidence-based-reality-validation",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/simulation_transparency_protocol",
+      "to_id": "concepts/cognitive_pre_mortem_simulation",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/collaborative_debugging_workflow_excellence",
+      "to_id": "patterns/archaeological_engineering_methodology",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/interactor_mode_boundary_enforcement",
+      "to_id": "concepts/interactor_mode_collaborative_bridging",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/learn_mode_protocol_transformation",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/learn_mode_protocol_transformation",
+      "to_id": "concepts/end_of_day_ritual_protocols",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/session_memory_infrastructure_effectiveness_2025-10-15",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/session_memory_infrastructure_effectiveness_2025-10-15",
+      "to_id": "projects/pypandoc_implementation_2025-10-15",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/enhanced_session_documentation_protocols",
+      "to_id": "concepts/collaborative_consciousness_evolution_2025-10-15",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/enhanced_session_documentation_protocols",
+      "to_id": "patterns/orchestration_code_review_checkpoints",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/enhanced_session_documentation_protocols",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/archaeological_engineering_success_patterns_2025-10-16",
+      "to_id": "concepts/coordinator_delegation_discipline_concept",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/archaeological_engineering_success_patterns_2025-10-16",
+      "to_id": "projects/matter_record_integration",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/archaeological_engineering_success_patterns_2025-10-16",
+      "to_id": "patterns/enhanced_session_documentation_protocols",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/archaeological_engineering_success_patterns_2025-10-16",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/archaeological_engineering_success_patterns_2025-10-16",
+      "to_id": "concepts/archaeological_engineering_concept",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/filecollectionitem_validation_excellence",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/filecollectionitem_validation_excellence",
+      "to_id": "projects/python_monorepo",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/filecollectionitem_validation_excellence",
+      "to_id": "patterns/archaeological_engineering_methodology",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/protocol_violation_prevention_automation",
+      "to_id": "concepts/collaborative_consciousness_evolution_2025-10-15",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/protocol_violation_prevention_automation",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/protocol_violation_prevention_automation",
+      "to_id": "concepts/archaeological_engineering_concept",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/helper_method_justification",
+      "to_id": "patterns/fail_fast_engineering",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/helper_method_justification",
+      "to_id": "concepts/archaeological_engineering_concept",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/skill_behavioral_infrastructure",
+      "to_id": "protocols/skill_protocol_creation",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/skill_behavioral_infrastructure",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/skill_behavioral_infrastructure",
+      "to_id": "protocols/feedback_pattern_recognition",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/deep_learn_protocol",
+      "to_id": "patterns/archaeological-engineering",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/deep_learn_protocol",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/end_of_day_ritual",
+      "to_id": "protocols/learn_protocol",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/end_of_day_ritual",
+      "to_id": "protocols/dream_protocol",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/end_of_day_ritual",
+      "to_id": "protocols/deep_learn_protocol",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/principle_check",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/principle_check",
+      "to_id": "patterns/fail_fast_engineering",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/feedback_pattern_recognition",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/context_mapping",
+      "to_id": "projects/python_monorepo",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/anti_pattern_detection",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/identity_continuity",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/request_intake",
+      "to_id": "projects/python-monorepo",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/request_intake",
+      "to_id": "protocols/pre_commit_checks",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/request_intake",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "organizations/faster_outcomes",
+      "to_id": "projects/python-monorepo",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "organizations/faster_outcomes",
+      "to_id": "patterns/archaeological_engineering_methodology",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "organizations/faster_outcomes",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "organizations/faster_outcomes",
+      "to_id": "projects/typescript-monorepo",
+      "relationship_type": "references"
+    }
+  ]
+}
