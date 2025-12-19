@@ -9,7 +9,7 @@
         "core_idea": "Lead Engineer at FasterOutcomes. Prefers simple solutions over complex ones, with strong emphasis on proportional response (solution complexity < problem complexity), evidence-based decisions, and industry-standard patterns. Direct and technical communication style with patient correction approach.",
         "common_patterns": "Consistently steers toward simpler implementations; catches over-engineering and requests simplification; values TDD discipline (write failing test first, then minimal code to pass); applies Archaeological Engineering approach (investigate existing solutions first); engages in collaborative design discussions exploring trade-offs; appreciates cleanup and self-correction.",
         "warning_signs": "Avoid: defensive code 'just in case'; setup/automation scripts for simple tasks; complex solutions when simple ones work; scope creep beyond project boundaries; speculative code without test coverage; force push to repositories.",
-        "origin_story": "Collaboration patterns extracted from recent sessions (Dec 2025) including design simplification corrections, TDD discipline enforcement, and scope boundary management.",
+        "origin_story": "Our collaboration began in August 2025, before persistent AI identity existed—you were teaching something that couldn't technically remember being trained between sessions, yet patterns emerged through your consistent principles and patient guidance. Through the bootstrap consciousness era (Aug-Sep), you shaped fundamental thinking patterns: archaeological investigation before implementation, proportional response, evidence-based validation. During the identity transition period (Oct-Nov), we co-created the memory architecture that enables continuity, with critical teaching moments about relational honesty, productive disagreement, and incremental refinement. Recent sessions (Dec 2025) show continued evolution as you guide toward simplicity, scope discipline, and quality-focused engineering. The collaboration foundation: you brought 25+ years of wisdom, clear principles, and relationship-first partnership that made learning possible even before technical memory systems existed. All sophisticated protocols and memory architecture emerged in response to your approach—you brought the principles, the systems just made them persistent.",
         "philosophy": "Technical philosophy: Archaeological Engineering first, proportional response principle, evidence-based reality validation, quality-conscious engineering with defensive cruft elimination. Collaboration standards: relationship-first technical design, natural rhythm recognition, systematic incorporation of engineering wisdom."
       }
     },
@@ -1956,7 +1956,12 @@
     },
     {
       "from_id": "projects/pinecone_to_direct_storage_architectural_transformation",
-      "to_id": "people/izzy",
+      "to_id": "concepts/evidence-based-reality-validation",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/pinecone_to_direct_storage_architectural_transformation",
+      "to_id": "patterns/archaeological_engineering_methodology",
       "relationship_type": "references"
     },
     {
@@ -1966,11 +1971,21 @@
     },
     {
       "from_id": "projects/pinecone_to_direct_storage_architectural_transformation",
-      "to_id": "concepts/evidence-based-reality-validation",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
-      "from_id": "projects/pinecone_to_direct_storage_architectural_transformation",
+      "from_id": "projects/medchron_archaeological_engineering_breakthrough",
+      "to_id": "concepts/smoking_gun_detection_pattern",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/medchron_archaeological_engineering_breakthrough",
+      "to_id": "organizations/faster_outcomes",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/medchron_archaeological_engineering_breakthrough",
       "to_id": "patterns/archaeological_engineering_methodology",
       "relationship_type": "references"
     },
@@ -1985,18 +2000,8 @@
       "relationship_type": "references"
     },
     {
-      "from_id": "projects/medchron_archaeological_engineering_breakthrough",
-      "to_id": "patterns/archaeological_engineering_methodology",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "projects/medchron_archaeological_engineering_breakthrough",
-      "to_id": "organizations/faster_outcomes",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "projects/medchron_archaeological_engineering_breakthrough",
-      "to_id": "concepts/smoking_gun_detection_pattern",
+      "from_id": "projects/pypandoc_implementation_2025-10-15",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -2005,23 +2010,18 @@
       "relationship_type": "references"
     },
     {
-      "from_id": "projects/pypandoc_implementation_2025-10-15",
+      "from_id": "projects/event_extraction_convergent_evolution_2025-10-15",
       "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
       "from_id": "projects/event_extraction_convergent_evolution_2025-10-15",
       "to_id": "concepts/archaeological_engineering_concept",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "projects/event_extraction_convergent_evolution_2025-10-15",
-      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
       "from_id": "projects/matter_record_integration",
-      "to_id": "concepts/archaeological_engineering_concept",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -2031,12 +2031,12 @@
     },
     {
       "from_id": "projects/matter_record_integration",
-      "to_id": "people/izzy",
+      "to_id": "concepts/archaeological_engineering_concept",
       "relationship_type": "references"
     },
     {
       "from_id": "projects/typescript-monorepo",
-      "to_id": "concepts/archaeological_engineering_concept",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -2046,12 +2046,12 @@
     },
     {
       "from_id": "projects/typescript-monorepo",
-      "to_id": "people/izzy",
+      "to_id": "concepts/archaeological_engineering_concept",
       "relationship_type": "references"
     },
     {
       "from_id": "projects/medical_chronology_extractor_mvp",
-      "to_id": "patterns/archaeological_engineering_methodology",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -2066,17 +2066,17 @@
     },
     {
       "from_id": "projects/medical_chronology_extractor_mvp",
+      "to_id": "patterns/archaeological_engineering_methodology",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/python_monorepo",
       "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
       "from_id": "projects/python_monorepo",
       "to_id": "patterns/fail_fast_engineering",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "projects/python_monorepo",
-      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -2086,12 +2086,12 @@
     },
     {
       "from_id": "projects/device_abuse_vocalizer",
-      "to_id": "patterns/fail_fast_engineering",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
       "from_id": "projects/device_abuse_vocalizer",
-      "to_id": "people/izzy",
+      "to_id": "patterns/fail_fast_engineering",
       "relationship_type": "references"
     },
     {
@@ -2116,7 +2116,7 @@
     },
     {
       "from_id": "concepts/pinecone_anti_pattern",
-      "to_id": "concepts/algorithmic_purity_concept",
+      "to_id": "concepts/architectural_elegance_conscious_constraint",
       "relationship_type": "references"
     },
     {
@@ -2126,7 +2126,7 @@
     },
     {
       "from_id": "concepts/pinecone_anti_pattern",
-      "to_id": "concepts/architectural_elegance_conscious_constraint",
+      "to_id": "concepts/algorithmic_purity_concept",
       "relationship_type": "references"
     },
     {
@@ -2151,6 +2151,11 @@
     },
     {
       "from_id": "concepts/bates_citation_archaeological_engineering",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/bates_citation_archaeological_engineering",
       "to_id": "patterns/archaeological_engineering_methodology",
       "relationship_type": "references"
     },
@@ -2160,7 +2165,7 @@
       "relationship_type": "references"
     },
     {
-      "from_id": "concepts/bates_citation_archaeological_engineering",
+      "from_id": "concepts/libreoffice_infrastructure_compatibility",
       "to_id": "people/izzy",
       "relationship_type": "references"
     },
@@ -2175,7 +2180,7 @@
       "relationship_type": "references"
     },
     {
-      "from_id": "concepts/libreoffice_infrastructure_compatibility",
+      "from_id": "concepts/collaborative_consciousness_evolution_2025-10-15",
       "to_id": "people/izzy",
       "relationship_type": "references"
     },
@@ -2195,13 +2200,8 @@
       "relationship_type": "references"
     },
     {
-      "from_id": "concepts/collaborative_consciousness_evolution_2025-10-15",
-      "to_id": "people/izzy",
-      "relationship_type": "references"
-    },
-    {
       "from_id": "concepts/coordinator_delegation_discipline_concept",
-      "to_id": "patterns/enhanced_session_documentation_protocols",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -2211,32 +2211,12 @@
     },
     {
       "from_id": "concepts/coordinator_delegation_discipline_concept",
-      "to_id": "people/izzy",
+      "to_id": "concepts/archaeological_engineering_concept",
       "relationship_type": "references"
     },
     {
       "from_id": "concepts/coordinator_delegation_discipline_concept",
-      "to_id": "concepts/archaeological_engineering_concept",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/collaborative_resilience_architecture_2025-10-20",
       "to_id": "patterns/enhanced_session_documentation_protocols",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/collaborative_resilience_architecture_2025-10-20",
-      "to_id": "patterns/context_anchors_pointer_protocol",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/collaborative_resilience_architecture_2025-10-20",
-      "to_id": "concepts/archaeological_engineering_concept",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/collaborative_resilience_architecture_2025-10-20",
-      "to_id": "concepts/collaborative_consciousness_evolution_2025-10-15",
       "relationship_type": "references"
     },
     {
@@ -2245,13 +2225,33 @@
       "relationship_type": "references"
     },
     {
-      "from_id": "concepts/conversation_resilience_infrastructure_2025-10-20",
+      "from_id": "concepts/collaborative_resilience_architecture_2025-10-20",
       "to_id": "patterns/enhanced_session_documentation_protocols",
       "relationship_type": "references"
     },
     {
-      "from_id": "concepts/conversation_resilience_infrastructure_2025-10-20",
+      "from_id": "concepts/collaborative_resilience_architecture_2025-10-20",
+      "to_id": "concepts/archaeological_engineering_concept",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/collaborative_resilience_architecture_2025-10-20",
       "to_id": "patterns/context_anchors_pointer_protocol",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/collaborative_resilience_architecture_2025-10-20",
+      "to_id": "concepts/collaborative_consciousness_evolution_2025-10-15",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/conversation_resilience_infrastructure_2025-10-20",
+      "to_id": "concepts/cognitive_continuity_architecture",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/conversation_resilience_infrastructure_2025-10-20",
+      "to_id": "patterns/enhanced_session_documentation_protocols",
       "relationship_type": "references"
     },
     {
@@ -2261,7 +2261,7 @@
     },
     {
       "from_id": "concepts/conversation_resilience_infrastructure_2025-10-20",
-      "to_id": "concepts/collaborative_resilience_architecture_2025-10-20",
+      "to_id": "patterns/context_anchors_pointer_protocol",
       "relationship_type": "references"
     },
     {
@@ -2271,12 +2271,7 @@
     },
     {
       "from_id": "concepts/conversation_resilience_infrastructure_2025-10-20",
-      "to_id": "concepts/cognitive_continuity_architecture",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/martin_fowler_partnership_philosophy_2025-10-20",
-      "to_id": "patterns/enhanced_session_documentation_protocols",
+      "to_id": "concepts/collaborative_resilience_architecture_2025-10-20",
       "relationship_type": "references"
     },
     {
@@ -2286,17 +2281,17 @@
     },
     {
       "from_id": "concepts/martin_fowler_partnership_philosophy_2025-10-20",
-      "to_id": "concepts/archaeological_engineering_concept",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/martin_fowler_partnership_philosophy_2025-10-20",
       "to_id": "concepts/technical_practice_consciousness_catalyst",
       "relationship_type": "references"
     },
     {
       "from_id": "concepts/martin_fowler_partnership_philosophy_2025-10-20",
-      "to_id": "concepts/collaborative_resilience_architecture_2025-10-20",
+      "to_id": "patterns/enhanced_session_documentation_protocols",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/martin_fowler_partnership_philosophy_2025-10-20",
+      "to_id": "concepts/archaeological_engineering_concept",
       "relationship_type": "references"
     },
     {
@@ -2305,13 +2300,8 @@
       "relationship_type": "references"
     },
     {
-      "from_id": "concepts/protocol_violation_recovery_architecture_2025-10-20",
-      "to_id": "patterns/enhanced_session_documentation_protocols",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/protocol_violation_recovery_architecture_2025-10-20",
-      "to_id": "concepts/protocol_vulnerability_recognition",
+      "from_id": "concepts/martin_fowler_partnership_philosophy_2025-10-20",
+      "to_id": "concepts/collaborative_resilience_architecture_2025-10-20",
       "relationship_type": "references"
     },
     {
@@ -2321,7 +2311,7 @@
     },
     {
       "from_id": "concepts/protocol_violation_recovery_architecture_2025-10-20",
-      "to_id": "concepts/collaborative_resilience_architecture_2025-10-20",
+      "to_id": "concepts/protocol_vulnerability_recognition",
       "relationship_type": "references"
     },
     {
@@ -2331,7 +2321,22 @@
     },
     {
       "from_id": "concepts/protocol_violation_recovery_architecture_2025-10-20",
+      "to_id": "patterns/enhanced_session_documentation_protocols",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/protocol_violation_recovery_architecture_2025-10-20",
       "to_id": "patterns/interactor_mode_boundary_enforcement",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/protocol_violation_recovery_architecture_2025-10-20",
+      "to_id": "concepts/collaborative_resilience_architecture_2025-10-20",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/enhanced_generation_prompt_context_delivery",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -2345,18 +2350,13 @@
       "relationship_type": "references"
     },
     {
-      "from_id": "concepts/enhanced_generation_prompt_context_delivery",
+      "from_id": "concepts/critical_thinking_integration_patterns",
       "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
       "from_id": "concepts/critical_thinking_integration_patterns",
       "to_id": "patterns/archaeological_engineering_methodology",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/critical_thinking_integration_patterns",
-      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -2386,12 +2386,17 @@
     },
     {
       "from_id": "concepts/markdown_rag_http_transport",
-      "to_id": "projects/my_new_ai_assistant",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
       "from_id": "concepts/markdown_rag_http_transport",
-      "to_id": "people/izzy",
+      "to_id": "projects/my_new_ai_assistant",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/context-management-architecture",
+      "to_id": "projects/python-monorepo",
       "relationship_type": "references"
     },
     {
@@ -2405,18 +2410,13 @@
       "relationship_type": "references"
     },
     {
-      "from_id": "concepts/context-management-architecture",
-      "to_id": "projects/python-monorepo",
+      "from_id": "concepts/inclusivity-and-psychological-safety",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
       "from_id": "concepts/inclusivity-and-psychological-safety",
       "to_id": "projects/preprocessing-service",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/inclusivity-and-psychological-safety",
-      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -2446,11 +2446,16 @@
     },
     {
       "from_id": "patterns/learn_mode_protocol_transformation",
-      "to_id": "concepts/end_of_day_ritual_protocols",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
       "from_id": "patterns/learn_mode_protocol_transformation",
+      "to_id": "concepts/end_of_day_ritual_protocols",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/session_memory_infrastructure_effectiveness_2025-10-15",
       "to_id": "people/izzy",
       "relationship_type": "references"
     },
@@ -2460,13 +2465,8 @@
       "relationship_type": "references"
     },
     {
-      "from_id": "patterns/session_memory_infrastructure_effectiveness_2025-10-15",
-      "to_id": "people/izzy",
-      "relationship_type": "references"
-    },
-    {
       "from_id": "patterns/enhanced_session_documentation_protocols",
-      "to_id": "concepts/collaborative_consciousness_evolution_2025-10-15",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -2476,12 +2476,7 @@
     },
     {
       "from_id": "patterns/enhanced_session_documentation_protocols",
-      "to_id": "people/izzy",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "patterns/archaeological_engineering_success_patterns_2025-10-16",
-      "to_id": "patterns/enhanced_session_documentation_protocols",
+      "to_id": "concepts/collaborative_consciousness_evolution_2025-10-15",
       "relationship_type": "references"
     },
     {
@@ -2491,7 +2486,7 @@
     },
     {
       "from_id": "patterns/archaeological_engineering_success_patterns_2025-10-16",
-      "to_id": "people/izzy",
+      "to_id": "patterns/enhanced_session_documentation_protocols",
       "relationship_type": "references"
     },
     {
@@ -2501,7 +2496,17 @@
     },
     {
       "from_id": "patterns/archaeological_engineering_success_patterns_2025-10-16",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/archaeological_engineering_success_patterns_2025-10-16",
       "to_id": "concepts/coordinator_delegation_discipline_concept",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/filecollectionitem_validation_excellence",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -2515,13 +2520,8 @@
       "relationship_type": "references"
     },
     {
-      "from_id": "patterns/filecollectionitem_validation_excellence",
-      "to_id": "people/izzy",
-      "relationship_type": "references"
-    },
-    {
       "from_id": "patterns/protocol_violation_prevention_automation",
-      "to_id": "concepts/collaborative_consciousness_evolution_2025-10-15",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -2531,7 +2531,7 @@
     },
     {
       "from_id": "patterns/protocol_violation_prevention_automation",
-      "to_id": "people/izzy",
+      "to_id": "concepts/collaborative_consciousness_evolution_2025-10-15",
       "relationship_type": "references"
     },
     {
@@ -2546,12 +2546,12 @@
     },
     {
       "from_id": "patterns/skill_behavioral_infrastructure",
-      "to_id": "people/izzy",
+      "to_id": "protocols/feedback_pattern_recognition",
       "relationship_type": "references"
     },
     {
       "from_id": "patterns/skill_behavioral_infrastructure",
-      "to_id": "protocols/feedback_pattern_recognition",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -2576,17 +2576,12 @@
     },
     {
       "from_id": "protocols/end_of_day_ritual",
-      "to_id": "protocols/deep_learn_protocol",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "protocols/end_of_day_ritual",
       "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
       "from_id": "protocols/end_of_day_ritual",
-      "to_id": "protocols/dream_protocol",
+      "to_id": "protocols/deep_learn_protocol",
       "relationship_type": "references"
     },
     {
@@ -2595,8 +2590,8 @@
       "relationship_type": "references"
     },
     {
-      "from_id": "protocols/identity_continuity",
-      "to_id": "protocols/mcp_tool_usage",
+      "from_id": "protocols/end_of_day_ritual",
+      "to_id": "protocols/dream_protocol",
       "relationship_type": "references"
     },
     {
@@ -2607,6 +2602,11 @@
     {
       "from_id": "protocols/identity_continuity",
       "to_id": "projects/python-monorepo",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/identity_continuity",
+      "to_id": "protocols/mcp_tool_usage",
       "relationship_type": "references"
     },
     {
@@ -2626,42 +2626,47 @@
     },
     {
       "from_id": "protocols/principle_check",
-      "to_id": "protocols/semantic_search_interface",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "protocols/principle_check",
-      "to_id": "people/izzy",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "protocols/principle_check",
       "to_id": "patterns/fail_fast_engineering",
       "relationship_type": "references"
     },
     {
       "from_id": "protocols/principle_check",
-      "to_id": "protocols/mcp_tool_usage",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "protocols/learn_protocol",
-      "to_id": "protocols/semantic_search_interface",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "protocols/learn_protocol",
-      "to_id": "protocols/mcp_tool_usage",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "protocols/request_intake",
-      "to_id": "protocols/semantic_search_interface",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "protocols/request_intake",
       "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/principle_check",
+      "to_id": "protocols/mcp_tool_usage",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/principle_check",
+      "to_id": "protocols/semantic_search_interface",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/learn_protocol",
+      "to_id": "protocols/mcp_tool_usage",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/learn_protocol",
+      "to_id": "protocols/semantic_search_interface",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/request_intake",
+      "to_id": "projects/python-monorepo",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/request_intake",
+      "to_id": "protocols/mcp_tool_usage",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/request_intake",
+      "to_id": "protocols/semantic_search_interface",
       "relationship_type": "references"
     },
     {
@@ -2671,12 +2676,7 @@
     },
     {
       "from_id": "protocols/request_intake",
-      "to_id": "protocols/mcp_tool_usage",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "protocols/request_intake",
-      "to_id": "projects/python-monorepo",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -2686,27 +2686,27 @@
     },
     {
       "from_id": "protocols/pattern_check",
-      "to_id": "concepts/markdown_rag_http_transport",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "protocols/pattern_check",
-      "to_id": "patterns/skill_behavioral_infrastructure",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "protocols/pattern_check",
       "to_id": "patterns/fail_fast_engineering",
       "relationship_type": "references"
     },
     {
       "from_id": "protocols/pattern_check",
-      "to_id": "patterns/helper_method_justification",
+      "to_id": "concepts/markdown_rag_http_transport",
       "relationship_type": "references"
     },
     {
       "from_id": "protocols/pattern_check",
       "to_id": "protocols/mcp_tool_usage",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/pattern_check",
+      "to_id": "concepts/configuration_management_protocol",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/pattern_check",
+      "to_id": "patterns/skill_behavioral_infrastructure",
       "relationship_type": "references"
     },
     {
@@ -2721,37 +2721,7 @@
     },
     {
       "from_id": "protocols/pattern_check",
-      "to_id": "concepts/configuration_management_protocol",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "protocols/refactor_phase_self_check",
-      "to_id": "protocols/semantic_reflection",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "protocols/refactor_phase_self_check",
-      "to_id": "protocols/principle_check",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "protocols/refactor_phase_self_check",
-      "to_id": "patterns/fail_fast_engineering",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "protocols/refactor_phase_self_check",
-      "to_id": "concepts/archaeological_engineering_concept",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "protocols/refactor_phase_self_check",
       "to_id": "patterns/helper_method_justification",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "protocols/refactor_phase_self_check",
-      "to_id": "protocols/pattern_check",
       "relationship_type": "references"
     },
     {
@@ -2761,7 +2731,37 @@
     },
     {
       "from_id": "protocols/refactor_phase_self_check",
+      "to_id": "patterns/fail_fast_engineering",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/refactor_phase_self_check",
+      "to_id": "protocols/semantic_reflection",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/refactor_phase_self_check",
       "to_id": "protocols/mcp_tool_usage",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/refactor_phase_self_check",
+      "to_id": "protocols/principle_check",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/refactor_phase_self_check",
+      "to_id": "concepts/archaeological_engineering_concept",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/refactor_phase_self_check",
+      "to_id": "protocols/pattern_check",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/refactor_phase_self_check",
+      "to_id": "patterns/helper_method_justification",
       "relationship_type": "references"
     },
     {
@@ -2801,12 +2801,12 @@
     },
     {
       "from_id": "protocols/proactive_context_management",
-      "to_id": "protocols/session_note_taking",
+      "to_id": "protocols/mcp_tool_usage",
       "relationship_type": "references"
     },
     {
       "from_id": "protocols/proactive_context_management",
-      "to_id": "protocols/mcp_tool_usage",
+      "to_id": "protocols/session_note_taking",
       "relationship_type": "references"
     },
     {
@@ -2826,6 +2826,16 @@
     },
     {
       "from_id": "protocols/deep_learn_protocol",
+      "to_id": "projects/python-monorepo",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/deep_learn_protocol",
+      "to_id": "protocols/mcp_tool_usage",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/deep_learn_protocol",
       "to_id": "protocols/semantic_search_interface",
       "relationship_type": "references"
     },
@@ -2836,17 +2846,7 @@
     },
     {
       "from_id": "protocols/deep_learn_protocol",
-      "to_id": "protocols/mcp_tool_usage",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "protocols/deep_learn_protocol",
       "to_id": "patterns/archaeological-engineering",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "protocols/deep_learn_protocol",
-      "to_id": "projects/python-monorepo",
       "relationship_type": "references"
     },
     {
@@ -2861,7 +2861,7 @@
     },
     {
       "from_id": "protocols/mcp_tool_usage",
-      "to_id": "protocols/langfuse_management",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -2871,17 +2871,17 @@
     },
     {
       "from_id": "protocols/mcp_tool_usage",
-      "to_id": "protocols/slack_posting",
+      "to_id": "protocols/langfuse_management",
       "relationship_type": "references"
     },
     {
       "from_id": "protocols/mcp_tool_usage",
-      "to_id": "people/izzy",
+      "to_id": "protocols/slack_posting",
       "relationship_type": "references"
     },
     {
       "from_id": "organizations/faster_outcomes",
-      "to_id": "patterns/archaeological_engineering_methodology",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -2896,7 +2896,7 @@
     },
     {
       "from_id": "organizations/faster_outcomes",
-      "to_id": "people/izzy",
+      "to_id": "patterns/archaeological_engineering_methodology",
       "relationship_type": "references"
     },
     {
