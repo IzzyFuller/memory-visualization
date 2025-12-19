@@ -46,6 +46,10 @@ def main():
 
     print(f"Parsed {len(nodes)} entities")
 
+    # Filter: Keep only Izzy from people entities
+    nodes = [node for node in nodes if not (node.type == "people" and node.id != "people/izzy")]
+    print(f"After filtering: {len(nodes)} entities (removed non-Izzy people)")
+
     # Create entity ID set for cross-reference validation
     entity_ids = {node.id for node in nodes}
 
