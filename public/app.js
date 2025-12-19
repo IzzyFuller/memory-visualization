@@ -169,10 +169,29 @@ function showEntityDetails(node) {
 
 /**
  * Simple markdown formatter for summary content.
- * Converts basic markdown to HTML.
+ * Converts basic markdown to HTML, removes code blocks, and truncates long content.
  */
 function formatMarkdown(text) {
     if (!text) return '';
+
+    // Remove code blocks (triple backticks with optional language)
+    text = text.replace(/```[\s\S]*?```/g, '');
+
+    // Remove indented code blocks (4+ spaces at line start)
+    text = text.replace(/^    .+$/gm, '');
+
+    // Truncate to ~750 characters at sentence boundary for readability
+    if (text.length > 750) {
+        let truncated = text.substring(0, 750);
+        let lastPeriod = truncated.lastIndexOf('.');
+        // Ensure we keep meaningful content (at least 400 chars)
+        if (lastPeriod > 400) {
+            text = truncated.substring(0, lastPeriod + 1) + ' [...]';
+        } else {
+            // Fallback: truncate at word boundary
+            text = truncated.substring(0, truncated.lastIndexOf(' ')) + '... [...]';
+        }
+    }
 
     return text
         // Convert ### headers to h4
