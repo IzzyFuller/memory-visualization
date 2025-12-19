@@ -95,10 +95,8 @@ def parse_entity_file(file_path: Path, memory_root: Path) -> EntityNode:
         # Use markdown heading as label
         label = first_line.lstrip("#").strip()
 
-    # Extract concept summary for concept entities
-    summary = None
-    if entity_type == "concepts":
-        summary = extract_concept_summary(content)
+    # Extract summary for all entity types (they all use similar markdown structure)
+    summary = extract_concept_summary(content)
 
     return EntityNode(
         id=entity_id,
