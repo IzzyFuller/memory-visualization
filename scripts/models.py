@@ -7,6 +7,16 @@ No Dict[str, Any] - all types explicitly defined.
 from pydantic import BaseModel, Field
 
 
+class ConceptSummary(BaseModel):
+    """Structured summary for concept entities."""
+
+    core_idea: str | None = Field(None, description="Main concept overview/principle")
+    common_patterns: str | None = Field(None, description="Key characteristics or patterns")
+    warning_signs: str | None = Field(None, description="Warning signs or indicators")
+    origin_story: str | None = Field(None, description="Source, history, or validation examples")
+    philosophy: str | None = Field(None, description="Meta-cognitive insights or integrations")
+
+
 class EntityNode(BaseModel):
     """Represents a single entity in the memory graph."""
 
@@ -14,6 +24,7 @@ class EntityNode(BaseModel):
     label: str = Field(..., description="Display name for the node")
     type: str = Field(..., description="Entity type: people, projects, concepts, patterns, protocols, organizations")
     path: str = Field(..., description="File path to the entity markdown file")
+    summary: ConceptSummary | None = Field(None, description="Structured summary (concepts only)")
 
     def get_color(self) -> str:
         """Returns color code based on entity type."""

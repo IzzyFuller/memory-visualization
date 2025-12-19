@@ -180,3 +180,52 @@ footer code {
     padding: 0.25rem 0.5rem;
     border-radius: 3px;
 }
+
+/* Concept Summary Styles */
+.concept-summary {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 2px solid #9013FE;
+}
+
+.summary-section {
+    margin-bottom: 1.5rem;
+}
+
+.summary-section h3 {
+    color: #9013FE;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.summary-section p {
+    color: #555;
+    font-size: 0.875rem;
+    line-height: 1.6;
+}
+
+.summary-content {
+    color: #555;
+    font-size: 0.875rem;
+    line-height: 1.6;
+}
+
+.summary-content h4 {
+    color: #2c3e50;
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.summary-content strong {
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+.summary-content br {
+    margin-bottom: 0.5rem;
+}

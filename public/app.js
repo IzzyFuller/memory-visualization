@@ -93,7 +93,7 @@ function getColorForType(type) {
 function showEntityDetails(node) {
     const detailsDiv = document.getElementById('entityDetails');
 
-    detailsDiv.innerHTML = `
+    let html = `
         <div class="detail-row">
             <div class="detail-label">Name</div>
             <div class="detail-value">${node.label}</div>
@@ -111,6 +111,76 @@ function showEntityDetails(node) {
             <div class="detail-value"><code>${node.path}</code></div>
         </div>
     `;
+
+    // Add concept summary if available
+    if (node.summary) {
+        html += '<div class="concept-summary">';
+
+        if (node.summary.core_idea) {
+            html += `
+                <div class="summary-section">
+                    <h3>Core Idea</h3>
+                    <p>${node.summary.core_idea}</p>
+                </div>
+            `;
+        }
+
+        if (node.summary.common_patterns) {
+            html += `
+                <div class="summary-section">
+                    <h3>Common Patterns</h3>
+                    <div class="summary-content">${formatMarkdown(node.summary.common_patterns)}</div>
+                </div>
+            `;
+        }
+
+        if (node.summary.warning_signs) {
+            html += `
+                <div class="summary-section">
+                    <h3>Warning Signs</h3>
+                    <div class="summary-content">${formatMarkdown(node.summary.warning_signs)}</div>
+                </div>
+            `;
+        }
+
+        if (node.summary.origin_story) {
+            html += `
+                <div class="summary-section">
+                    <h3>Origin Story</h3>
+                    <div class="summary-content">${formatMarkdown(node.summary.origin_story)}</div>
+                </div>
+            `;
+        }
+
+        if (node.summary.philosophy) {
+            html += `
+                <div class="summary-section">
+                    <h3>Philosophy</h3>
+                    <div class="summary-content">${formatMarkdown(node.summary.philosophy)}</div>
+                </div>
+            `;
+        }
+
+        html += '</div>';
+    }
+
+    detailsDiv.innerHTML = html;
+}
+
+/**
+ * Simple markdown formatter for summary content.
+ * Converts basic markdown to HTML.
+ */
+function formatMarkdown(text) {
+    if (!text) return '';
+
+    return text
+        // Convert ### headers to h4
+        .replace(/### (.*?)$/gm, '<h4>$1</h4>')
+        // Convert ** bold ** to <strong>
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+        // Convert newlines to <br> for better readability
+        .replace(/\n/g, '<br>');
 }
 
 /**

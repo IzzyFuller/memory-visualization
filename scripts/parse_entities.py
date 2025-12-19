@@ -7,7 +7,62 @@ Clean, focused implementation following fail-fast principles.
 import re
 from pathlib import Path
 
-from models import EntityNode, EntityEdge
+from models import EntityNode, EntityEdge, ConceptSummary
+
+
+def extract_concept_summary(content: str) -> ConceptSummary:
+    """
+    Extract structured summary from concept markdown file.
+
+    Maps markdown sections to summary fields:
+    - Overview/Core Principle → core_idea
+    - Key Characteristics/Framework → common_patterns
+    - Warning Signs → warning_signs
+    - Source/Validation/History → origin_story
+    - Meta-Cognitive/Integration/Philosophy → philosophy
+
+    Args:
+        content: Full markdown content of concept file
+
+    Returns:
+        ConceptSummary with extracted sections
+    """
+    # Split content into sections based on ## headers
+    sections = {}
+    current_header = None
+    current_content = []
+
+    for line in content.split("\n"):
+        # Check if this is a section header (## Header)
+        if line.startswith("## "):
+            # Save previous section if it exists
+            if current_header:
+                sections[current_header.lower()] = "\n".join(current_content).strip()
+            # Start new section
+            current_header = line[3:].strip()
+            current_content = []
+        elif current_header:
+            current_content.append(line)
+
+    # Save last section
+    if current_header:
+        sections[current_header.lower()] = "\n".join(current_content).strip()
+
+    # Map sections to summary fields using flexible matching
+    def find_section(*keywords):
+        """Find first section matching any of the keywords."""
+        for key, value in sections.items():
+            if any(keyword.lower() in key for keyword in keywords):
+                return value
+        return None
+
+    return ConceptSummary(
+        core_idea=find_section("overview", "core principle"),
+        common_patterns=find_section("key characteristics", "key framework", "methodology", "key principles"),
+        warning_signs=find_section("warning signs"),
+        origin_story=find_section("source", "validation", "history"),
+        philosophy=find_section("meta-cognitive", "integration", "philosophy")
+    )
 
 
 def parse_entity_file(file_path: Path, memory_root: Path) -> EntityNode:
@@ -40,11 +95,17 @@ def parse_entity_file(file_path: Path, memory_root: Path) -> EntityNode:
         # Use markdown heading as label
         label = first_line.lstrip("#").strip()
 
+    # Extract concept summary for concept entities
+    summary = None
+    if entity_type == "concepts":
+        summary = extract_concept_summary(content)
+
     return EntityNode(
         id=entity_id,
         label=label,
         type=entity_type,
-        path=str(file_path)
+        path=str(file_path),
+        summary=summary
     )
 
 
