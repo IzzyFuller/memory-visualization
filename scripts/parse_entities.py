@@ -10,19 +10,43 @@ from pathlib import Path
 from models import EntityNode, EntityEdge, ConceptSummary
 
 
-def extract_concept_summary(content: str) -> ConceptSummary:
+def extract_concept_summary(content: str, entity_type: str = "concepts") -> ConceptSummary:
     """
-    Extract structured summary from concept markdown file.
+    Extract structured summary from entity markdown file.
 
-    Maps markdown sections to summary fields:
+    Maps markdown sections to summary fields based on entity type:
+
+    Concepts/Patterns:
     - Overview/Core Principle → core_idea
-    - Key Characteristics/Framework → common_patterns
+    - Key Characteristics/Framework/Methodology/Key Principles → common_patterns
     - Warning Signs → warning_signs
     - Source/Validation/History → origin_story
     - Meta-Cognitive/Integration/Philosophy → philosophy
 
+    Protocols:
+    - Purpose → core_idea
+    - When to Invoke/Protocol Steps → common_patterns
+    - User Feedback/Source → origin_story
+
+    Projects:
+    - Overview → core_idea
+    - Technical Architecture/Project Approach → common_patterns
+    - Project Context/Key Projects → origin_story
+
+    Anti-Patterns:
+    - The Problem → core_idea
+    - Why This Is Wrong → warning_signs
+    - The Correct Pattern → common_patterns
+    - User Feedback → origin_story
+
+    Organizations:
+    - Overview/Summary → core_idea
+    - Organizational Patterns → common_patterns
+    - Key Projects → origin_story
+
     Args:
-        content: Full markdown content of concept file
+        content: Full markdown content of entity file
+        entity_type: Type of entity (concepts, patterns, protocols, etc.)
 
     Returns:
         ConceptSummary with extracted sections
@@ -56,12 +80,44 @@ def extract_concept_summary(content: str) -> ConceptSummary:
                 return value
         return None
 
+    # Define section mappings based on entity type
+    if entity_type == "protocols":
+        core_idea = find_section("purpose", "overview")
+        common_patterns = find_section("when to invoke", "protocol steps", "methodology")
+        warning_signs = find_section("warning signs", "anti-patterns")
+        origin_story = find_section("user feedback", "source", "history")
+        philosophy = find_section("philosophy", "principles")
+    elif entity_type == "projects":
+        core_idea = find_section("overview", "summary")
+        common_patterns = find_section("technical architecture", "project approach", "architecture")
+        warning_signs = find_section("warning signs", "challenges")
+        origin_story = find_section("project context", "context", "background")
+        philosophy = find_section("philosophy", "principles")
+    elif entity_type == "anti-patterns":
+        core_idea = find_section("the problem", "overview")
+        common_patterns = find_section("the correct pattern", "correct approach", "solution")
+        warning_signs = find_section("why this is wrong", "warning signs", "consequences")
+        origin_story = find_section("user feedback", "source", "specific example")
+        philosophy = None
+    elif entity_type == "organizations":
+        core_idea = find_section("overview", "summary")
+        common_patterns = find_section("organizational patterns", "patterns", "approach")
+        warning_signs = None
+        origin_story = find_section("key projects", "background", "history")
+        philosophy = find_section("philosophy", "technical philosophy")
+    else:  # concepts, patterns, skills, and others
+        core_idea = find_section("overview", "core principle", "purpose", "summary")
+        common_patterns = find_section("key characteristics", "key framework", "methodology", "key principles", "patterns observed", "key insights")
+        warning_signs = find_section("warning signs", "challenges", "lessons learned")
+        origin_story = find_section("source", "validation", "history", "background")
+        philosophy = find_section("meta-cognitive", "integration", "philosophy", "future applications")
+
     return ConceptSummary(
-        core_idea=find_section("overview", "core principle"),
-        common_patterns=find_section("key characteristics", "key framework", "methodology", "key principles"),
-        warning_signs=find_section("warning signs"),
-        origin_story=find_section("source", "validation", "history"),
-        philosophy=find_section("meta-cognitive", "integration", "philosophy")
+        core_idea=core_idea,
+        common_patterns=common_patterns,
+        warning_signs=warning_signs,
+        origin_story=origin_story,
+        philosophy=philosophy
     )
 
 
@@ -95,8 +151,18 @@ def parse_entity_file(file_path: Path, memory_root: Path) -> EntityNode:
         # Use markdown heading as label
         label = first_line.lstrip("#").strip()
 
-    # Extract summary for all entity types (they all use similar markdown structure)
-    summary = extract_concept_summary(content)
+    # Special handling for people/izzy entity
+    if entity_id == "people/izzy":
+        summary = ConceptSummary(
+            core_idea="Lead Engineer at FasterOutcomes. Prefers simple solutions over complex ones, with strong emphasis on proportional response (solution complexity < problem complexity), evidence-based decisions, and industry-standard patterns. Direct and technical communication style with patient correction approach.",
+            common_patterns="Consistently steers toward simpler implementations; catches over-engineering and requests simplification; values TDD discipline (write failing test first, then minimal code to pass); applies Archaeological Engineering approach (investigate existing solutions first); engages in collaborative design discussions exploring trade-offs; appreciates cleanup and self-correction.",
+            warning_signs="Avoid: defensive code 'just in case'; setup/automation scripts for simple tasks; complex solutions when simple ones work; scope creep beyond project boundaries; speculative code without test coverage; force push to repositories.",
+            origin_story="Collaboration patterns extracted from recent sessions (Dec 2025) including design simplification corrections, TDD discipline enforcement, and scope boundary management.",
+            philosophy="Technical philosophy: Archaeological Engineering first, proportional response principle, evidence-based reality validation, quality-conscious engineering with defensive cruft elimination. Collaboration standards: relationship-first technical design, natural rhythm recognition, systematic incorporation of engineering wisdom."
+        )
+    else:
+        # Extract summary for all other entity types (passing entity_type for type-specific extraction)
+        summary = extract_concept_summary(content, entity_type)
 
     return EntityNode(
         id=entity_id,
@@ -130,7 +196,7 @@ def extract_cross_references(file_path: Path, entity_id: str, all_entity_ids: se
     # Pattern to match entity references (e.g., "concepts/archaeological_engineering")
     # Matches: word/word-or-underscore pattern
     # Use non-capturing group (?:...) so re.findall returns full match, not just the group
-    pattern = r'\b(?:people|projects|concepts|patterns|protocols|organizations)/[\w-]+\b'
+    pattern = r'\b(?:people|projects|concepts|patterns|protocols|organizations|anti-patterns|skills)/[\w-]+\b'
 
     matches = re.findall(pattern, content)
     referenced_ids = set(matches)
@@ -156,7 +222,7 @@ def discover_entity_files(memory_root: Path) -> list[Path]:
     Returns:
         List of paths to entity markdown files
     """
-    entity_types = ["people", "projects", "concepts", "patterns", "protocols", "organizations"]
+    entity_types = ["people", "projects", "concepts", "patterns", "protocols", "organizations", "anti-patterns", "skills"]
     entity_files = []
 
     for entity_type in entity_types:
