@@ -25,6 +25,7 @@ class EntityNode(BaseModel):
     type: str = Field(..., description="Entity type: people, projects, concepts, patterns, protocols, organizations")
     path: str = Field(..., description="File path to the entity markdown file")
     summary: ConceptSummary | None = Field(None, description="Structured summary (concepts only)")
+    public_display: bool = Field(True, description="Whether entity is permitted for public display")
 
     def get_color(self) -> str:
         """Returns color code based on entity type."""

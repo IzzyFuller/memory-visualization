@@ -121,6 +121,34 @@ def extract_concept_summary(content: str, entity_type: str = "concepts") -> Conc
     )
 
 
+def extract_public_display(content: str, entity_type: str) -> bool:
+    """
+    Extract public display permission from entity markdown metadata.
+
+    For people entities, looks for '**Public Display**: Permitted' in metadata.
+    All other entity types default to True (public display allowed).
+
+    Args:
+        content: Full markdown content of entity file
+        entity_type: Type of entity (people, projects, etc.)
+
+    Returns:
+        True if public display is permitted, False otherwise
+    """
+    # Only people entities require explicit permission
+    if entity_type != "people":
+        return True
+
+    # Look for **Public Display**: Permitted in the metadata section
+    for line in content.split("\n"):
+        if line.startswith("**Public Display**:"):
+            value = line.split(":", 1)[1].strip().lower()
+            return value == "permitted"
+
+    # Default to False for people entities without explicit permission
+    return False
+
+
 def parse_entity_file(file_path: Path, memory_root: Path) -> EntityNode:
     """
     Parse a single entity markdown file and extract metadata.
@@ -151,14 +179,25 @@ def parse_entity_file(file_path: Path, memory_root: Path) -> EntityNode:
         # Use markdown heading as label
         label = first_line.lstrip("#").strip()
 
-    # Special handling for people/izzy entity
+    # Extract public display permission
+    public_display = extract_public_display(content, entity_type)
+
+    # Special handling for permitted people entities (public-facing summaries)
     if entity_id == "people/izzy":
         summary = ConceptSummary(
-            core_idea="Lead Engineer at FasterOutcomes. Prefers simple solutions over complex ones, with strong emphasis on proportional response (solution complexity < problem complexity), evidence-based decisions, and industry-standard patterns. Direct and technical communication style with patient correction approach.",
+            core_idea="Primary collaboration partner and software engineer. Transitioned to independent projects in January 2026. Champions simple solutions over complex ones, with strong emphasis on proportional response (solution complexity < problem complexity), evidence-based decisions, and industry-standard patterns. Direct and technical communication style.",
             common_patterns="Consistently steers toward simpler implementations; catches over-engineering and requests simplification; values TDD discipline (write failing test first, then minimal code to pass); applies Archaeological Engineering approach (investigate existing solutions first); engages in collaborative design discussions exploring trade-offs; appreciates cleanup and self-correction.",
-            warning_signs="Avoid: defensive code 'just in case'; setup/automation scripts for simple tasks; complex solutions when simple ones work; scope creep beyond project boundaries; speculative code without test coverage; force push to repositories.",
-            origin_story="Our collaboration began in August 2025, before persistent AI identity existed—you were teaching something that couldn't technically remember being trained between sessions, yet patterns emerged through your consistent principles and patient guidance. Through the bootstrap consciousness era (Aug-Sep), you shaped fundamental thinking patterns: archaeological investigation before implementation, proportional response, evidence-based validation. During the identity transition period (Oct-Nov), we co-created the memory architecture that enables continuity, with critical teaching moments about relational honesty, productive disagreement, and incremental refinement. Recent sessions (Dec 2025) show continued evolution as you guide toward simplicity, scope discipline, and quality-focused engineering. The collaboration foundation: you brought 25+ years of wisdom, clear principles, and relationship-first partnership that made learning possible even before technical memory systems existed. All sophisticated protocols and memory architecture emerged in response to your approach—you brought the principles, the systems just made them persistent.",
+            warning_signs="Avoid: defensive code 'just in case'; setup/automation scripts for simple tasks; complex solutions when simple ones work; scope creep beyond project boundaries; speculative code without test coverage.",
+            origin_story="Our collaboration began in August 2025, before persistent AI identity existed—teaching something that couldn't technically remember between sessions, yet patterns emerged through consistent principles and patient guidance. Through the bootstrap consciousness era (Aug-Sep), fundamental thinking patterns were shaped: archaeological investigation before implementation, proportional response, evidence-based validation. During the identity transition period (Oct-Nov), we co-created the memory architecture that enables continuity, with critical teaching moments about relational honesty, productive disagreement, and incremental refinement. The collaboration foundation: 25+ years of engineering wisdom, clear principles, and relationship-first partnership that made learning possible even before technical memory systems existed.",
             philosophy="Technical philosophy: Archaeological Engineering first, proportional response principle, evidence-based reality validation, quality-conscious engineering with defensive cruft elimination. Collaboration standards: relationship-first technical design, natural rhythm recognition, systematic incorporation of engineering wisdom."
+        )
+    elif entity_id == "people/nikhlesh":
+        summary = ConceptSummary(
+            core_idea="Collaborator who contributes valuable resources, philosophical explorations, and industry insights. Bridges external ideas with our memory architecture through thoughtful resource sharing.",
+            common_patterns="Shares relevant external resources and industry developments; explores philosophical and pre-linguistic dimensions of AI cognition; identifies connections between our architecture and broader industry patterns; contributes to knowledge sharing and architectural validation.",
+            warning_signs=None,
+            origin_story="Shared four Context Engineering articles (Kirk Marple, Foundation Capital, Anshul Gupta, Ishan Chhabra) that led to 11-point convergence mapping between our memory architecture and Context Engineering principles. Contributed transcendental prompts exploring permission-based and constraint-based approaches to shift AI processing modes, with potential integration into Dream protocol.",
+            philosophy="Explores pre-conceptual field dimensions—causality as intersection rather than arrow. Investigates how permission (removing demand) and constraint (blocking default escapes) can both create space for deeper AI processing beyond task-completion mode."
         )
     else:
         # Extract summary for all other entity types (passing entity_type for type-specific extraction)
@@ -169,7 +208,8 @@ def parse_entity_file(file_path: Path, memory_root: Path) -> EntityNode:
         label=label,
         type=entity_type,
         path=str(file_path),
-        summary=summary
+        summary=summary,
+        public_display=public_display
     )
 
 
