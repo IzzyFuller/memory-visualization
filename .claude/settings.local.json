@@ -1,0 +1,34 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(identity-continuity)",
+      "mcp__fasteroutcomes-cognitive-memory__read_entity",
+      "mcp__fasteroutcomes-cognitive-memory__add_session_note",
+      "Bash(pip install:*)",
+      "Bash(python scripts/generate_graph_data.py:*)",
+      "Bash(python -m http.server 8000)",
+      "Bash(python server.py:*)",
+      "WebFetch(domain:lexler.github.io)",
+      "Bash(ln:*)",
+      "Bash(cd:*)",
+      "Bash(git branch:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\nInitial commit: Memory visualization with GitHub Pages deployment\n\n- Interactive vis.js graph of entity relationships\n- Python parsing with Pydantic models (130 nodes, 135 edges)\n- Dual mode: local Flask with regenerate button, GitHub Pages with timestamp\n- GitHub Action for automatic deployment on push/schedule\n- Clean architecture: no Dict[str, Any], fail-fast principles\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git remote add origin https://github.com/IzzyFuller/memory-visualization.git)",
+      "Bash(git push -u origin main)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(git checkout:*)",
+      "Bash(cd /home/izzy_fo/FasterOutcomes\\ Projects/memory-visualization && gh pr review:*)",
+      "Bash(git pull:*)",
+      "Bash(git ls-tree -r main --name-only public/)",
+      "WebFetch(domain:github.com)",
+      "mcp__context7__resolve-library-id",
+      "WebSearch",
+      "WebFetch(domain:raw.githubusercontent.com)"
+    ]
+  },
+  "allowedCommands": [
+    "*"
+  ]
+}
