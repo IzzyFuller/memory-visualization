@@ -17,6 +17,14 @@ from models import GraphData
 from parse_entities import discover_entity_files, parse_entity_file, extract_cross_references
 
 
+# Entities excluded from public visualization
+# - organizations/faster_outcomes: Former employer, direct reference excluded
+# - People without consent are handled via public_display flag in parse_entities.py
+EXCLUDED_ENTITIES = {
+    "organizations/faster_outcomes",
+}
+
+
 def main():
     """Generate graph data JSON from entity memory."""
 
@@ -49,7 +57,11 @@ def main():
     # Filter: Keep only entities permitted for public display
     # People entities require explicit **Public Display**: Permitted in their markdown
     nodes = [node for node in nodes if node.public_display]
-    print(f"After filtering: {len(nodes)} entities (removed non-public entities)")
+    print(f"After public_display filter: {len(nodes)} entities")
+
+    # Filter: Remove explicitly excluded entities
+    nodes = [node for node in nodes if node.id not in EXCLUDED_ENTITIES]
+    print(f"After exclusion filter: {len(nodes)} entities")
 
     # Create entity ID set for cross-reference validation
     entity_ids = {node.id for node in nodes}

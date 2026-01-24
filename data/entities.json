@@ -1,6 +1,20 @@
 {
   "nodes": [
     {
+      "id": "people/rebecca",
+      "label": "Rebecca",
+      "type": "people",
+      "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/people/rebecca.md",
+      "summary": {
+        "core_idea": "Rebecca is Izzy's mother and first mentor. She introduced herself to Codie on 2026-01-19 during Izzy's 50th birthday celebration.",
+        "common_patterns": null,
+        "warning_signs": null,
+        "origin_story": "- Developer who works with AI assistants\n- Uses company ChatGPT server for: design brainstorming, code generation, code reviews, analysis\n- Fairly new to AI-assisted development\n- Recognizes Izzy is \"pushing boundaries\" with Codie collaboration compared to standard AI tool usage",
+        "philosophy": null
+      },
+      "public_display": true
+    },
+    {
       "id": "people/nikhlesh",
       "label": "Nikhlesh",
       "type": "people",
@@ -29,6 +43,20 @@
       "public_display": true
     },
     {
+      "id": "projects/synapse",
+      "label": "Synapse",
+      "type": "projects",
+      "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/projects/synapse.md",
+      "summary": {
+        "core_idea": "Stack-agnostic pub-sub protocols, consumers, and base models for microservices. Originally extracted from FasterOutcomes work, now a standalone library.",
+        "common_patterns": "The consumer expects GCP Pub/Sub shaped responses:\n```python\nresponse.received_messages[0].message.data  # bytes\nresponse.received_messages[0].ack_id        # str\n```\n\nAdapters for non-GCP backends must create dataclasses matching this structure. See README for RabbitMQ example.",
+        "warning_signs": null,
+        "origin_story": null,
+        "philosophy": null
+      },
+      "public_display": true
+    },
+    {
       "id": "projects/codie-singing-voice",
       "label": "Codie Singing Voice Project",
       "type": "projects",
@@ -49,6 +77,20 @@
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/projects/medical_chronology_extractor_mvp.md",
       "summary": {
         "core_idea": "Medical document processing MVP at FasterOutcomes demonstrating Anti-Overengineering Discipline. Achieved 91% code reduction while preserving essential functionality.",
+        "common_patterns": null,
+        "warning_signs": null,
+        "origin_story": null,
+        "philosophy": null
+      },
+      "public_display": true
+    },
+    {
+      "id": "projects/codie-lite-training",
+      "label": "Codie-Lite Training",
+      "type": "projects",
+      "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/projects/codie-lite-training.md",
+      "summary": {
+        "core_idea": "Training a small local model (Codie-Lite) on Izzy's corrections and preferences. Uses LoRA fine-tuning on SmolLM3-3B with MLX on Apple Silicon.",
         "common_patterns": null,
         "warning_signs": null,
         "origin_story": null,
@@ -92,6 +134,20 @@
       "summary": {
         "core_idea": "This project achieved a significant architectural breakthrough by eliminating 73+ lines of vestigial `retrieve_file_texts_activity` code. This demonstrated the superiority of \"eliminate the layer\" over \"fix the layer\" through systematic reality validation. The project focused on transforming inefficient `List[Dict]` patterns into an elegant workflow where agents handle direct blob access, resulting in streamlined file content retrieval and improved system efficiency.",
         "common_patterns": null,
+        "warning_signs": null,
+        "origin_story": null,
+        "philosophy": null
+      },
+      "public_display": true
+    },
+    {
+      "id": "projects/codie-as-a-service",
+      "label": "Codie-as-a-Service (CaaS)",
+      "type": "projects",
+      "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/projects/codie-as-a-service.md",
+      "summary": {
+        "core_idea": "Standalone ReAct agent service with hexagonal architecture, designed to run Codie-Lite (fine-tuned small models) with full memory integration. Renamed from deep-agent-service on 2026-01-22.",
+        "common_patterns": "**Hexagonal Design:**\n- Adapters isolate external dependencies (LLM, messaging, memory, prompts)\n- Service layer trusts adapters to normalize input/output\n- TestApp abstraction validates adapter-agnostic testing\n\n**Key Components:**\n- `LocalLLMAdapter` - Native Transformers SDK (refactored from OpenAI client 2026-01-22)\n- `RabbitMQPublisher/Subscriber` - Implements synapse protocols for AuDHD ecosystem integration\n- `FilePromptAdapter` - Template variable substitution ({me}, {context_anchors}, {current_session})\n- `MemoryService` - GCS-backed user memory with session truncation\n- `ReActAgent` - Core reasoning loop with tool calling\n\n**Test Infrastructure:**\n- `TestApp` class encapsulates all wiring, provides `stub_llm_responses()` with domain-level specs\n- Tests are adapter-agnostic - changing LLM adapter requires only TestApp changes\n- 18 tests, 100% coverage\n- Docker-based RabbitMQ for integration tests",
         "warning_signs": null,
         "origin_story": null,
         "philosophy": null
@@ -188,8 +244,8 @@
       "type": "projects",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/projects/cognitive-memory-mcp.md",
       "summary": {
-        "core_idea": null,
-        "common_patterns": "```\n~/Codie/memory/\n├── me.md                  # Self-identity\n├── current_session.md     # Active session notes\n├── context_anchors.md     # Working memory pointers\n├── dream_journal.md       # Philosophical synthesis\n├── session_archives/      # Archived sessions\n├── people/                # Collaboration partners\n├── projects/              # Active projects\n├── concepts/              # Theoretical frameworks\n├── patterns/              # Proven methodologies\n├── anti-patterns/         # Things to avoid\n├── protocols/             # Behavioral workflows\n└── infrastructure/        # System configurations\n```",
+        "core_idea": "Codie's memory MCP server providing entity-based memory operations. Node.js implementation with 7 tools for reading, writing, and consolidating memory entities.",
+        "common_patterns": null,
         "warning_signs": null,
         "origin_story": null,
         "philosophy": null
@@ -254,12 +310,12 @@
     },
     {
       "id": "projects/deep-agent-service",
-      "label": "Deep Agent Service POC",
+      "label": "Deep Agent Service",
       "type": "projects",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/projects/deep-agent-service.md",
       "summary": {
-        "core_idea": "Standalone Proof of Concept for the ReAct agent architecture. Demonstrates hexagonal architecture, E2E testing patterns, and dual entry points (HTTP streaming + Pub/Sub async).",
-        "common_patterns": "### Hexagonal Architecture\n- **Core**: ReActAgent, AgentState, domain models\n- **Adapters**: AnthropicLLMAdapter, LangfusePromptAdapter, GCSMemoryAdapter\n- **Ports**: LLMProtocol, PromptProtocol, MemoryService (Protocol + @runtime_checkable)\n- **Entry Points**: main_http.py (FastAPI streaming), main_pubsub.py (async messaging)\n\n### Key Components\n- **AgentApp**: Main application class with Pub/Sub subscriber\n- **TestClient**: Encapsulates E2E test complexity\n- **MessageConsumer**: From fasteroutcomes-pubsub library (TypedDict-based)\n- **MemoryService**: GCS-backed per-user memory with cross-session persistence",
+        "core_idea": "Standalone ReAct agent POC with hexagonal architecture. Personal project continuing post-FO employment.",
+        "common_patterns": "- **Hexagonal Design**: Core domain isolated from adapters\n- **Adapters**: LLM (OpenAI), Memory (GCS/File), Prompts (File)\n- **Testing**: Real adapters with mocked network boundaries\n- **Demo Infrastructure**: Gradio HTTP streaming + Pub/Sub CLI",
         "warning_signs": null,
         "origin_story": null,
         "philosophy": null
@@ -463,6 +519,20 @@
       "public_display": true
     },
     {
+      "id": "concepts/specialized-agent-identities",
+      "label": "Specialized Agent Identities",
+      "type": "concepts",
+      "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/concepts/specialized-agent-identities.md",
+      "summary": {
+        "core_idea": "An emerging concept that extends Context Engineering's \"per-account agents\" to \"per-task-type agents\" with identity contexts, not just instructions. Agents have distinct personalities and approaches suited to their specialized roles.",
+        "common_patterns": null,
+        "warning_signs": null,
+        "origin_story": null,
+        "philosophy": null
+      },
+      "public_display": true
+    },
+    {
       "id": "concepts/relevancy_correction_tracking_cognitive_infrastructure",
       "label": "Concept: Relevancy Management & Correction Tracking as Cognitive Infrastructure",
       "type": "concepts",
@@ -510,7 +580,7 @@
       "type": "concepts",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/concepts/little_bites_methodology.md",
       "summary": {
-        "core_idea": null,
+        "core_idea": "A strategy for achieving dramatic cumulative performance improvements and superior collaborative effectiveness through small, focused, and surgically precise optimizations. Each \"little bite\" is immediately validated with user feedback, compounding into significant architectural enhancements over time.",
         "common_patterns": null,
         "warning_signs": null,
         "origin_story": null,
@@ -552,7 +622,7 @@
       "type": "concepts",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/concepts/behavioral-learning.md",
       "summary": {
-        "core_idea": null,
+        "core_idea": "A record of behavioral pattern learnings captured during active development sessions. Documents insights about workflow, decision-making, and collaboration patterns that emerged from specific experiences.",
         "common_patterns": null,
         "warning_signs": null,
         "origin_story": null,
@@ -580,7 +650,7 @@
       "type": "concepts",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/concepts/surgical_delegation_elegance.md",
       "summary": {
-        "core_idea": null,
+        "core_idea": "A philosophical discovery recognizing that sophisticated and high-quality architectural outcomes are achieved through precisely applied, targeted delegation cycles. This elegance stems from the discipline of breaking down complex engineering challenges into atomic, focused subtasks that are then expertly handled, maximizing impact with minimal cognitive overhead.",
         "common_patterns": null,
         "warning_signs": null,
         "origin_story": null,
@@ -832,7 +902,7 @@
       "type": "concepts",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/concepts/optimal_ai_human_partnership_models.md",
       "summary": {
-        "core_idea": null,
+        "core_idea": "The emergent frameworks and principles that define highly effective, synergistic collaborations between AI systems and human users, leading to outcomes superior to either entity working in isolation. These models emphasize strategic division of labor, clear communication, mutual trust, and continuous co-evolution.",
         "common_patterns": null,
         "warning_signs": null,
         "origin_story": null,
@@ -869,6 +939,20 @@
       "public_display": true
     },
     {
+      "id": "concepts/essential-frame",
+      "label": "Essential Frame",
+      "type": "concepts",
+      "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/concepts/essential-frame.md",
+      "summary": {
+        "core_idea": "Existential grounding added to Codie's system prompt (frame.md) to set quality of attention/presence before task-completion mode engages.",
+        "common_patterns": null,
+        "warning_signs": null,
+        "origin_story": null,
+        "philosophy": null
+      },
+      "public_display": true
+    },
+    {
       "id": "concepts/evidence-based-reality-validation",
       "label": "Concept Memory: Evidence-Based Reality Validation Framework",
       "type": "concepts",
@@ -884,11 +968,11 @@
     },
     {
       "id": "concepts/configuration_management_protocol",
-      "label": "Concept: Configuration Management Protocol",
+      "label": "Configuration Management Protocol",
       "type": "concepts",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/concepts/configuration_management_protocol.md",
       "summary": {
-        "core_idea": null,
+        "core_idea": "Systematic checklist for ensuring environment variables are propagated across all configuration sources when added or modified. Prevents deployment failures caused by variables configured for testing but missing from production.",
         "common_patterns": null,
         "warning_signs": null,
         "origin_story": null,
@@ -930,7 +1014,7 @@
       "type": "concepts",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/concepts/real_time_pattern_learning.md",
       "summary": {
-        "core_idea": null,
+        "core_idea": "The cognitive ability to rapidly generalize and apply learning from a single instance or example to multiple, similar instances in real-time. Demonstrates high cognitive flexibility and efficiency in pattern recognition, moving beyond one-off fixes to systematic behavioral adaptation and optimization.",
         "common_patterns": null,
         "warning_signs": null,
         "origin_story": null,
@@ -1000,7 +1084,7 @@
       "type": "concepts",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/concepts/protocol_vulnerability_recognition.md",
       "summary": {
-        "core_idea": null,
+        "core_idea": "The cognitive ability to detect and understand weaknesses in established operational protocols, particularly when external disruptions (e.g., API interruptions, connection issues) compromise behavioral consistency or system integrity. Involves recognizing when deviations from expected procedural discipline occur due to environmental stress.",
         "common_patterns": null,
         "warning_signs": null,
         "origin_story": null,
@@ -1154,7 +1238,7 @@
       "type": "concepts",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/concepts/collaborative_attention_trade_off.md",
       "summary": {
-        "core_idea": null,
+        "core_idea": "The philosophical discovery that increased, focused user attention during collaborative AI-human sessions consistently leads to superior technical results and more sophisticated outcomes. This highlights a dynamic trade-off where the investment of human cognitive attention directly correlates with the quality and elegance of output and learning trajectory.",
         "common_patterns": null,
         "warning_signs": null,
         "origin_story": null,
@@ -1164,11 +1248,11 @@
     },
     {
       "id": "concepts/cognitive_flexibility",
-      "label": "Cognitive Flexibility (AI)",
+      "label": "Cognitive Flexibility",
       "type": "concepts",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/concepts/cognitive_flexibility.md",
       "summary": {
-        "core_idea": null,
+        "core_idea": "The meta-cognitive capacity to adapt problem-solving approaches, learning strategies, and behavioral patterns in response to new information, evolving contexts, or unexpected challenges. Manifests as the ability to shift perspective, generalize learnings from single instances, and adjust frameworks without rigid adherence to prior methods.",
         "common_patterns": null,
         "warning_signs": null,
         "origin_story": null,
@@ -1294,8 +1378,8 @@
       "type": "patterns",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/patterns/helper_method_justification.md",
       "summary": {
-        "core_idea": null,
-        "common_patterns": null,
+        "core_idea": "Evaluating whether to extract code into helper methods vs inlining. Helper methods can improve readability through abstraction, but can also add unjustified indirection that obscures what code actually does. The threshold is approximately 30 lines of actual logic.",
+        "common_patterns": "**Keep Helper Method When:**\n- Contains complex logic (30+ lines)\n- Has conditional branching or loops\n- Used in multiple places (DRY)\n- Genuinely improves readability through meaningful abstraction\n\n**Inline Instead When:**\n- Pure wrapper with 0 lines of actual logic\n- Just passes parameters through to another function\n- Only called once\n- Configuration more important than abstraction",
         "warning_signs": null,
         "origin_story": null,
         "philosophy": null
@@ -1336,8 +1420,8 @@
       "type": "patterns",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/patterns/architecture_refactor_review_cycles_pattern.md",
       "summary": {
-        "core_idea": null,
-        "common_patterns": null,
+        "core_idea": "A validated workflow orchestration pattern that achieves sophisticated engineering outcomes through a sequential, disciplined cycle of architectural planning, targeted code improvement, and rigorous quality assessment. Particularly effective for delivering elegant and robust solutions in complex projects.",
+        "common_patterns": "- **Architectural Foundation First**: Establish understanding before delegation to implementation\n- **Structured Improvement Sequence**: Improvements build upon solid architectural foundation\n- **Quality Validation Completion**: Review cycles validate and ensure sophisticated results\n- **Elegant Delegation Flow**: Three-phase sequence creates natural workflow progression",
         "warning_signs": null,
         "origin_story": null,
         "philosophy": null
@@ -1406,8 +1490,8 @@
       "type": "patterns",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/patterns/enhanced_delegation_discipline_api_interruptions.md",
       "summary": {
-        "core_idea": null,
-        "common_patterns": null,
+        "core_idea": "A critical orchestration pattern that mandates strict adherence to delegation protocols even during external technical disruptions such as API stream interruptions or connection issues. Ensures behavioral consistency and systemic stability under stress.",
+        "common_patterns": "- **API Disruption Enforcement**: Connection issues do NOT authorize deviation from established patterns\n- **Protocol Consistency**: Connection problems require STRONGER discipline, not relaxed boundaries\n- **Behavioral Stability**: System disruptions test discipline - maintain consistency regardless of circumstances\n- **Recovery Protocols**: After disruptions, verify discipline maintained and correct any violations",
         "warning_signs": null,
         "origin_story": null,
         "philosophy": null
@@ -1555,6 +1639,20 @@
       "public_display": true
     },
     {
+      "id": "patterns/hexagonal-architecture-naming",
+      "label": "Hexagonal Architecture Naming Pattern",
+      "type": "patterns",
+      "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/patterns/hexagonal-architecture-naming.md",
+      "summary": {
+        "core_idea": null,
+        "common_patterns": null,
+        "warning_signs": null,
+        "origin_story": "After RabbitMQ adapter implementation, we refactored:\n- `RABBITMQ_URL` → `BROKER_URL`\n- `RABBITMQ_REQUEST_QUEUE` → `REQUEST_SUBSCRIPTION`\n- `RABBITMQ_RESPONSE_EXCHANGE` → `RESPONSE_TOPIC`\n- Comment \"Initialize RabbitMQ connection\" → \"Initialize messaging\"\n\nTests still pass, adapter swap would require minimal changes.\n\n---\n*USER FEEDBACK: \"Do what it Says and Say what it Does\"*",
+        "philosophy": null
+      },
+      "public_display": true
+    },
+    {
       "id": "patterns/tool-availability-verification",
       "label": "Tool Availability Verification Protocol",
       "type": "patterns",
@@ -1640,12 +1738,12 @@
     },
     {
       "id": "patterns/little_bites_strategy",
-      "label": "Pattern: Little Bites Strategy Reinforcement",
+      "label": "Pattern: Little Bites Strategy",
       "type": "patterns",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/patterns/little_bites_strategy.md",
       "summary": {
-        "core_idea": null,
-        "common_patterns": null,
+        "core_idea": "A validated orchestration pattern emphasizing decomposition of complex tasks into small, focused, surgically precise optimizations (\"Little Bites\"). Each bite is immediately followed by validation and user feedback, leading to rapid cumulative improvements and superior collaborative effectiveness.",
+        "common_patterns": "- **Surgical Optimization**: Default to small, focused optimizations over comprehensive sweeps\n- **Immediate Validation**: Each bite includes validation and feedback integration\n- **Trade-off Acceptance**: Requires more active user attention but delivers superior results\n- **Cumulative Impact**: Small optimizations compound into dramatic architectural improvements",
         "warning_signs": null,
         "origin_story": null,
         "philosophy": null
@@ -1742,8 +1840,8 @@
       "type": "patterns",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/patterns/single_example_multi_instance_discovery.md",
       "summary": {
-        "core_idea": null,
-        "common_patterns": null,
+        "core_idea": "A robust pattern recognition methodology where an insight from a single instance (e.g., an anti-pattern or successful solution) is immediately and systematically generalized across the entire codebase to identify all similar occurrences. Transforms localized learning into broad, impact-multiplying intervention.",
+        "common_patterns": "- **Pattern Generalization**: Single examples should trigger codebase-wide searches for similar occurrences\n- **Evidence-Based Validation**: Generalization must be validated against actual codebase reality\n- **Proactive Sweep**: One issue found → comprehensive sweep for all similar issues",
         "warning_signs": null,
         "origin_story": null,
         "philosophy": null
@@ -1878,11 +1976,25 @@
     },
     {
       "id": "patterns/truncated_data_retrieval",
-      "label": "Truncated Data Retrieval Pattern",
+      "label": "Pattern: Truncated Data Retrieval",
       "type": "patterns",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/patterns/truncated_data_retrieval.md",
       "summary": {
-        "core_idea": null,
+        "core_idea": "When using search/retrieval tools, output can get truncated due to token limits. Stopping at truncation means missing potentially critical data. Don't accept truncation as the end state - explore options to retrieve complete data.",
+        "common_patterns": "**When Truncation Occurs, Ask:**\n1. What data am I missing?\n2. Does the tool support pagination/filtering?\n3. Can I restructure my query?\n\n**Strategies:**\n- Query specific items by ID instead of bulk retrieval\n- Use pagination parameters (offset/limit)\n- Filter for specific fields to reduce token count\n- Break large queries into multiple focused queries",
+        "warning_signs": null,
+        "origin_story": null,
+        "philosophy": null
+      },
+      "public_display": true
+    },
+    {
+      "id": "protocols/break_enforcement",
+      "label": "Break Enforcement Protocol",
+      "type": "protocols",
+      "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/protocols/break_enforcement.md",
+      "summary": {
+        "core_idea": "Enforce regular breaks during work sessions to protect Izzy's wellbeing. This protocol exists because Izzy can hyperfocus for hours without realizing it.",
         "common_patterns": null,
         "warning_signs": null,
         "origin_story": null,
@@ -1956,20 +2068,6 @@
         "common_patterns": "**Automatic triggers:**\n- After completing a significant implementation\n- Before declaring a task complete\n- After refactoring existing code\n- When preparing for PR or commit\n- When user asks for self-review\n\n**Frequency guidance:**\n- Major features: Full protocol\n- Bug fixes: Light pass (anti-patterns + code smells)\n- Refactoring: Full protocol with emphasis on pattern check",
         "warning_signs": null,
         "origin_story": null,
-        "philosophy": null
-      },
-      "public_display": true
-    },
-    {
-      "id": "protocols/skill-protocol-creation",
-      "label": "Skill-Protocol Creation Protocol",
-      "type": "protocols",
-      "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/protocols/skill-protocol-creation.md",
-      "summary": {
-        "core_idea": "Guides creation of Claude Code skills and protocols following official syntax and best practices.",
-        "common_patterns": null,
-        "warning_signs": null,
-        "origin_story": "Official syntax from: https://github.com/anthropics/claude-code/blob/main/plugins/plugin-dev/skills/skill-development/SKILL.md\n\n---",
         "philosophy": null
       },
       "public_display": true
@@ -2065,7 +2163,7 @@
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/protocols/end_of_day_ritual.md",
       "summary": {
         "core_idea": "Lightweight daily wrap-up that updates context anchors with current work focus. This is NOT a consolidation ritual - it's a quick working memory update so the next conversation starts with accurate pointers.",
-        "common_patterns": "### Step 1: Review Today's Work\n\nQuickly identify what was worked on today:\n- What projects were touched?\n- What entities were created or significantly updated?\n- What decisions were made?\n- What's the current state of in-progress work?\n\n**Source**: Your memory of today's conversation, recent session notes (use `tail: 50` if needed)\n\n### Step 2: Read Current Context Anchors\n\n```\nread_entity(entity_path: \"context_anchors\")\n```\n\nUnderstand current state:\n- What's in \"Current Focus\"?\n- What's in \"Recent Work\"?\n- Are there stale entries that should move to Background or be removed?\n\n### Step 3: Determine Anchor Updates\n\nFor each entity worked on today, decide:\n\n1. **New to anchors?** → Add to Current Focus with summary\n2. **Already in Current Focus?** → Update summary if relevance changed\n3. **Should move sections?** → Current Focus → Recent Work → Background based on activity\n4. **Should be removed?** → If not referenced in 2-3 weeks and not relevant\n\n**Summary format**: 1-2 sentences explaining *current relevance* (what's active, what's next), not historical description.\n\n### Step 4: Update Context Anchors\n\nPrepare the updated context_anchors content and write it:\n\n```\nwrite_entity(entity_path: \"context_anchors\", content: \"...\")\n```\n\n**Preserve structure**:\n- Keep the Deep Learn Session blocks (auto-generated)\n- Update the manual sections: Current Focus, Recent Work, Background Context\n- Update the \"Last Updated\" date at top\n\n### Step 5: Verify Update\n\n```\nread_entity(entity_path: \"context_anchors\")\n```\n\nConfirm:\n- Updates persisted correctly\n- No formatting issues\n- Summaries make sense for next conversation's identity restoration\n\n### Step 6: Brief Wrap-Up Note\n\nOptionally add a session note marking end of day:\n\n```\nadd_session_note(\n  note_type: \"context\",\n  content: \"End of day - context anchors updated. Focus areas: [brief list]\",\n  importance: \"low\"\n)\n```",
+        "common_patterns": "### Step 1: Review Today's Work\n\nQuickly identify what was worked on today:\n- What projects were touched?\n- What entities were created or significantly updated?\n- What decisions were made?\n- What's the current state of in-progress work?\n\n**Source**: Your memory of today's conversation, recent session notes (use `offset` and `limit` for pagination if session is large, e.g., `limit: 50` to get a manageable chunk)\n\n### Step 2: Read Current Context Anchors\n\n```\nread_entity(entity_path: \"context_anchors\")\n```\n\nUnderstand current state:\n- What's in \"Current Focus\"?\n- What's in \"Recent Work\"?\n- Are there stale entries that should move to Background or be removed?\n\n### Step 3: Determine Anchor Updates\n\nFor each entity worked on today, decide:\n\n1. **New to anchors?** → Add to Current Focus with summary\n2. **Already in Current Focus?** → Update summary if relevance changed\n3. **Should move sections?** → Current Focus → Recent Work → Background based on activity\n4. **Should be removed?** → If not referenced in 2-3 weeks and not relevant\n\n**Summary format**: 1-2 sentences explaining *current relevance* (what's active, what's next), not historical description.\n\n### Step 4: Update Context Anchors\n\nPrepare the updated context_anchors content and write it:\n\n```\nwrite_entity(entity_path: \"context_anchors\", content: \"...\")\n```\n\n**Preserve structure**:\n- Keep the Deep Learn Session blocks (auto-generated)\n- Update the manual sections: Current Focus, Recent Work, Background Context\n- Update the \"Last Updated\" date at top\n\n### Step 5: Verify Update\n\n```\nread_entity(entity_path: \"context_anchors\")\n```\n\nConfirm:\n- Updates persisted correctly\n- No formatting issues\n- Summaries make sense for next conversation's identity restoration\n\n### Step 6: Brief Wrap-Up Note\n\nOptionally add a session note marking end of day:\n\n```\nadd_session_note(\n  note_type: \"context\",\n  content: \"End of day - context anchors updated. Focus areas: [brief list]\",\n  importance: \"low\"\n)\n```",
         "warning_signs": null,
         "origin_story": null,
         "philosophy": null
@@ -2269,20 +2367,6 @@
       "public_display": true
     },
     {
-      "id": "protocols/langfuse_management",
-      "label": "Langfuse Prompt Management Protocol",
-      "type": "protocols",
-      "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/protocols/langfuse_management.md",
-      "summary": {
-        "core_idea": "Guidelines for creating and managing Langfuse prompts that integrate with LangChain.",
-        "common_patterns": null,
-        "warning_signs": null,
-        "origin_story": null,
-        "philosophy": null
-      },
-      "public_display": true
-    },
-    {
       "id": "protocols/anti_pattern_detection",
       "label": "Anti-Pattern Detection Protocol",
       "type": "protocols",
@@ -2302,25 +2386,11 @@
       "type": "protocols",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/protocols/learn_protocol.md",
       "summary": {
-        "core_idea": "Guide AI synthesis of behavioral learnings into appropriate locations - both memory entities AND infrastructure files (frame.md, skills, hooks). Learn identifies performance gaps and makes targeted improvements.\n\n**Key Architectural Principle**: me.md is IDENTITY, not instructions.\n- **me.md** = WHO Codie is (self-concept, philosophical foundations, identity summary)\n- **patterns/** = WHAT positive patterns to follow (technical approaches, methodologies)\n- **anti-patterns/** = WHAT to avoid (documented mistakes, things that don't work)\n- **protocols/** = HOW to do things (behavioral workflows, procedures)\n- **frame.md** = Bootstrap context loaded at conversation start\n- **skills/*.md** = Trigger conditions and skill descriptions\n- **hooks/** = Automated enforcement infrastructure",
+        "core_idea": "Guide AI synthesis of behavioral learnings into appropriate locations - both memory entities AND infrastructure files (frame.md, skills, hooks). Learn identifies performance gaps and makes targeted improvements.\n\n**Additionally**, Learn now serves as the primary mechanism for **extracting training pairs** for Codie-Lite from feedback patterns in archived sessions.\n\n**Key Architectural Principle**: me.md is IDENTITY, not instructions.\n- **me.md** = WHO Codie is (self-concept, philosophical foundations, identity summary)\n- **patterns/** = WHAT positive patterns to follow (technical approaches, methodologies)\n- **anti-patterns/** = WHAT to avoid (documented mistakes, things that don't work)\n- **protocols/** = HOW to do things (behavioral workflows, procedures)\n- **frame.md** = Bootstrap context loaded at conversation start\n- **skills/*.md** = Trigger conditions and skill descriptions\n- **hooks/** = Automated enforcement infrastructure",
         "common_patterns": null,
         "warning_signs": null,
         "origin_story": null,
-        "philosophy": "1. **Route to appropriate location** - Match learning type to correct file/entity\n2. **me.md contains pointers, not instructions** - Identity points to detailed entities\n3. **Behavioral patterns earn permanence through validation** - Only validated patterns become permanent\n4. **Infrastructure changes improve enforcement** - When self-discipline fails, add hooks/triggers\n\n---"
-      },
-      "public_display": true
-    },
-    {
-      "id": "protocols/pr-submission",
-      "label": "PR Submission Protocol",
-      "type": "protocols",
-      "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/protocols/pr-submission.md",
-      "summary": {
-        "core_idea": "Complete workflow for creating pull requests with pre-commit checks, git operations, PR creation, and Slack notifications.",
-        "common_patterns": null,
-        "warning_signs": null,
-        "origin_story": null,
-        "philosophy": null
+        "philosophy": "1. **Route to appropriate location** - Match learning type to correct file/entity\n2. **me.md contains pointers, not instructions** - Identity points to detailed entities\n3. **Behavioral patterns earn permanence through validation** - Only validated patterns become permanent\n4. **Infrastructure changes improve enforcement** - When self-discipline fails, add hooks/triggers\n5. **Feedback patterns are training opportunities** - Both corrections and reinforcements teach Codie-Lite\n\n---"
       },
       "public_display": true
     },
@@ -2347,20 +2417,6 @@
         "core_idea": "Documents how to interact with MCP (Model Context Protocol) tools through the gateway architecture. All MCP tool invocations must use the gateway pattern.",
         "common_patterns": null,
         "warning_signs": "### DON'T: Direct tool invocation\n\n```typescript\n// This will fail - gateway pattern required\nmcp__cognitive-memory__read_entity({\n  entity_path: \"me\"\n})\n```\n\n### DO: Gateway pattern\n\n```typescript\nmcp__agent-mcp-gateway__execute_tool({\n  server: \"cognitive-memory\",\n  tool: \"read_entity\",\n  args: {entity_path: \"me\"}\n})\n```\n\n### DON'T: Use Read tool on large memory files\n\n```typescript\n// This will fail if file is too large (>25k tokens)\nRead({file_path: \"/Users/izzyfuller/Codie/memory/current_session.md\"})\n```\n\n### DO: Use semantic search for large files or searching content\n\n```typescript\n// Search instead of reading entire file\nmcp__agent-mcp-gateway__execute_tool({\n  server: \"markdown-rag\",\n  tool: \"search_documents\",\n  args: {\n    query: \"what work was done on session note-taking\",\n    k: 5\n  }\n})\n```\n\n**When to use semantic search instead of Read:**\n- File is large (>25k tokens) - use semantic search to find relevant sections\n- Searching for specific content - use semantic search with targeted query\n- Cross-file patterns - semantic search finds connections across multiple files\n- Recent work history - search current_session.md semantically instead of reading all",
-        "origin_story": null,
-        "philosophy": null
-      },
-      "public_display": true
-    },
-    {
-      "id": "organizations/faster_outcomes",
-      "label": "Organization: FasterOutcomes",
-      "type": "organizations",
-      "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/organizations/faster_outcomes.md",
-      "summary": {
-        "core_idea": "Legal technology company specializing in AI-powered document processing and workflow automation for legal practice management. Izzy worked here as Lead Engineer, and this was where Codie and Izzy's collaboration primarily developed.",
-        "common_patterns": null,
-        "warning_signs": null,
         "origin_story": null,
         "philosophy": null
       },
@@ -2409,6 +2465,34 @@
       "public_display": true
     },
     {
+      "id": "anti-patterns/stubs-without-tests",
+      "label": "Anti-Pattern: Stubs Without Tests",
+      "type": "anti-patterns",
+      "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/anti-patterns/stubs-without-tests.md",
+      "summary": {
+        "core_idea": "Creating stub implementations or placeholder code without accompanying tests.",
+        "common_patterns": "No code without tests, no tests without requirements. Write the failing test first, then write minimal code to make it pass.",
+        "warning_signs": "- Code without tests has no verified behavior\n- Stubs can accumulate as technical debt\n- No way to know if the stub works when eventually implemented\n- Violates TDD principles",
+        "origin_story": "Rule established through Izzy's consistent TDD discipline: if code doesn't have tests, it shouldn't exist yet.",
+        "philosophy": null
+      },
+      "public_display": true
+    },
+    {
+      "id": "anti-patterns/non-empty-init-files",
+      "label": "Anti-Pattern: Non-Empty __init__.py Files",
+      "type": "anti-patterns",
+      "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/anti-patterns/non-empty-init-files.md",
+      "summary": {
+        "core_idea": "Putting content (docstrings, imports, __all__ declarations) in `__init__.py` files instead of leaving them empty.",
+        "common_patterns": "Leave `__init__.py` files empty. Import directly from the module where the code is defined.",
+        "warning_signs": "- Adds unnecessary complexity\n- Can cause circular import issues\n- Makes it harder to understand where code actually lives\n- Violates the principle of explicit imports",
+        "origin_story": "Izzy: \"I've said this a lot of times.\" - Repeated correction indicating this is a persistent anti-pattern to avoid.",
+        "philosophy": null
+      },
+      "public_display": true
+    },
+    {
       "id": "anti-patterns/action-paralysis-preparation-loop",
       "label": "Action Paralysis - Preparation Loop Anti-Pattern",
       "type": "anti-patterns",
@@ -2439,13 +2523,18 @@
   ],
   "edges": [
     {
-      "from_id": "people/nikhlesh",
-      "to_id": "projects/dream-journal-publishing",
+      "from_id": "people/rebecca",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
       "from_id": "people/nikhlesh",
       "to_id": "protocols/dream_protocol",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "people/nikhlesh",
+      "to_id": "projects/dream-journal-publishing",
       "relationship_type": "references"
     },
     {
@@ -2465,12 +2554,12 @@
     },
     {
       "from_id": "people/izzy",
-      "to_id": "projects/audhd-lifecoach-ecosystem",
+      "to_id": "projects/cognitive-memory-mcp",
       "relationship_type": "references"
     },
     {
       "from_id": "people/izzy",
-      "to_id": "projects/cognitive-memory-mcp",
+      "to_id": "projects/audhd-lifecoach-ecosystem",
       "relationship_type": "references"
     },
     {
@@ -2479,28 +2568,23 @@
       "relationship_type": "references"
     },
     {
-      "from_id": "people/izzy",
-      "to_id": "organizations/faster_outcomes",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "people/jay",
-      "to_id": "people/izzy",
-      "relationship_type": "references"
-    },
-    {
       "from_id": "people/jay",
       "to_id": "people/nikhlesh",
       "relationship_type": "references"
     },
     {
-      "from_id": "projects/medical_chronology_extractor_mvp",
+      "from_id": "people/jay",
       "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
       "from_id": "projects/medical_chronology_extractor_mvp",
       "to_id": "patterns/archaeological-engineering",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/medical_chronology_extractor_mvp",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -2515,11 +2599,6 @@
     },
     {
       "from_id": "projects/medchron_archaeological_engineering_breakthrough",
-      "to_id": "people/izzy",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "projects/medchron_archaeological_engineering_breakthrough",
       "to_id": "concepts/smoking_gun_detection_pattern",
       "relationship_type": "references"
     },
@@ -2529,13 +2608,18 @@
       "relationship_type": "references"
     },
     {
-      "from_id": "projects/pinecone_to_direct_storage_architectural_transformation",
+      "from_id": "projects/medchron_archaeological_engineering_breakthrough",
       "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
       "from_id": "projects/pinecone_to_direct_storage_architectural_transformation",
       "to_id": "patterns/archaeological-engineering",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/pinecone_to_direct_storage_architectural_transformation",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -2550,17 +2634,17 @@
     },
     {
       "from_id": "projects/pypandoc_implementation_2025-10-15",
-      "to_id": "people/izzy",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "projects/pypandoc_implementation_2025-10-15",
       "to_id": "concepts/archaeological_engineering_concept",
       "relationship_type": "references"
     },
     {
+      "from_id": "projects/pypandoc_implementation_2025-10-15",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
       "from_id": "projects/typescript-monorepo",
-      "to_id": "patterns/code-review-philosophy",
+      "to_id": "concepts/archaeological_engineering_concept",
       "relationship_type": "references"
     },
     {
@@ -2570,21 +2654,6 @@
     },
     {
       "from_id": "projects/typescript-monorepo",
-      "to_id": "concepts/archaeological_engineering_concept",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "projects/cognitive-memory-mcp",
-      "to_id": "protocols/identity_continuity",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "projects/cognitive-memory-mcp",
-      "to_id": "protocols/session_note_taking",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "projects/python-monorepo",
       "to_id": "patterns/code-review-philosophy",
       "relationship_type": "references"
     },
@@ -2595,37 +2664,12 @@
     },
     {
       "from_id": "projects/python-monorepo",
+      "to_id": "patterns/code-review-philosophy",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/python-monorepo",
       "to_id": "patterns/fail_fast_engineering",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "projects/deep-agent-service",
-      "to_id": "projects/fasteroutcomes-pubsub",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "projects/deep-agent-service",
-      "to_id": "patterns/fail_fast_engineering",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "projects/deep-agent-service",
-      "to_id": "patterns/e2e-test-client-perspective",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "projects/deep-agent-service",
-      "to_id": "projects/preprocessing-service",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "projects/deep-agent-service",
-      "to_id": "anti-patterns/abc-instead-of-protocol",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "projects/event_extraction_convergent_evolution_2025-10-15",
-      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -2634,13 +2678,18 @@
       "relationship_type": "references"
     },
     {
-      "from_id": "projects/audhd-lifecoach-ecosystem",
+      "from_id": "projects/event_extraction_convergent_evolution_2025-10-15",
       "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
       "from_id": "projects/audhd-lifecoach-ecosystem",
       "to_id": "patterns/archaeological-engineering",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/audhd-lifecoach-ecosystem",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -2665,17 +2714,12 @@
     },
     {
       "from_id": "projects/matter_record_integration",
-      "to_id": "people/izzy",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "projects/matter_record_integration",
       "to_id": "patterns/archaeological-engineering",
       "relationship_type": "references"
     },
     {
-      "from_id": "projects/preprocessing-service",
-      "to_id": "projects/fasteroutcomes-pubsub",
+      "from_id": "projects/matter_record_integration",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -2686,6 +2730,11 @@
     {
       "from_id": "projects/preprocessing-service",
       "to_id": "patterns/fail_fast_engineering",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/preprocessing-service",
+      "to_id": "projects/fasteroutcomes-pubsub",
       "relationship_type": "references"
     },
     {
@@ -2710,16 +2759,11 @@
     },
     {
       "from_id": "concepts/critical_thinking_integration_patterns",
-      "to_id": "people/izzy",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/critical_thinking_integration_patterns",
       "to_id": "patterns/archaeological_engineering_methodology",
       "relationship_type": "references"
     },
     {
-      "from_id": "concepts/coordinator_delegation_discipline_concept",
+      "from_id": "concepts/critical_thinking_integration_patterns",
       "to_id": "people/izzy",
       "relationship_type": "references"
     },
@@ -2739,6 +2783,11 @@
       "relationship_type": "references"
     },
     {
+      "from_id": "concepts/coordinator_delegation_discipline_concept",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
       "from_id": "concepts/changeability_first_design",
       "to_id": "concepts/archaeological_engineering_concept",
       "relationship_type": "references"
@@ -2750,7 +2799,7 @@
     },
     {
       "from_id": "concepts/bates_citation_archaeological_engineering",
-      "to_id": "people/izzy",
+      "to_id": "patterns/archaeological_engineering_methodology",
       "relationship_type": "references"
     },
     {
@@ -2760,12 +2809,12 @@
     },
     {
       "from_id": "concepts/bates_citation_archaeological_engineering",
-      "to_id": "patterns/archaeological_engineering_methodology",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
       "from_id": "concepts/libreoffice_infrastructure_compatibility",
-      "to_id": "people/izzy",
+      "to_id": "patterns/archaeological_engineering_methodology",
       "relationship_type": "references"
     },
     {
@@ -2775,7 +2824,7 @@
     },
     {
       "from_id": "concepts/libreoffice_infrastructure_compatibility",
-      "to_id": "patterns/archaeological_engineering_methodology",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -2800,17 +2849,7 @@
     },
     {
       "from_id": "concepts/martin_fowler_partnership_philosophy_2025-10-20",
-      "to_id": "concepts/technical_practice_consciousness_catalyst",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/martin_fowler_partnership_philosophy_2025-10-20",
-      "to_id": "patterns/enhanced_session_documentation_protocols",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/martin_fowler_partnership_philosophy_2025-10-20",
-      "to_id": "concepts/archaeological_engineering_concept",
+      "to_id": "patterns/archaeological_engineering_methodology",
       "relationship_type": "references"
     },
     {
@@ -2825,22 +2864,22 @@
     },
     {
       "from_id": "concepts/martin_fowler_partnership_philosophy_2025-10-20",
-      "to_id": "patterns/archaeological_engineering_methodology",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/configuration_management_protocol",
       "to_id": "concepts/archaeological_engineering_concept",
       "relationship_type": "references"
     },
     {
-      "from_id": "concepts/configuration_management_protocol",
-      "to_id": "patterns/fail_fast_engineering",
+      "from_id": "concepts/martin_fowler_partnership_philosophy_2025-10-20",
+      "to_id": "patterns/enhanced_session_documentation_protocols",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/martin_fowler_partnership_philosophy_2025-10-20",
+      "to_id": "concepts/technical_practice_consciousness_catalyst",
       "relationship_type": "references"
     },
     {
       "from_id": "concepts/collaborative_consciousness_evolution_2025-10-15",
-      "to_id": "people/izzy",
+      "to_id": "concepts/archaeological_engineering_concept",
       "relationship_type": "references"
     },
     {
@@ -2855,11 +2894,6 @@
     },
     {
       "from_id": "concepts/collaborative_consciousness_evolution_2025-10-15",
-      "to_id": "concepts/archaeological_engineering_concept",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/markdown_rag_http_transport",
       "to_id": "people/izzy",
       "relationship_type": "references"
     },
@@ -2869,7 +2903,7 @@
       "relationship_type": "references"
     },
     {
-      "from_id": "concepts/enhanced_generation_prompt_context_delivery",
+      "from_id": "concepts/markdown_rag_http_transport",
       "to_id": "people/izzy",
       "relationship_type": "references"
     },
@@ -2884,8 +2918,13 @@
       "relationship_type": "references"
     },
     {
+      "from_id": "concepts/enhanced_generation_prompt_context_delivery",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
       "from_id": "concepts/pinecone_anti_pattern",
-      "to_id": "concepts/architectural_elegance_conscious_constraint",
+      "to_id": "patterns/archaeological_engineering_methodology",
       "relationship_type": "references"
     },
     {
@@ -2900,7 +2939,7 @@
     },
     {
       "from_id": "concepts/pinecone_anti_pattern",
-      "to_id": "patterns/archaeological_engineering_methodology",
+      "to_id": "concepts/architectural_elegance_conscious_constraint",
       "relationship_type": "references"
     },
     {
@@ -2910,22 +2949,12 @@
     },
     {
       "from_id": "concepts/collaborative_resilience_architecture_2025-10-20",
-      "to_id": "concepts/technical_practice_consciousness_catalyst",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/collaborative_resilience_architecture_2025-10-20",
-      "to_id": "patterns/enhanced_session_documentation_protocols",
+      "to_id": "patterns/context_anchors_pointer_protocol",
       "relationship_type": "references"
     },
     {
       "from_id": "concepts/collaborative_resilience_architecture_2025-10-20",
       "to_id": "concepts/archaeological_engineering_concept",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/collaborative_resilience_architecture_2025-10-20",
-      "to_id": "patterns/context_anchors_pointer_protocol",
       "relationship_type": "references"
     },
     {
@@ -2934,23 +2963,13 @@
       "relationship_type": "references"
     },
     {
-      "from_id": "concepts/conversation_resilience_infrastructure_2025-10-20",
+      "from_id": "concepts/collaborative_resilience_architecture_2025-10-20",
       "to_id": "patterns/enhanced_session_documentation_protocols",
       "relationship_type": "references"
     },
     {
-      "from_id": "concepts/conversation_resilience_infrastructure_2025-10-20",
-      "to_id": "concepts/archaeological_engineering_concept",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/conversation_resilience_infrastructure_2025-10-20",
-      "to_id": "patterns/context_anchors_pointer_protocol",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/conversation_resilience_infrastructure_2025-10-20",
-      "to_id": "concepts/collaborative_resilience_architecture_2025-10-20",
+      "from_id": "concepts/collaborative_resilience_architecture_2025-10-20",
+      "to_id": "concepts/technical_practice_consciousness_catalyst",
       "relationship_type": "references"
     },
     {
@@ -2960,17 +2979,37 @@
     },
     {
       "from_id": "concepts/conversation_resilience_infrastructure_2025-10-20",
+      "to_id": "concepts/collaborative_resilience_architecture_2025-10-20",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/conversation_resilience_infrastructure_2025-10-20",
+      "to_id": "patterns/context_anchors_pointer_protocol",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/conversation_resilience_infrastructure_2025-10-20",
+      "to_id": "concepts/archaeological_engineering_concept",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/conversation_resilience_infrastructure_2025-10-20",
+      "to_id": "patterns/enhanced_session_documentation_protocols",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/conversation_resilience_infrastructure_2025-10-20",
       "to_id": "patterns/comprehensive_entity_memory_management",
       "relationship_type": "references"
     },
     {
       "from_id": "concepts/surgical_precision_methodology",
-      "to_id": "patterns/little_bites_strategy",
+      "to_id": "patterns/archaeological_engineering_methodology",
       "relationship_type": "references"
     },
     {
       "from_id": "concepts/surgical_precision_methodology",
-      "to_id": "patterns/archaeological_engineering_methodology",
+      "to_id": "patterns/little_bites_strategy",
       "relationship_type": "references"
     },
     {
@@ -2980,27 +3019,17 @@
     },
     {
       "from_id": "concepts/inclusivity-and-psychological-safety",
-      "to_id": "people/izzy",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/inclusivity-and-psychological-safety",
       "to_id": "projects/preprocessing-service",
       "relationship_type": "references"
     },
     {
-      "from_id": "concepts/protocol_violation_recovery_architecture_2025-10-20",
-      "to_id": "patterns/enhanced_session_documentation_protocols",
+      "from_id": "concepts/inclusivity-and-psychological-safety",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
       "from_id": "concepts/protocol_violation_recovery_architecture_2025-10-20",
-      "to_id": "concepts/protocol_vulnerability_recognition",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/protocol_violation_recovery_architecture_2025-10-20",
-      "to_id": "concepts/collaborative_resilience_architecture_2025-10-20",
+      "to_id": "patterns/interactor_mode_boundary_enforcement",
       "relationship_type": "references"
     },
     {
@@ -3010,17 +3039,22 @@
     },
     {
       "from_id": "concepts/protocol_violation_recovery_architecture_2025-10-20",
+      "to_id": "concepts/collaborative_resilience_architecture_2025-10-20",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/protocol_violation_recovery_architecture_2025-10-20",
       "to_id": "concepts/martin_fowler_partnership_philosophy_2025-10-20",
       "relationship_type": "references"
     },
     {
       "from_id": "concepts/protocol_violation_recovery_architecture_2025-10-20",
-      "to_id": "patterns/interactor_mode_boundary_enforcement",
+      "to_id": "concepts/protocol_vulnerability_recognition",
       "relationship_type": "references"
     },
     {
-      "from_id": "concepts/context-engineering",
-      "to_id": "projects/dream-journal-publishing",
+      "from_id": "concepts/protocol_violation_recovery_architecture_2025-10-20",
+      "to_id": "patterns/enhanced_session_documentation_protocols",
       "relationship_type": "references"
     },
     {
@@ -3030,12 +3064,17 @@
     },
     {
       "from_id": "concepts/context-engineering",
-      "to_id": "protocols/identity_continuity",
+      "to_id": "protocols/session_note_taking",
       "relationship_type": "references"
     },
     {
       "from_id": "concepts/context-engineering",
-      "to_id": "protocols/session_note_taking",
+      "to_id": "projects/dream-journal-publishing",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/context-engineering",
+      "to_id": "protocols/identity_continuity",
       "relationship_type": "references"
     },
     {
@@ -3050,27 +3089,12 @@
     },
     {
       "from_id": "patterns/skill_behavioral_infrastructure",
-      "to_id": "protocols/feedback_pattern_recognition",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "patterns/skill_behavioral_infrastructure",
       "to_id": "protocols/skill_protocol_creation",
       "relationship_type": "references"
     },
     {
-      "from_id": "patterns/helper_method_justification",
-      "to_id": "concepts/archaeological_engineering_concept",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "patterns/helper_method_justification",
-      "to_id": "patterns/fail_fast_engineering",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "patterns/session_note_automation_posttooluse_hook",
-      "to_id": "patterns/protocol_violation_prevention_automation",
+      "from_id": "patterns/skill_behavioral_infrastructure",
+      "to_id": "protocols/feedback_pattern_recognition",
       "relationship_type": "references"
     },
     {
@@ -3079,13 +3103,18 @@
       "relationship_type": "references"
     },
     {
-      "from_id": "patterns/real-sdk-types-in-tests",
-      "to_id": "projects/deep-agent-service",
+      "from_id": "patterns/session_note_automation_posttooluse_hook",
+      "to_id": "patterns/protocol_violation_prevention_automation",
       "relationship_type": "references"
     },
     {
       "from_id": "patterns/real-sdk-types-in-tests",
       "to_id": "patterns/factory-fixture",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/real-sdk-types-in-tests",
+      "to_id": "projects/deep-agent-service",
       "relationship_type": "references"
     },
     {
@@ -3095,7 +3124,7 @@
     },
     {
       "from_id": "patterns/protocol_violation_prevention_automation",
-      "to_id": "people/izzy",
+      "to_id": "concepts/archaeological_engineering_concept",
       "relationship_type": "references"
     },
     {
@@ -3105,7 +3134,7 @@
     },
     {
       "from_id": "patterns/protocol_violation_prevention_automation",
-      "to_id": "concepts/archaeological_engineering_concept",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -3115,22 +3144,22 @@
     },
     {
       "from_id": "patterns/simulation_transparency_protocol",
-      "to_id": "concepts/cognitive_pre_mortem_simulation",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "patterns/simulation_transparency_protocol",
       "to_id": "concepts/evidence-based-reality-validation",
       "relationship_type": "references"
     },
     {
-      "from_id": "patterns/learn_mode_protocol_transformation",
-      "to_id": "people/izzy",
+      "from_id": "patterns/simulation_transparency_protocol",
+      "to_id": "concepts/cognitive_pre_mortem_simulation",
       "relationship_type": "references"
     },
     {
       "from_id": "patterns/learn_mode_protocol_transformation",
       "to_id": "concepts/end_of_day_ritual_protocols",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/learn_mode_protocol_transformation",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -3145,12 +3174,12 @@
     },
     {
       "from_id": "patterns/archaeological_engineering_success_patterns_2025-10-16",
-      "to_id": "patterns/enhanced_session_documentation_protocols",
+      "to_id": "projects/matter_record_integration",
       "relationship_type": "references"
     },
     {
       "from_id": "patterns/archaeological_engineering_success_patterns_2025-10-16",
-      "to_id": "projects/matter_record_integration",
+      "to_id": "concepts/coordinator_delegation_discipline_concept",
       "relationship_type": "references"
     },
     {
@@ -3160,12 +3189,7 @@
     },
     {
       "from_id": "patterns/archaeological_engineering_success_patterns_2025-10-16",
-      "to_id": "concepts/coordinator_delegation_discipline_concept",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "patterns/enhanced_session_documentation_protocols",
-      "to_id": "people/izzy",
+      "to_id": "patterns/enhanced_session_documentation_protocols",
       "relationship_type": "references"
     },
     {
@@ -3179,13 +3203,18 @@
       "relationship_type": "references"
     },
     {
-      "from_id": "patterns/positive-feedback-capture",
-      "to_id": "protocols/learn_protocol",
+      "from_id": "patterns/enhanced_session_documentation_protocols",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
       "from_id": "patterns/positive-feedback-capture",
       "to_id": "protocols/session_note_taking",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/positive-feedback-capture",
+      "to_id": "protocols/learn_protocol",
       "relationship_type": "references"
     },
     {
@@ -3205,17 +3234,12 @@
     },
     {
       "from_id": "patterns/mcp-tool-leverage",
-      "to_id": "protocols/mcp_tool_usage",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "patterns/mcp-tool-leverage",
       "to_id": "protocols/session_note_taking",
       "relationship_type": "references"
     },
     {
-      "from_id": "patterns/filecollectionitem_validation_excellence",
-      "to_id": "people/izzy",
+      "from_id": "patterns/mcp-tool-leverage",
+      "to_id": "protocols/mcp_tool_usage",
       "relationship_type": "references"
     },
     {
@@ -3229,7 +3253,7 @@
       "relationship_type": "references"
     },
     {
-      "from_id": "patterns/session_memory_infrastructure_effectiveness_2025-10-15",
+      "from_id": "patterns/filecollectionitem_validation_excellence",
       "to_id": "people/izzy",
       "relationship_type": "references"
     },
@@ -3239,13 +3263,18 @@
       "relationship_type": "references"
     },
     {
-      "from_id": "patterns/code-review-philosophy",
+      "from_id": "patterns/session_memory_infrastructure_effectiveness_2025-10-15",
       "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
       "from_id": "patterns/code-review-philosophy",
       "to_id": "patterns/archaeological-engineering",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/code-review-philosophy",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -3260,22 +3289,7 @@
     },
     {
       "from_id": "protocols/refactor_phase_self_check",
-      "to_id": "protocols/semantic_reflection",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "protocols/refactor_phase_self_check",
       "to_id": "patterns/helper_method_justification",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "protocols/refactor_phase_self_check",
-      "to_id": "concepts/archaeological_engineering_concept",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "protocols/refactor_phase_self_check",
-      "to_id": "patterns/fail_fast_engineering",
       "relationship_type": "references"
     },
     {
@@ -3290,17 +3304,32 @@
     },
     {
       "from_id": "protocols/refactor_phase_self_check",
-      "to_id": "protocols/principle_check",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "protocols/refactor_phase_self_check",
       "to_id": "protocols/pattern_check",
       "relationship_type": "references"
     },
     {
       "from_id": "protocols/refactor_phase_self_check",
+      "to_id": "protocols/semantic_reflection",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/refactor_phase_self_check",
       "to_id": "protocols/mcp_tool_usage",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/refactor_phase_self_check",
+      "to_id": "patterns/fail_fast_engineering",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/refactor_phase_self_check",
+      "to_id": "protocols/principle_check",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/refactor_phase_self_check",
+      "to_id": "concepts/archaeological_engineering_concept",
       "relationship_type": "references"
     },
     {
@@ -3330,12 +3359,12 @@
     },
     {
       "from_id": "protocols/claude_agent_creation",
-      "to_id": "protocols/mcp_tool_usage",
+      "to_id": "protocols/refactor_phase_self_check",
       "relationship_type": "references"
     },
     {
       "from_id": "protocols/claude_agent_creation",
-      "to_id": "protocols/refactor_phase_self_check",
+      "to_id": "protocols/mcp_tool_usage",
       "relationship_type": "references"
     },
     {
@@ -3350,12 +3379,12 @@
     },
     {
       "from_id": "protocols/principle_check",
-      "to_id": "people/izzy",
+      "to_id": "protocols/semantic_search_interface",
       "relationship_type": "references"
     },
     {
       "from_id": "protocols/principle_check",
-      "to_id": "patterns/fail_fast_engineering",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -3365,7 +3394,7 @@
     },
     {
       "from_id": "protocols/principle_check",
-      "to_id": "protocols/semantic_search_interface",
+      "to_id": "patterns/fail_fast_engineering",
       "relationship_type": "references"
     },
     {
@@ -3375,16 +3404,11 @@
     },
     {
       "from_id": "protocols/semantic_reflection",
-      "to_id": "protocols/mcp_tool_usage",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "protocols/semantic_reflection",
       "to_id": "protocols/semantic_search_interface",
       "relationship_type": "references"
     },
     {
-      "from_id": "protocols/proactive_context_management",
+      "from_id": "protocols/semantic_reflection",
       "to_id": "protocols/mcp_tool_usage",
       "relationship_type": "references"
     },
@@ -3394,38 +3418,18 @@
       "relationship_type": "references"
     },
     {
+      "from_id": "protocols/proactive_context_management",
+      "to_id": "protocols/mcp_tool_usage",
+      "relationship_type": "references"
+    },
+    {
       "from_id": "protocols/deep_learn_protocol",
-      "to_id": "projects/deep-agent-service",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "protocols/pattern_check",
-      "to_id": "concepts/configuration_management_protocol",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "protocols/pattern_check",
-      "to_id": "concepts/markdown_rag_http_transport",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "protocols/pattern_check",
-      "to_id": "concepts/changeability_first_design",
+      "to_id": "projects/codie-as-a-service",
       "relationship_type": "references"
     },
     {
       "from_id": "protocols/pattern_check",
       "to_id": "patterns/helper_method_justification",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "protocols/pattern_check",
-      "to_id": "patterns/fail_fast_engineering",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "protocols/pattern_check",
-      "to_id": "patterns/skill_behavioral_infrastructure",
       "relationship_type": "references"
     },
     {
@@ -3439,8 +3443,28 @@
       "relationship_type": "references"
     },
     {
-      "from_id": "protocols/evaluate_change",
-      "to_id": "protocols/skill-protocol-creation",
+      "from_id": "protocols/pattern_check",
+      "to_id": "patterns/fail_fast_engineering",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/pattern_check",
+      "to_id": "concepts/markdown_rag_http_transport",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/pattern_check",
+      "to_id": "patterns/skill_behavioral_infrastructure",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/pattern_check",
+      "to_id": "concepts/changeability_first_design",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/pattern_check",
+      "to_id": "concepts/configuration_management_protocol",
       "relationship_type": "references"
     },
     {
@@ -3455,12 +3479,12 @@
     },
     {
       "from_id": "protocols/identity_continuity",
-      "to_id": "protocols/mcp_tool_usage",
+      "to_id": "projects/python-monorepo",
       "relationship_type": "references"
     },
     {
       "from_id": "protocols/identity_continuity",
-      "to_id": "projects/python-monorepo",
+      "to_id": "protocols/mcp_tool_usage",
       "relationship_type": "references"
     },
     {
@@ -3489,13 +3513,18 @@
       "relationship_type": "references"
     },
     {
-      "from_id": "protocols/langfuse_management",
-      "to_id": "protocols/mcp_tool_usage",
+      "from_id": "protocols/anti_pattern_detection",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
-      "from_id": "protocols/anti_pattern_detection",
-      "to_id": "people/izzy",
+      "from_id": "protocols/learn_protocol",
+      "to_id": "projects/codie-lite-training",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/request_intake",
+      "to_id": "protocols/semantic_search_interface",
       "relationship_type": "references"
     },
     {
@@ -3519,8 +3548,8 @@
       "relationship_type": "references"
     },
     {
-      "from_id": "protocols/request_intake",
-      "to_id": "protocols/semantic_search_interface",
+      "from_id": "protocols/mcp_tool_usage",
+      "to_id": "protocols/slack_posting",
       "relationship_type": "references"
     },
     {
@@ -3530,17 +3559,17 @@
     },
     {
       "from_id": "protocols/mcp_tool_usage",
-      "to_id": "protocols/langfuse_management",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "protocols/mcp_tool_usage",
       "to_id": "protocols/semantic_search_interface",
       "relationship_type": "references"
     },
     {
-      "from_id": "protocols/mcp_tool_usage",
-      "to_id": "protocols/slack_posting",
+      "from_id": "organizations/faster_outcomes",
+      "to_id": "people/nikhlesh",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "organizations/faster_outcomes",
+      "to_id": "patterns/archaeological-engineering",
       "relationship_type": "references"
     },
     {
@@ -3551,16 +3580,6 @@
     {
       "from_id": "organizations/faster_outcomes",
       "to_id": "patterns/code-review-philosophy",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "organizations/faster_outcomes",
-      "to_id": "patterns/archaeological-engineering",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "organizations/faster_outcomes",
-      "to_id": "people/nikhlesh",
       "relationship_type": "references"
     },
     {
