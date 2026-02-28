@@ -83,15 +83,15 @@ def extract_concept_summary(content: str, entity_type: str = "concepts") -> Conc
     # Define section mappings based on entity type
     if entity_type == "protocols":
         core_idea = find_section("purpose", "overview")
-        common_patterns = find_section("when to invoke", "protocol steps", "methodology")
+        common_patterns = find_section("when to invoke", "when to use", "protocol steps", "methodology")
         warning_signs = find_section("warning signs", "anti-patterns")
-        origin_story = find_section("user feedback", "source", "history")
+        origin_story = find_section("user feedback", "source", "history", "evidence")
         philosophy = find_section("philosophy", "principles")
     elif entity_type == "projects":
         core_idea = find_section("overview", "summary")
-        common_patterns = find_section("technical architecture", "project approach", "architecture")
+        common_patterns = find_section("technical architecture", "project approach", "architecture", "key details")
         warning_signs = find_section("warning signs", "challenges")
-        origin_story = find_section("project context", "context", "background")
+        origin_story = find_section("project context", "context", "background", "evidence")
         philosophy = find_section("philosophy", "principles")
     elif entity_type == "anti-patterns":
         core_idea = find_section("the problem", "overview", "summary")
@@ -107,9 +107,9 @@ def extract_concept_summary(content: str, entity_type: str = "concepts") -> Conc
         philosophy = find_section("philosophy", "technical philosophy")
     else:  # concepts, patterns, skills, and others
         core_idea = find_section("overview", "core principle", "purpose", "summary")
-        common_patterns = find_section("key characteristics", "key framework", "methodology", "key principles", "patterns observed", "key insights")
+        common_patterns = find_section("key characteristics", "key framework", "methodology", "key principles", "patterns observed", "key insights", "key details", "when to apply", "how it works")
         warning_signs = find_section("warning signs", "challenges", "lessons learned")
-        origin_story = find_section("source", "validation", "history", "background")
+        origin_story = find_section("source", "validation", "history", "background", "evidence")
         philosophy = find_section("meta-cognitive", "integration", "philosophy", "future applications")
 
     # Fallback: if no sections matched, use body text (after title and metadata) as core_idea
