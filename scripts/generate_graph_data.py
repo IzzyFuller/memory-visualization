@@ -14,7 +14,7 @@ import json
 from pathlib import Path
 
 from models import GraphData
-from parse_entities import discover_entity_files, parse_entity_file, extract_cross_references
+from parse_entities import discover_entity_files, parse_entity_file, extract_cross_references, build_entity_name_map
 
 
 # Entities excluded from public visualization
@@ -63,8 +63,10 @@ def main():
     nodes = [node for node in nodes if node.id not in EXCLUDED_ENTITIES]
     print(f"After exclusion filter: {len(nodes)} entities")
 
-    # Create entity ID set for cross-reference validation
+    # Create entity ID set and name map for cross-reference validation
     entity_ids = {node.id for node in nodes}
+    entity_name_map = build_entity_name_map(nodes)
+    print(f"Built name map with {len(entity_name_map)} name variants")
 
     # Step 3: Extract cross-references
     edges = []
@@ -74,8 +76,8 @@ def main():
             relative_path = entity_file.relative_to(memory_root)
             entity_id = str(relative_path.with_suffix(""))
 
-            # Extract edges
-            entity_edges = extract_cross_references(entity_file, entity_id, entity_ids)
+            # Extract edges (path-based + name-based matching)
+            entity_edges = extract_cross_references(entity_file, entity_id, entity_ids, entity_name_map)
             edges.extend(entity_edges)
         except Exception as e:
             print(f"Error extracting references from {entity_file}: {e}")

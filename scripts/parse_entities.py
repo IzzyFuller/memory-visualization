@@ -240,35 +240,74 @@ def parse_entity_file(file_path: Path, memory_root: Path) -> EntityNode:
     )
 
 
-def extract_cross_references(file_path: Path, entity_id: str, all_entity_ids: set[str]) -> list[EntityEdge]:
+def build_entity_name_map(nodes: list[EntityNode]) -> dict[str, str]:
+    """
+    Build a mapping of natural language names to entity IDs for text-based matching.
+
+    Generates name variants from entity labels and ID stems. Only includes names
+    >= 10 chars or >= 3 words to avoid false positive matches on short common words.
+
+    Args:
+        nodes: List of parsed entity nodes
+
+    Returns:
+        Dict mapping lowercase name variant -> entity ID
+    """
+    name_map: dict[str, str] = {}
+    for node in nodes:
+        label = node.label.lower()
+        stem = node.id.split("/")[-1].replace("-", " ").replace("_", " ")
+
+        for name in [label, stem]:
+            # Skip short names to avoid false positives
+            if len(name) < 10 and len(name.split()) < 3:
+                continue
+            name_map[name] = node.id
+
+    return name_map
+
+
+def extract_cross_references(
+    file_path: Path,
+    entity_id: str,
+    all_entity_ids: set[str],
+    entity_name_map: dict[str, str] | None = None,
+) -> list[EntityEdge]:
     """
     Extract cross-references from entity file content.
 
-    Looks for references to other entities in the format:
-    - concepts/some-concept
-    - patterns/some-pattern
-    - projects/some-project
+    Uses two strategies:
+    1. Path-based: matches explicit type/entity-name references
+    2. Name-based: matches natural language entity names in text
 
     Args:
         file_path: Path to the entity file
         entity_id: ID of the current entity
         all_entity_ids: Set of all valid entity IDs to match against
+        entity_name_map: Optional mapping of lowercase name -> entity ID for text matching
 
     Returns:
         List of EntityEdge objects representing relationships
     """
     content = file_path.read_text()
-    edges = []
+    referenced_ids: set[str] = set()
 
-    # Pattern to match entity references (e.g., "concepts/archaeological_engineering")
-    # Matches: word/word-or-underscore pattern
-    # Use non-capturing group (?:...) so re.findall returns full match, not just the group
+    # Strategy 1: Path-based references (e.g., "concepts/archaeological_engineering")
     pattern = r'\b(?:people|projects|concepts|patterns|protocols|organizations|anti-patterns|skills)/[\w-]+\b'
-
     matches = re.findall(pattern, content)
-    referenced_ids = set(matches)
+    referenced_ids.update(matches)
+
+    # Strategy 2: Name-based references (e.g., "Archaeological Engineering")
+    if entity_name_map:
+        content_lower = content.lower()
+        for name, target_id in entity_name_map.items():
+            if target_id == entity_id:
+                continue
+            if name in content_lower:
+                referenced_ids.add(target_id)
 
     # Only create edges for valid entity IDs that actually exist
+    edges = []
     for ref_id in referenced_ids:
         if ref_id in all_entity_ids and ref_id != entity_id:
             edges.append(EntityEdge(
