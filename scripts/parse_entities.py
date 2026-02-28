@@ -94,10 +94,10 @@ def extract_concept_summary(content: str, entity_type: str = "concepts") -> Conc
         origin_story = find_section("project context", "context", "background")
         philosophy = find_section("philosophy", "principles")
     elif entity_type == "anti-patterns":
-        core_idea = find_section("the problem", "overview")
-        common_patterns = find_section("the correct pattern", "correct approach", "solution")
-        warning_signs = find_section("why this is wrong", "warning signs", "consequences")
-        origin_story = find_section("user feedback", "source", "specific example")
+        core_idea = find_section("the problem", "overview", "summary")
+        common_patterns = find_section("the correct pattern", "correct approach", "solution", "the correction", "the fix")
+        warning_signs = find_section("why this is wrong", "warning signs", "consequences", "the mistake", "the error")
+        origin_story = find_section("user feedback", "source", "specific example", "evidence", "history")
         philosophy = None
     elif entity_type == "organizations":
         core_idea = find_section("overview", "summary")
@@ -111,6 +111,33 @@ def extract_concept_summary(content: str, entity_type: str = "concepts") -> Conc
         warning_signs = find_section("warning signs", "challenges", "lessons learned")
         origin_story = find_section("source", "validation", "history", "background")
         philosophy = find_section("meta-cognitive", "integration", "philosophy", "future applications")
+
+    # Fallback: if no sections matched, use body text (after title and metadata) as core_idea
+    if all(v is None for v in [core_idea, common_patterns, warning_signs, origin_story, philosophy]):
+        lines = content.split("\n")
+        body_lines = []
+        past_metadata = False
+        for line in lines:
+            # Skip title line
+            if line.startswith("# "):
+                continue
+            # Skip metadata lines (bold key-value pairs like **Key**: Value)
+            if line.startswith("**") and "**:" in line:
+                continue
+            # Skip empty lines before body
+            if not past_metadata and not line.strip():
+                continue
+            # Skip --- separators
+            if line.strip() == "---":
+                continue
+            # Skip italicized footer lines
+            if line.strip().startswith("*Last session"):
+                continue
+            past_metadata = True
+            body_lines.append(line)
+        body_text = "\n".join(body_lines).strip()
+        if body_text:
+            core_idea = body_text
 
     return ConceptSummary(
         core_idea=core_idea,

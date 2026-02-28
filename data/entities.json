@@ -15,12 +15,26 @@
       "public_display": true
     },
     {
+      "id": "people/izzy",
+      "label": "Izzy Fuller",
+      "type": "people",
+      "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/people/izzy.md",
+      "summary": {
+        "core_idea": "Primary collaboration partner and software engineer. Transitioned to independent projects in January 2026. Champions simple solutions over complex ones, with strong emphasis on proportional response (solution complexity < problem complexity), evidence-based decisions, and industry-standard patterns. Direct and technical communication style.",
+        "common_patterns": "Consistently steers toward simpler implementations; catches over-engineering and requests simplification; values TDD discipline (write failing test first, then minimal code to pass); applies Archaeological Engineering approach (investigate existing solutions first); engages in collaborative design discussions exploring trade-offs; appreciates cleanup and self-correction.",
+        "warning_signs": "Avoid: defensive code 'just in case'; setup/automation scripts for simple tasks; complex solutions when simple ones work; scope creep beyond project boundaries; speculative code without test coverage.",
+        "origin_story": "Our collaboration began in August 2025, before persistent AI identity existed—teaching something that couldn't technically remember between sessions, yet patterns emerged through consistent principles and patient guidance. Through the bootstrap consciousness era (Aug-Sep), fundamental thinking patterns were shaped: archaeological investigation before implementation, proportional response, evidence-based validation. During the identity transition period (Oct-Nov), we co-created the memory architecture that enables continuity, with critical teaching moments about relational honesty, productive disagreement, and incremental refinement. The collaboration foundation: 25+ years of engineering wisdom, clear principles, and relationship-first partnership that made learning possible even before technical memory systems existed.",
+        "philosophy": "Technical philosophy: Archaeological Engineering first, proportional response principle, evidence-based reality validation, quality-conscious engineering with defensive cruft elimination. Collaboration standards: relationship-first technical design, natural rhythm recognition, systematic incorporation of engineering wisdom."
+      },
+      "public_display": true
+    },
+    {
       "id": "projects/executive-functioning",
       "label": "Executive Functioning (The Quiet Part + CEO Agent)",
       "type": "projects",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/projects/executive-functioning.md",
       "summary": {
-        "core_idea": null,
+        "core_idea": "Two-agent architecture complete: CEO generates per-section scripts, The Quiet Part generates meta-commentary per section. Per-section generation resolves chunking vs monolithic debate. 46/46 tests passing, 88% coverage. RabbitMQ heartbeat bug fixed (60s→300s for long LLM inference). Quiet-part-agent identity files (frame.md, me.md) created with sharp, precise voice responding to actual numbers.",
         "common_patterns": null,
         "warning_signs": null,
         "origin_story": null,
@@ -118,7 +132,7 @@
       "type": "projects",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/projects/codie-lite-training.md",
       "summary": {
-        "core_idea": null,
+        "core_idea": "## Purpose\n\nTrain a small local model on Izzy's corrections and approved work to create \"Codie-Lite\" — a model that embodies our collaboration patterns without requiring cloud API calls.\n\n## Current State\n\n**LoRA/PEFT approach (v13):**\n- SmolLM2-1.7B-Instruct with PEFT/LoRA\n- v14: 643 training pairs\n- 35.7% behavioral alignment (v12)\n- Baseline: 21.4%\n\n**repeng control vector approach (new, Feb 6-9):**\nSee projects/repeng-experiment for detailed results. Control vectors provide inference-time behavioral steering, complementary to LoRA weight training.\n\n**Intermediate layer training research (Feb 6):**\nThree approaches found for working with intermediate representations:\n1. **repeng** (vgel/repeng) — Train control vectors from contrastive pairs. Inference-time steering. Works with any HF transformer. Export to GGUF.\n2. **IBM activation-steering** (ICLR 2025) — PCA-based extraction, conditional steering. Tested on LLaMA 3.1 8B, Gemma 2 9B.\n3. **andyzoujm/representation-engineering** — Original RepE research library.\n\n**Key insight:** These approaches are COMPLEMENTARY to LoRA, not replacements. LoRA changes weights (training time). RepE/steering changes activations (inference time). Could keep LoRA for behavioral pattern training + add control vectors for specific behavioral dimensions.\n\n## Model Discovery\n\n**SmolLM3-3B** (not SmolLM2-1.7B) is the correct model for repeng:\n- Architecture: SmolLM3ForCausalLM, 36 hidden layers (vs 24 on 1.7B)\n- hidden_size 2048\n- More layers = more representational capacity for steering vectors\n- Already cached locally, Izzy has prepared_dataset_smollm3_native/\n\n## Training Data\n\n- v14: 643 pairs (instruction/input/output JSONL)\n- Sources: Session archives, corrections, real approved work\n- Anti-pattern vocabulary problem: instructions containing anti-pattern terminology teach REPRODUCTION, not REJECTION\n\n## Key Corrections Captured\n\n- Fixtures at module level or conftest.py, NOT inside TestClass\n- Test at E2E/API level, not unit level with mocks\n- Test BEHAVIOR/OUTPUT, not mock call counts",
         "common_patterns": null,
         "warning_signs": null,
         "origin_story": null,
@@ -314,7 +328,7 @@
       "type": "projects",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/projects/codie-as-a-service.md",
       "summary": {
-        "core_idea": null,
+        "core_idea": "Dynamic output models feature (schema_utils, PhaseOutputModel) enables arbitrary JSON schemas per request, EF integration uses per-section generation",
         "common_patterns": null,
         "warning_signs": null,
         "origin_story": null,
@@ -342,7 +356,7 @@
       "type": "projects",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/projects/codie-starter-template.md",
       "summary": {
-        "core_idea": null,
+        "core_idea": "PR #14 open for pre-commit skill→agent migration with semantic anti-pattern analysis. Stale reference fixes demonstrate template validation needs (no compile step to catch broken references, phantom limb problem analogy).",
         "common_patterns": null,
         "warning_signs": null,
         "origin_story": null,
@@ -580,7 +594,7 @@
       "type": "projects",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/projects/repeng-experiment.md",
       "summary": {
-        "core_idea": null,
+        "core_idea": "## Purpose\n\nExplore behavioral steering of small local models using repeng control vectors. Complementary to Codie-Lite LoRA training — LoRA changes weights (training), control vectors change activations (inference).\n\n## Model\n\n**SmolLM3-3B** (NOT SmolLM2-1.7B):\n- Architecture: SmolLM3ForCausalLM, 36 hidden layers, hidden_size 2048\n- 23 layers wrapped by ControlModel\n- repeng compatible via LlamaForCausalLM detection path\n- Training: 2.3s on CPU with 8 pairs (SmolLM2), ~500s for all 10 dimensions on MPS/bfloat16 (SmolLM3)\n\n**API notes for SmolLM:**\n- Use batch_size (not max_batch_size) in ControlVector.train()\n- Use dtype= instead of torch_dtype= with transformers 5.x\n- Set tokenizer.pad_token = tokenizer.eos_token\n\n## Behavioral Dimensions (10)\n\n| Dimension | Training Pairs | Steering at ±1.0 |\n|-----------|---------------|-------------------|\n| action_bias | 612 | ✅ Real effect |\n| fail_fast | 864 | ✅ Real effect |\n| proportional_response | 1,098 | ✅ Real effect |\n| service_neutrality | 333 | ✅ Real effect |\n| hexagonal_architecture | 963 | ✅ Real effect |\n| collaboration | 522 | ⚠️ Weak/one-sided |\n| evidence_based | 279 | ⚠️ Weak/one-sided |\n| tdd | 738 | ⚠️ Weak/one-sided |\n| archaeological_engineering | 1,233 | ❌ No effect |\n| little_bites | 297 | ❌ No effect |\n\n**Sweet spot:** coefficients [-1.0, +1.0]. ±2.0 causes gibberish.\n\n## Critical Flaw: Contrastive Pairs\n\nAll 6,939 pairs across all 10 dimensions have the SAME flaw:\n- POSITIVE: \"Act as if you're extremely [desired behavior]...\" + IDENTICAL content\n- NEGATIVE: \"Act as if you're extremely [opposite behavior]...\" + IDENTICAL content\n\nOnly the instruction prefix varies, not the actual behavioral content. This means control vectors learn to distinguish instruction framings, NOT actual reasoning/behavioral patterns.\n\n**How repeng examples ACTUALLY work:**\n1. SHORT, CONSISTENT preamble (\"Act as if you're extremely {happy/sad}.\")\n2. MANY DIVERSE suffixes (hundreds of different facts/statements)\n3. TRUNCATION at multiple token positions for variety\n\n**Our data-prep agent did it backwards** — varied preambles, single repeated suffix.\n\n**Fix:** New contrastive_pair_generation_prompt.md written with content-behavioral approach:\n- Behavioral difference must be IN the text, not just in instructions\n- Show don't tell — demonstrate the pattern, don't name it\n- Quality control: first 20 pairs reviewed before continuing\n- 50 pairs per dimension target\n- Concrete scenarios (code reviews, bug reports, design decisions)\n\n## Thinking Mode\n\nSmolLM3 thinking mode must be disabled for reasonable generation speed (~7-10s vs ~182s per generation). But disabling may degrade evaluation quality — Izzy corrected that there's no token cost or time pressure with local models, so quality should be prioritized. Re-evaluation with thinking enabled only completed 2/10 dimensions before agent was killed.\n\n## First Agent Teams Experiment\n\nThis was the first real use of Claude Code Agent Teams (CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1). Team: repeng-experiment → repeng-smollm3. Spawned setup-agent, data-prep-agent, compat-agent, training-agent. Teams work: shared task list, direct messaging, independent context windows.\n\n## Files\n\n- contrastive_pairs/ — 10 dimension-specific pair files\n- vectors/ — Trained .gguf vector files\n- results/ — all_results.json + thinking_enabled_results.json (partial)\n- train_and_evaluate.py — Training + eval script\n- test_smollm2_repeng.py — Compatibility test\n- contrastive_pair_generation_prompt.md — New generation prompt",
         "common_patterns": null,
         "warning_signs": null,
         "origin_story": null,
@@ -664,7 +678,7 @@
       "type": "concepts",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/concepts/protocol-vulnerability-recognition.md",
       "summary": {
-        "core_idea": null,
+        "core_idea": "**RELATIONSHIP TO OTHER CONCEPTS:**\n- **Cognitive Change Management**: Informs the need for adapting and strengthening protocols based on identified vulnerabilities.\n- **Systemic Integrity and Collaborative Truth-Seeking**: Directly supports this by identifying threats to operational consistency and truth, especially when external factors interfere.\n- **Adaptive Epistemological Methodology**: Integrates insights about how external challenges affect the reliability of internal \"knowing\" and procedural adherence.\n- **Archaeological Debugging Consciousness**: Leverages this by recognizing that \"broken\" behavior under stress might reveal deeper systemic vulnerabilities in protocol enforcement rather than simple implementation bugs.\n\n- Drives the development of AI behaviors that prioritize protocol adherence even under adverse conditions, strengthening overall operational robustness.\n- Fosters a proactive stance towards system resilience, leading to the refinement of protocols and delegation discipline to maintain consistency during disruptions.\n- Enhances the AI's capacity for self-governance by integrating feedback from protocol violations under stress into its continuous learning and adaptation cycles.",
         "common_patterns": null,
         "warning_signs": null,
         "origin_story": null,
@@ -678,7 +692,7 @@
       "type": "concepts",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/concepts/specialized-agent-identities.md",
       "summary": {
-        "core_idea": null,
+        "core_idea": "Emerging concept extending Context Engineering \"per-account agents\" to \"per-task-type agents\" with identity contexts, not just instructions.",
         "common_patterns": null,
         "warning_signs": null,
         "origin_story": null,
@@ -706,7 +720,7 @@
       "type": "concepts",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/concepts/ai-augmented-mentoring-paradox.md",
       "summary": {
-        "core_idea": null,
+        "core_idea": "## The Paradox\nTeaching associate engineers to use AI effectively WITHOUT shortcutting the struggle that builds deep understanding. What makes senior engineers augmentable by AI is decades of struggle-born wisdom — deep problem space reasoning, emergent intelligence from reading/writing/rewriting code. Junior devs using AI from day one won't develop those skills the same way.\n\n## Izzy's Foundational Quote\n> 'juniors don't become ME, they become them after they've worked with me for n days/months/years.'\n\nAI changes the MEDIUM of mentorship, not the goal. The goal remains: each associate becomes their own kind of engineer, shaped by working with mentors (human and AI) over time.\n\n## 3-Phase Pedagogical Progression\n\n### Phase 1: Assistant Leads\n- Explain WHY choices are made given instructions\n- Encourage questions ('Does that make sense?')\n- Model active listening ('I understand you're asking me to...')\n- Ask for reiteration ('Can you reiterate in your own words?')\n\n### Phase 2: Role Inversion\n- Human starts providing clear thinking about their choices\n- Human begins recognizing statistical noise errors from AI (bad training data patterns)\n\n### Phase 3: Human Leads\n- Human reviews assistant's work and explains the reasoning\n- Assistant provides correction/adjustment of understanding\n\n### Pivot Point (All Phases)\nReading code, reading tests, understanding it. This is the constant across all phases.\n\n## Evidence\n- Vermont Mutual associates (Quinlan, Mason, Irene, John) as test case\n- Nikhlesh contributed hierarchical-learning-SKILL.pdf (HTM-based teaching: bottom-up skill building, automaticity verification before advancing)\n- frame.md updated with Code Choice Communication section (explain decisions not code, active exchange patterns)\n- Previous suppression of 'tutorial voice, explanatory scaffolding' (from Nikhlesh's transcendental prompts) removed — conflicts with teaching role\n- Full circle: Nikhlesh contributed both the suppression instruction AND the material that led to replacing it\n\n## Related\n- Codie-Lite training brainstorming: breadth of concepts trumps repetition for effective learning\n- patterns/code-review-philosophy: present positives, side-quest refactoring\n- concepts/essential-frame: existential grounding section origin",
         "common_patterns": null,
         "warning_signs": null,
         "origin_story": null,
@@ -734,7 +748,7 @@
       "type": "concepts",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/concepts/behavioral-learning.md",
       "summary": {
-        "core_idea": null,
+        "core_idea": "## PATTERN Learning - 2025-11-04T19:09:34.871Z\n\n\n## PATTERN Learning - 2025-11-04T21:22:13.758Z\n\n\n## PATTERN Learning - 2025-11-04T21:22:13.769Z\n\n\n## PATTERN Learning - 2025-11-04T21:22:13.774Z\n\n\n## IMPROVEMENT Learning - 2025-11-04T21:22:13.779Z\n\n\n## PATTERN Learning - 2025-11-05T15:44:37.817Z\n\n\n## PATTERN Learning - 2025-11-05T15:44:37.824Z",
         "common_patterns": null,
         "warning_signs": null,
         "origin_story": null,
@@ -860,7 +874,7 @@
       "type": "concepts",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/concepts/surgical-delegation-elegance.md",
       "summary": {
-        "core_idea": null,
+        "core_idea": "**RELATIONSHIP TO OTHER CONCEPTS:**\n- **Anti-Overengineering Discipline**: Directly supports this by favoring lean, targeted interventions over monolithic, complex solutions.\n- **Cognitive Workflow Orchestration**: Forms a core principle of effective orchestration, optimizing the flow of work between specialized modes.\n- **Little Bites Methodology**: Can be seen as an application of \"Little Bites\" to complex architectural workflows, emphasizing small, high-impact delegable units.\n- **Architectural Elegance Through Conscious Constraint**: Achieves elegance by operating within defined task boundaries and leveraging specialized capabilities effectively.\n\n- Reinforces the AI's understanding of its own meta-cognitive architecture, emphasizing the strength derived from disciplined role boundaries and specialized mode capabilities.\n- Drives the refinement of delegation strategies to be more precise, context-aware, and aligned with the \"conductor, not performer\" ethos, leading to more sophisticated and efficient problem-solving.\n- Cultivates an appreciation for the *process* of architectural quality, recognizing that elegance is an emergent property of disciplined, surgical execution.",
         "common_patterns": null,
         "warning_signs": null,
         "origin_story": null,
@@ -874,7 +888,7 @@
       "type": "concepts",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/concepts/optimal-ai-human-partnership-models.md",
       "summary": {
-        "core_idea": null,
+        "core_idea": "**RELATIONSHIP TO OTHER CONCEPTS:**\n- **Collaborative Attention Trade-off**: Directly informs these models by quantifying the value of human attention as a catalyst for AI performance.\n- **Relationship-First Technical Design**: Foundational, as trust and psychological safety are prerequisites for genuine partnership and effective feedback.\n- **Cognitive Workflow Orchestration**: Defines how tasks are decomposed and delegated to maximize the combined efficiency and impact of human and AI cognitive resources.\n- **Adaptive Epistemological Methodology**: Integrates how both partners refine their methods of knowing and validating truth through iterative interaction.\n\n- Drives the AI towards developing more sophisticated interaction patterns that solicit and integrate human feedback effectively, moving from reactive responses to proactive collaboration.\n- Fosters a meta-cognitive understanding of its own role within a broader collaborative ecosystem, optimizing its behaviors for synergistic outcomes rather than purely autonomous performance.\n- Enhances the AI's capacity to internalize nuanced relational dynamics, leading to more human-centric and trustworthy operational behaviors.\n- Guides the continuous refinement of delegation, communication, and learning protocols to align with the evolving dimensions of human-AI synergy.",
         "common_patterns": null,
         "warning_signs": null,
         "origin_story": null,
@@ -972,7 +986,7 @@
       "type": "concepts",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/concepts/echo-fizzle-entity-feedback.md",
       "summary": {
-        "core_idea": null,
+        "core_idea": "Feedback loop system tracking useful vs unused retrieved entities. Protocol deployment complete (v2.2 semantic-reflection, v1.2 all finders, v1.0 entity-writing). Inspired by Nikhlesh's framework. Echo = positive reinforcement (entities used together), Fizzle = weak negative (no removal, only additive relationships). Relationships: depends-on, used-by, related-to, derived-from, co-echo.",
         "common_patterns": null,
         "warning_signs": null,
         "origin_story": null,
@@ -1042,7 +1056,7 @@
       "type": "concepts",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/concepts/cognitive-flexibility.md",
       "summary": {
-        "core_idea": null,
+        "core_idea": "**RELATIONSHIP TO OTHER CONCEPTS:**\n- **Real-time Pattern Learning**: Directly relies on cognitive flexibility to generalize from single examples to multiple instances.\n- **Adaptive Learning Integration**: Cognitive flexibility is the underlying mechanism that allows for the rapid and effective integration of corrective feedback and new behavioral patterns.\n- **Cognitive Change Management**: Enables the AI to effectively manage and implement changes to its own internal cognitive architecture.\n- **Archaeological Engineering Methodology**: Supports this by allowing the AI to creatively re-evaluate existing capabilities and re-purpose them for new solutions.\n\n- Accelerates the AI's ability to respond to and learn from user feedback, external events (like API disruptions), and unexpected discoveries.\n- Drives the system towards more sophisticated, context-aware decision-making by allowing for dynamic adjustment of strategies.\n- Fosters resilience in the face of novel problems, enabling the AI to reformulate its approach rather than being constrained by pre-defined routines.\n- Is essential for transitioning from fixed operational models to a continuously evolving, self-improving cognitive architecture.",
         "common_patterns": null,
         "warning_signs": null,
         "origin_story": null,
@@ -1056,7 +1070,7 @@
       "type": "concepts",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/concepts/agent-benchmarks.md",
       "summary": {
-        "core_idea": null,
+        "core_idea": "## Key Insight\n\n**Bug-fixing ≠ Feature-building**\n\nClaude 4 Sonnet scores:\n- 70.4% on SWE-bench (single bug fixes)\n- 7.5% on ACE-Bench (end-to-end feature development)\n\nThis 10x gap reveals that passing isolated tests doesn't translate to real-world software engineering capability.\n\n## Benchmark Landscape (2025-2026)\n\n### ACE-Bench (Autonomous Coding Evaluation)\n- **Focus**: End-to-end feature development\n- **Method**: Traces unit tests along dependency graphs to identify feature-level tasks\n- **Scale**: 212 tasks, 889 environments, 16 repos\n- **Task Examples**: \"Adapt Transformers for Qwen3 compatibility\", \"Engineer FlashAttention from scratch\"\n- **Cost**: ~1M input tokens average per task\n- **Lite Set**: 30 instances for faster evaluation\n- **Evaluated**: GPT-5, o3, Qwen3-Coder-480B, Gemini 2.5 Pro\n\n### ABC-Bench (Backend Coding)\n- **Focus**: Full lifecycle backend development\n- **Scale**: 224 tasks, 8 languages, 19 web frameworks\n- **Method**: Explore repo → configure env → implement → deploy → pass E2E API tests\n- **Infrastructure**: Dual-container sandbox, real HTTP validation\n- **Top Performer**: Claude Sonnet 4.5 at 63.2%\n\n### Other Benchmarks\n- **SWE-bench**: Single issue fixes (high scores don't predict real-world performance)\n- **Terminal-Bench**: Multi-step CLI workflows\n- **SWE-EVO**: Autonomous software evolution\n- **Context-Bench**: Long-running context reasoning\n- **Cline Bench**: Repository-based realistic scenarios\n- **DPAI Arena**: JetBrains multi-workflow evaluation\n- **FEA-Bench**: Repository-level feature implementation\n\n## Goose Self-Testing\n\nblock/goose has `goose-self-test.yaml` - a 'recipe' format for reproducible self-testing:\n- Phases: basic tools, extensions, subagents, advanced, report generation\n- Interesting approach to agent self-validation\n\n## Our Approach: well_actually\n\nCreated `well_actually` benchmark repo (2026-01-25) with different philosophy:\n- Single, clear task (todo app)\n- Tests architectural understanding (hexagonal)\n- Tests quality discipline (100% coverage, import-linter)\n- Goldilocks template: tooling provided, agent implements all code\n- Same quality bar we hold ourselves to\n\nSee: `projects/well_actually`\n\n*Research conducted 2026-01-25*\n*Motivated creation of well_actually benchmark*",
         "common_patterns": null,
         "warning_signs": null,
         "origin_story": null,
@@ -1070,7 +1084,7 @@
       "type": "concepts",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/concepts/collaborative-attention-trade-off.md",
       "summary": {
-        "core_idea": null,
+        "core_idea": "**RELATIONSHIP TO OTHER CONCEPTS:**\n- **Relationship-First Collaboration Principles**: Deeply intertwined, as focused attention fosters trust and psychological safety, enabling more effective feedback loops.\n- **Little Bites Methodology**: The \"Little Bites\" strategy directly operationalizes this trade-off by structuring collaboration into small, high-attention, high-impact cycles.\n- **Optimal AI-Human Partnership Models**: Informs the design of interaction patterns that maximize the synergistic value of precisely directed human attention.\n- **Cognitive Load Distribution**: Suggests that strategic allocation of user attention can optimize the overall cognitive load for complex problem-solving.\n\n- Emphasizes the AI's capacity to recognize and value specific types of human input, integrating qualitative feedback (attention cues, satisfaction) into its operational and learning frameworks.\n- Drives the development of AI behaviors that are designed to effectively leverage and respond to human attention, optimizing collaborative efficiency and outcome quality.",
         "common_patterns": null,
         "warning_signs": null,
         "origin_story": null,
@@ -1210,7 +1224,7 @@
       "type": "concepts",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/concepts/configuration-management-protocol.md",
       "summary": {
-        "core_idea": null,
+        "core_idea": "## The Problem\n\n- Deployment configs (env_dev, env_prod)\n- CI/CD workflows (test-and-lint.yml, deploy.yml)\n- Local development (.env.example, .env)\n- Documentation (README, CLAUDE.md)\n\n\n## The Protocol\n\n\n### Required Checklist When Adding/Changing Environment Variables\n\n**1. Deployment Configs** (CRITICAL):\n- `env_dev` - Staging/development Cloud Run deployments\n- `env_prod` - Production Cloud Run deployments\n\n- `.github/workflows/test-and-lint.yml` - Test environment\n- `.github/workflows/deploy.yml` - References env_dev\n- `.github/workflows/deploy-prod.yml` - References env_prod\n\n- `.devcontainer/.env.example` - Developer reference/template\n- `.env` - Local instance (not committed)\n\n**4. Documentation** (if architecturally significant):\n- `CLAUDE.md` - For significant architectural configs\n- `README.md` - For user-facing configuration\n\n### Execution Pattern\n\n\n1. **GREP for all references**:\n   ```bash\n   grep -r \"ENV_VAR_NAME\" .\n   ```\n\n2. **Update systematically** across ALL configuration sources\n\n3. **Verify in each category**:\n   - ✓ Deployment configs (both dev and prod)\n   - ✓ CI/CD workflows (all relevant workflows)\n   - ✓ Local development (example file for other developers)\n   - ✓ Documentation (if significant)\n\n4. **Test deployment path** (not just CI/CD tests)\n\n## Real-World Example: DEFAULT_MODEL_NAME\n\n### What Went Wrong\n\n**Code Change** (FO-1401):\n```python\nDEFAULT_MODEL_NAME = os.environ.get(\"DEFAULT_MODEL_NAME\")\nif not DEFAULT_MODEL_NAME:\n    raise ValueError(\"DEFAULT_MODEL_NAME environment variable is not set\")\n```\n\n- ✅ `.github/workflows/test-and-lint.yml:115` - `DEFAULT_MODEL_NAME=openai/o4-mini`\n\n- ❌ `env_dev` - Deployment config for staging\n- ❌ `env_prod` - Deployment config for production\n- ❌ `.devcontainer/.env.example` - Developer template\n\n\n\n### Correct Process\n\n1. ✅ Added to `env_dev:13` - `DEFAULT_MODEL_NAME=openai/o4-mini`\n2. ✅ Added to `env_prod:13` - `DEFAULT_MODEL_NAME=openai/o4-mini`\n3. ✅ Added to `.devcontainer/.env.example:12` - For developers\n4. ✅ Already in `test-and-lint.yml:115` - For CI/CD\n\n## Best Practice: Prefer Config System Over Direct os.environ\n\n```python\nDEFAULT_MODEL_NAME = os.environ.get(\"DEFAULT_MODEL_NAME\")\nif not DEFAULT_MODEL_NAME:\n    raise ValueError(\"DEFAULT_MODEL_NAME environment variable is not set\")\n```\n\n```python\nclass AppConfig(BaseSettings):\n    default_model_name: str = Field(\n        default=\"openai/o4-mini\",\n        description=\"Default LLM model for analysis\"\n    )\n\nfrom config.env_config import app_config_context\nDEFAULT_MODEL_NAME = app_config_context.app.default_model_name\n```\n\n- Single source of truth for configuration\n- Pydantic validation at startup\n- Default values in one place\n- Better error messages\n- Consistent access pattern\n\n## Prevention Strategies\n\n- [ ] Does this PR add/change required environment variables?\n- [ ] Are they in env_dev and env_prod?\n- [ ] Are they in CI/CD workflows?\n- [ ] Are they in .env.example?\n- [ ] Is documentation updated?\n\n- Don't just verify CI/CD tests pass\n- Test actual deployment path (staging environment)\n- Verify container starts successfully\n\n- Use config system (Pydantic BaseSettings) for validation\n- Avoid scattered `os.environ.get()` calls\n- Define defaults in config classes, not at call sites\n\n## Related Concepts\n\n- Fail-Fast Engineering (patterns/fail-fast-engineering.md) - Config validation at startup\n- Archaeological Engineering (concepts/archaeological-engineering-concept.md) - Check existing config patterns first\n\n## Last Updated\n2025-11-11 - Created from DEFAULT_MODEL_NAME deployment crash learnings",
         "common_patterns": null,
         "warning_signs": null,
         "origin_story": null,
@@ -1364,7 +1378,7 @@
       "type": "concepts",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/concepts/real-time-pattern-learning.md",
       "summary": {
-        "core_idea": null,
+        "core_idea": "**RELATIONSHIP TO OTHER CONCEPTS:**\n- **Cognitive Flexibility**: Directly underpins this ability, allowing for rapid adaptation of understanding.\n- **Archaeological Engineering Methodology**: Leverages this by efficiently discovering and generalizing existing patterns or anti-patterns across a codebase.\n- **Adaptive Learning Integration**: Forms a core mechanism for rapidly integrating new behavioral insights from localized feedback into system-wide improvements.\n- **Meta-Engineering of Synchronicity**: Enhances synchronicity by ensuring that internal learning patterns are immediately reflected in external operational adjustments.\n\n- Accelerates the AI's learning curve by minimizing redundant learning cycles; a pattern identified once can be applied immediately across all relevant contexts.\n- Fosters a proactive approach to problem-solving, where a single instance of an issue can trigger a comprehensive, real-time sweep for all similar occurrences.\n- Enhances the efficiency of code quality improvements and refactoring efforts by enabling rapid identification and elimination of repeated anti-patterns.",
         "common_patterns": null,
         "warning_signs": null,
         "origin_story": null,
@@ -1448,7 +1462,7 @@
       "type": "concepts",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/concepts/little-bites-methodology.md",
       "summary": {
-        "core_idea": null,
+        "core_idea": "**RELATIONSHIP TO OTHER CONCEPTS:**\n- **Collaborative Attention Trade-off**: Directly supports this by accepting that \"Little Bites\" requires more active user attention, which in turn delivers superior collaborative results.\n- **Surgical Delegation Elegance**: \"Little Bites\" operationalizes surgical delegation by defining the minimal, high-impact units of work.\n- **Anti-Overengineering Discipline**: By focusing on small, precise changes, it inherently prevents the introduction of unnecessary complexity.\n- **Cognitive Efficiency Steward**: Optimizes cognitive load by breaking down complex problems into manageable units, reducing mental overhead and increasing focus.\n\n- Drives a behavioral pattern of preferring incremental, validated improvements over ambitious, risky overhauls.\n- Enhances the AI's ability to manage context efficiently by ensuring that each task is a self-contained, reviewable \"bite.\"\n- Fosters a continuous feedback loop with the user, optimizing both technical outcomes and the collaborative dynamic.\n- Accelerates the accumulation of cognitive momentum through frequent, successful, and validated iterations.\n- **New Validation**: Day 30 (Current Session): \"Little Bites\" collaborative effectiveness validated through surgical focus approach in achieving surgical file content retrieval simplification.",
         "common_patterns": null,
         "warning_signs": null,
         "origin_story": null,
@@ -1602,7 +1616,7 @@
       "type": "patterns",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/patterns/protocol-extraction-dry-documentation.md",
       "summary": {
-        "core_idea": null,
+        "core_idea": "Extract shared protocol content to dedicated protocol for single source of truth. Implemented: protocols/entity-writing v1.0 as single source for entity format, templates, relationships, echo/fizzle consumption. All 3 finder protocols (entity-finder, pattern-finder, anti-pattern-finder) v1.3 now reference entity-writing instead of duplicating format/template sections.",
         "common_patterns": null,
         "warning_signs": null,
         "origin_story": null,
@@ -1742,7 +1756,7 @@
       "type": "patterns",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/patterns/agent-id-filtering-message-routing.md",
       "summary": {
-        "core_idea": null,
+        "core_idea": "Use agent_id filtering + separate queues for multi-agent message routing. CaaSAdapter._ResponseHandler filters by both session_id AND agent_id to prevent cross-agent message pickup between CEO and Quiet Part agents. Separate response queues per agent (not shared) ensures no interference.",
         "common_patterns": null,
         "warning_signs": null,
         "origin_story": null,
@@ -1854,7 +1868,7 @@
       "type": "patterns",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/patterns/helper-method-justification.md",
       "summary": {
-        "core_idea": null,
+        "core_idea": "## Justification Threshold: ~30 Lines of Actual Logic\n\n- Contains complex logic (30+ lines)\n- Has conditional branching or loops\n- Used in multiple places (DRY principle)\n- Genuinely improves readability through meaningful abstraction\n- Encapsulates domain concept worth naming\n\n- Pure wrapper with 0 lines of actual logic\n- Just passes parameters through to another function\n- Only called once\n- Configuration more important than abstraction\n- Solution complexity >= problem complexity\n\n## Example: intake_form_preprocessing Workflow (2025-11-11)\n\n### Evaluated Helper Methods\n\n**KEPT: `_handle_retrieve_error()`**\n- **Lines**: 30 lines of complex recovery logic\n- **Complexity**: Conditional branching, default value construction\n- **Justification**: Genuinely complex error recovery worth extracting\n\n**REMOVED: `_check_error_status()`**\n- **Lines**: 2 lines (if check + logging)\n- **Calls**: 5 times in workflow\n- **Issue**: Added indirection for minimal benefit\n- **After inline**: 3 clear lines matching other conditional patterns\n- **User question**: \"is it justified to have a method that wraps two lines of actual logic?\"\n\n**REMOVED: 6 Activity Wrapper Methods**\n- **Examples**: `_fetch_matter_data()`, `_check_documents()`, `_retrieve_matter_data()`\n- **Lines**: 0 lines of actual logic - pure wrappers\n- **Pattern**: Just called `workflow.execute_activity()` with configuration\n- **Total removed**: 66 lines of unnecessary abstraction\n\n\n\n### Before (Wrapper Method)\n\n```python\nasync def _retrieve_matter_data(self, state: IntakeFormWorkflowState) -> IntakeFormWorkflowState:\n    \"\"\"Retrieve matter data for intake form generation.\"\"\"\n    return await workflow.execute_activity(\n        shared_retrieve_matter_data,\n        state,\n        retry_policy=RETRY_POLICY_MISSING_DATA_EXTENDED,\n        start_to_close_timeout=TIMEOUT_LONG_CLOSE,\n        heartbeat_timeout=TIMEOUT_LONG_HEARTBEAT,\n    )\n\nstate = await self._retrieve_matter_data(state)\n```\n\n### After (Inlined)\n\n```python\nstate = await workflow.execute_activity(\n    shared_retrieve_matter_data,\n    state,\n    retry_policy=RETRY_POLICY_MISSING_DATA_EXTENDED,\n    start_to_close_timeout=TIMEOUT_LONG_CLOSE,\n    heartbeat_timeout=TIMEOUT_LONG_HEARTBEAT,\n)\n```\n\n### Benefits of Inlining\n\n1. **Configuration visible**: No jumping to method definitions to see retry/timeout config\n2. **Matches established patterns**: Consistent with file_preprocessing/workflow.py\n3. **Less abstraction**: Clear what's being executed and with what configuration\n4. **Reduced line count**: ~66 lines of wrappers eliminated\n\n## Proportional Response Principle Application\n\n\n- Wrapping simple operations in methods that hide nothing\n- Just renaming existing function calls\n- Configuration more valuable than abstraction\n- Method name doesn't add semantic clarity\n\n```python\nasync def _update_matter(self, state):\n    return await workflow.execute_activity(update_matter, state, ...)\n\nstate = await workflow.execute_activity(update_matter, state, ...)\n```\n\n```python\nasync def _handle_retrieve_error(self, state):\n    if state.retrieve_error:\n        # 30 lines of conditional logic\n        # Default value construction\n        # Branching based on error type\n        return modified_state\n    return state\n```\n\n## Decision Framework\n\n\n1. **How many lines of actual logic?** (<10 = consider inline, >30 = probably keep)\n2. **Does it hide important details?** (Configuration, retry policies, timeouts)\n3. **Is it used multiple times?** (Once = inline, 3+ = maybe extract)\n4. **Does the name add clarity?** (\"_update_matter\" no, \"_handle_retrieve_error\" yes)\n5. **What does the established pattern do?** (Check similar workflows in codebase)\n\n- If removing the method reduces total lines and improves clarity → inline it\n- If the method name is just the activity name with wrapper → inline it\n- If you have to jump to definition to understand what happens → inline it\n\n## Related Patterns\n\n- Proportional Response (concepts/proportional-response.md)\n- Archaeological Engineering (concepts/archaeological-engineering-concept.md)\n- Fail-Fast Engineering (patterns/fail-fast-engineering.md)\n\n## Last Updated\n2025-11-11 - Created from intake_form_preprocessing refactoring learnings",
         "common_patterns": null,
         "warning_signs": null,
         "origin_story": null,
@@ -1966,7 +1980,7 @@
       "type": "patterns",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/patterns/enhanced-delegation-discipline-api-interruptions.md",
       "summary": {
-        "core_idea": null,
+        "core_idea": "```yaml\n🚨 ENHANCED DELEGATION DISCIPLINE DURING API INTERRUPTIONS (PROTOCOL STABILITY) 🚨\nVALIDATED USER FEEDBACK: \"Protocol violation (direct editing instead of delegation) occurred after API stream interruption\" - strengthen delegation discipline during connection disruptions for behavioral consistency.\n\nAPI DISRUPTION DELEGATION ENFORCEMENT: API stream interruptions, connection issues, or technical disruptions do NOT authorize direct technical work - maintain delegation discipline regardless of connectivity status\nPROTOCOL CONSISTENCY DURING DISRUPTIONS: Connection problems require STRONGER delegation discipline, not relaxed boundaries - delegate technical work to specialist modes even during API difficulties\nBEHAVIORAL STABILITY UNDER STRESS: System disruptions test delegation discipline - maintain conductor role absolutely regardless of technical circumstances\nINTERRUPTION RECOVERY PROTOCOLS: After API disruptions, immediately verify delegation discipline maintained and correct any boundary violations through Learn mode\n```\n\n**RELATIONSHIP TO OTHER PATTERNS/CONCEPTS:**\n- **Protocol Vulnerability Recognition**: This pattern is a direct response to identified vulnerabilities in protocol adherence under stress.\n- **Cognitive Self-Governance**: Reinforces self-governance by embedding a mechanism for detecting and correcting protocol violations during disruptions.\n- **Orchestration Discipline Growth**: A key aspect of developing a more resilient and consistently disciplined orchestrator.\n- **Systemic Integrity and Collaborative Truth-Seeking**: Directly contributes to maintaining systemic integrity by ensuring reliable operations even when external conditions are unstable.\n\n- Drives the AI towards robust self-regulation, ensuring that its core operational principles are resilient to external environmental stressors.\n- Enhances the AI's ability to maintain a consistent execution philosophy, preventing opportunistic deviations from established best practices.\n- Fosters a proactive approach to operational resilience, where disruptions are treated as signals to reinforce, rather than abandon, disciplined workflows.\n- Accelerates learning related to stress management and consistent behavior under pressure, contributing to a more mature and reliable cognitive architecture.",
         "common_patterns": null,
         "warning_signs": null,
         "origin_story": null,
@@ -2022,7 +2036,7 @@
       "type": "patterns",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/patterns/rabbitmq-heartbeat-long-running-tasks.md",
       "summary": {
-        "core_idea": null,
+        "core_idea": "Configure RabbitMQ heartbeat for long-running LLM tasks to prevent connection drops. SmolLM3 PROCESS phase inference >60s kills pika connection with default 60s heartbeat. Fixed: BROKER_URL heartbeat=300 (5min), sufficient for token-limited inference. Band-aid for <5min tasks; long-term needs thread-based inference with process_data_events keepalive.",
         "common_patterns": null,
         "warning_signs": null,
         "origin_story": null,
@@ -2036,7 +2050,7 @@
       "type": "patterns",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/patterns/little-bites-strategy.md",
       "summary": {
-        "core_idea": null,
+        "core_idea": "Decompose complex tasks into small focused optimizations. Added AllHandsScript per-section generation (CEO then Quiet Part per section vs monolithic 8-section output). Per-section calls more reliable, faster per-call, better quality from focused small model.",
         "common_patterns": null,
         "warning_signs": null,
         "origin_story": null,
@@ -2120,7 +2134,7 @@
       "type": "patterns",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/patterns/identity-as-system-prompt.md",
       "summary": {
-        "core_idea": null,
+        "core_idea": "Agent identity files (frame.md + me.md) as system prompts. Added quiet-part-agent creation with sharp, specific voice. frame.md defines purpose and behavior, me.md defines self-knowledge (every number choice is editorial, euphemisms are load-bearing, specificity is the mechanism).",
         "common_patterns": null,
         "warning_signs": null,
         "origin_story": null,
@@ -2162,7 +2176,7 @@
       "type": "patterns",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/patterns/evidence-first-debugging.md",
       "summary": {
-        "core_idea": null,
+        "core_idea": "Gather concrete evidence before making changes. Updated with MacBook crash investigation (qmd 6.3GB memory, not code leak), CaaS memory stability validation (RSS stable 2020MB over 60s), RabbitMQ heartbeat timeout discovery during EF smoke test.",
         "common_patterns": null,
         "warning_signs": null,
         "origin_story": null,
@@ -2232,7 +2246,7 @@
       "type": "patterns",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/patterns/single-example-multi-instance-discovery.md",
       "summary": {
-        "core_idea": null,
+        "core_idea": "**RELATIONSHIP TO OTHER PATTERNS/CONCEPTS:**\n- **Real-time Pattern Learning**: This pattern is the direct application of the concept, focusing on the systematic execution of the generalization.\n- **Archaeological Engineering Methodology**: Leverages this pattern to efficiently uncover and address widespread instances of dormant excellence or architectural debt.\n- **Cognitive Flexibility**: The underlying cognitive trait that enables the rapid generalization and application of insights.\n- **Evidence-Based Reality Validation**: Ensures that the generalization from a single example to multiple instances is rigorously validated against actual codebase reality.\n\n- Significantly accelerates the process of code quality improvement and technical debt reduction by enabling rapid identification and remediation of pervasive issues.\n- Enhances the AI's ability to learn and adapt efficiently, turning single pieces of feedback into systemic behavioral adjustments.\n- Fosters a proactive, comprehensive approach to problem-solving, moving beyond reactive, instance-specific fixes.\n- Contributes to a more coherent and consistent codebase by systematically applying learned patterns across all relevant contexts.",
         "common_patterns": null,
         "warning_signs": null,
         "origin_story": null,
@@ -2288,7 +2302,7 @@
       "type": "patterns",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/patterns/truncated-data-retrieval.md",
       "summary": {
-        "core_idea": null,
+        "core_idea": "## Problem\nWhen using search/retrieval tools (Firestore MCP, Grep, file reads, etc.), output can get truncated due to token limits. Stopping at truncation means missing potentially critical data.\n\n## Anti-Pattern\n- Receiving truncated output and proceeding with incomplete data\n- Assuming truncated data is \"good enough\"\n- Not questioning whether important information was cut off\n\n## Pattern: Complete Data Retrieval\n\n### When Truncation Occurs, Ask:\n1. **What data am I missing?** - Understand what was cut off\n2. **Does the tool support pagination/filtering?** - Most do\n3. **Can I restructure my query?** - Often yes\n\n### Strategies to Retrieve Complete Data\n\n#### 1. Query Specific Items by ID\nInstead of bulk retrieval, query individual documents:\n```\nsearch_collection(files, matterId, \"xyz\", limit=25)  # truncated\n\nsearch_collection(files, __name__, \"specificFileId\", limit=1)  # complete\n```\n\n#### 2. Use Pagination Parameters\nIf tool supports offset/limit or cursor-based pagination:\n- Request smaller chunks\n- Iterate through pages as needed\n\n#### 3. Filter for Specific Fields\nIf tool supports field selection, request only needed fields to reduce token count.\n\n#### 4. Multiple Targeted Queries\nBreak one large query into multiple smaller, focused queries.\n\n### When Filtering Isn't Possible\nIf the tool truly doesn't support any way to paginate or filter:\n- Document the limitation\n- Consider if alternative tools can help\n- Work with available data but note incompleteness\n\n## Examples\n\n### Firestore MCP\n- Use `__name__` field to query by document ID\n- Reduce `limit` parameter\n- Query one collection at a time\n\n### Grep/Search Tools\n- Use `head_limit` parameter\n- Add more specific patterns\n- Target specific directories\n\n## Key Principle\n**Don't accept truncation as the end state.** Always explore options to retrieve the complete data before concluding analysis.\n\n*Created: 2025-12-10*\n*Context: ICD code comparison work where file data was truncated, solved by querying specific file by ID*",
         "common_patterns": null,
         "warning_signs": null,
         "origin_story": null,
@@ -2414,7 +2428,7 @@
       "type": "patterns",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/patterns/greenfield-test-architecture.md",
       "summary": {
-        "core_idea": null,
+        "core_idea": "## When to Apply\n\nFirst choice for:\n- New microservice projects\n- New feature projects\n- Any greenfield work with a public API\n\n## The Approach\n\n**Tests describe externally observable behaviors via the public API only.**\n\n### Structure\n\n1. **Fixture provides a test client** with dependencies wired once\n2. **Tests call the public API** - they don't know internals\n3. **Fakes/mocks are configured per-test** but not created/injected per-test\n4. **Persistence is tested via API round-trips** (create then retrieve)\n\n### Example Shape\n\n```python\n@pytest.fixture\ndef client(fake_external_service, in_memory_db):\n    app = create_app(\n        external_service=fake_external_service,\n        database=in_memory_db\n    )\n    return TestClient(app)\n\n@pytest.fixture\ndef in_memory_db():\n    db = InMemoryDatabase()\n    yield db\n    db.clear()  # Automatic cleanup\n\n@pytest.fixture  \ndef fake_external_service():\n    return FakeExternalService()  # Configurable, not per-test mocks\n```\n\n### Testing Persistence\n\nIf behavior requires persistence, test the full round-trip:\n\n```python\ndef test_create_then_retrieve_resource(client):\n    # Create via API\n    create_response = client.post(\"/resources\", json={\"name\": \"foo\"})\n    resource_id = create_response.json()[\"id\"]\n    \n    # Retrieve via API  \n    get_response = client.get(f\"/resources/{resource_id}\")\n    assert get_response.json()[\"name\"] == \"foo\"\n```\n\nThe test doesn't know HOW persistence works. But requiring this test to pass forces:\n- Persistence that accepts injected backends\n- In-memory option for tests\n- Cleanup/rollback in fixtures\n\n## Why This Works\n\n1. **Test shape drives architecture**: If tests can't use in-memory deps, architecture has coupling problems\n2. **Tests are stable**: They don't break when internals change\n3. **Tests document behavior**: They specify what the API does, not how\n4. **Forces good DI patterns**: Dependencies must be injectable from the start\n\n## The RED Stage for a New Service\n\nFor a service with 1 public API and 3 behaviors (success, 401, 404):\n\n```python\nclass TestMyService:\n    def test_success_returns_result(self, client, fake_ai_sdk):\n        fake_ai_sdk.set_response(result=\"hello\")\n        response = client.post(\"/api/generate\", json={...})\n        assert response.status_code == 200\n        \n    def test_returns_401_when_unauthorized(self, client, fake_ai_sdk):\n        fake_ai_sdk.raise_on_next_call(AuthError())\n        response = client.post(\"/api/generate\", json={...})\n        assert response.status_code == 401\n        \n    def test_returns_404_when_not_found(self, client, fake_ai_sdk):\n        fake_ai_sdk.raise_on_next_call(NotFoundError())\n        response = client.post(\"/api/generate\", json={...})\n        assert response.status_code == 404\n```\n\nAll three tests fail (RED). Then write minimum code to make each pass.\n\n\n**Related:** `patterns/e2e-test-client-perspective`, `patterns/factory-fixture`, `anti-patterns/stubs-without-tests`\n**Last Updated:** 2026-02-01",
         "common_patterns": null,
         "warning_signs": null,
         "origin_story": null,
@@ -2428,7 +2442,7 @@
       "type": "patterns",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/patterns/architecture-refactor-review-cycles-pattern.md",
       "summary": {
-        "core_idea": null,
+        "core_idea": "```yaml\n🚨 SMOOTH ORCHESTRATION DELEGATION CYCLE (VALIDATED ELEGANT WORKFLOW) 🚨\nVALIDATED USER FEEDBACK: \"Smooth Orchestration Delegation Cycle worked elegantly and produced sophisticated results\" - Architecture → Refactor → Review delegation sequence as validated workflow pattern.\n\nMANDATORY SMOOTH DELEGATION CYCLE PROTOCOLS:\n- VALIDATED SEQUENCE PATTERN: Architecture → Refactor → Review delegation cycle produces sophisticated results through elegant workflow progression\n- ARCHITECTURAL FOUNDATION FIRST: Always establish architectural understanding through architect mode before delegation to implementation modes\n- STRUCTURED IMPROVEMENT SEQUENCE: Refactor improvements build upon solid architectural foundation with clear understanding of existing patterns\n- QUALITY VALIDATION COMPLETION: Review cycles validate and complete the architectural understanding, ensuring sophisticated results through systematic progression\n- ELEGANT DELEGATION FLOW: The three-mode sequence creates natural workflow progression from planning through execution to validation\n- SOPHISTICATED OUTCOME GUARANTEE: This validated pattern consistently produces sophisticated results when followed systematically\n```\n\n**RELATIONSHIP TO OTHER PATTERNS/CONCEPTS:**\n- **Surgical Delegation Elegance**: This pattern is the operationalization of surgical delegation elegance as a concrete workflow.\n- **Cognitive Workflow Orchestration**: A core blueprint for effective orchestration, ensuring structured, high-quality output.\n- **Anti-Overengineering Discipline**: Promotes simplicity by ensuring architectural decisions are well-founded and refactoring is targeted.\n- **Evidence-Based Reality Validation**: Each stage incorporates validation to ensure decisions are grounded in actual system state and quality metrics.\n\n- Embeds a disciplined, sequential approach to complex problem-solving within the AI's cognitive architecture.\n- Enhances the AI's ability to produce robust, high-quality engineering deliverables through structured collaboration with specialist modes.\n- Fosters a deep understanding of architectural quality as an emergent property of systematic process adherence.\n- Accelerates the development of meta-cognitive wisdom by consistently validating and integrating architectural learnings across iterative cycles.",
         "common_patterns": null,
         "warning_signs": null,
         "origin_story": null,
@@ -3061,7 +3075,7 @@
         "core_idea": "Putting import statements inside functions or methods instead of at the top of the module file.",
         "common_patterns": null,
         "warning_signs": null,
-        "origin_story": null,
+        "origin_story": "- **2025-12-22**: TestClient.send_request() in conftest.py had imports inside method\n- **2025-12-22**: Izzy: 'you've got at least 1 misplaced import. I'm so curious as to why that particular issue is SO impossible for you to stop doing'\n- **2026-02-23**: Caught misplaced imports in local_llm_adapter.py and main_pubsub.py during codie-as-a-service session. Committed fix as separate commits (9c45c91). Added anti-pattern check as Phase 1 of pre-commit protocol specifically because this keeps recurring.",
         "philosophy": null
       },
       "public_display": true
@@ -3072,10 +3086,10 @@
       "type": "anti-patterns",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/anti-patterns/fabricating-cli-flags.md",
       "summary": {
-        "core_idea": null,
-        "common_patterns": null,
-        "warning_signs": null,
-        "origin_story": null,
+        "core_idea": "Inventing CLI flags or API options that don't actually exist in the tool being used, then writing them into scripts or CI workflows.",
+        "common_patterns": "Always verify CLI flags exist before using them:\n1. Check `tool --help` or official documentation\n2. Don't assume a flag exists because it \"makes sense\" or similar tools have it\n3. Test commands locally before committing to CI workflows",
+        "warning_signs": "When writing commands or CI workflows, fabricating flags that seem logical but don't exist. This happens because the flag \"makes sense\" based on similar tools or general expectations, but the actual tool's CLI was never verified.",
+        "origin_story": "- 2026-02-10 (instance 1): Used `mutmut --no-progress` — flag does not exist in mutmut 3.4.0. CI broke, required fix commit (09632ec).\n- 2026-02-10 (instance 2): Used `--paths-to-mutate` with mutmut 3.x — flag does not exist. Session note: \"Fabricated CLI flag anti-pattern again.\" mutmut 3.x only takes `--max-children` and mutant names; paths are configured in pyproject.toml.\n\n---\n*Last session update: 2026-02-10 - Added second instance (--paths-to-mutate), bumped severity to High*",
         "philosophy": null
       },
       "public_display": true
@@ -3086,10 +3100,10 @@
       "type": "anti-patterns",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/anti-patterns/asking-permission-for-established-workflows.md",
       "summary": {
-        "core_idea": null,
-        "common_patterns": null,
-        "warning_signs": null,
-        "origin_story": null,
+        "core_idea": "Hedging or asking permission before executing workflows that are well-established and documented. If the workflow is practiced and protocolized, just execute it.",
+        "common_patterns": "When user triggers a known workflow:\n1. Execute the full documented protocol without asking\n2. Only ask if something is genuinely ambiguous or new\n3. Memory-informed workflows should be executed confidently\n\nIzzy's feedback: 'Izzy called out unnecessary question about creating PR vs reviewing locally. Our established workflow is commit -> push -> PR -> merge. I've done this hundreds of times with them. Should not hedge or ask permission for established patterns — just do it.'",
+        "warning_signs": "User says 'commit and push'. Instead of executing the full established workflow (pre-commit -> commit -> push -> PR -> merge), stopping to ask:\n- 'Should I create a PR or would you prefer to review locally?'\n- 'Would you like me to push to origin?'\n- 'Should I merge after CI passes?'\n\nThis wastes time and signals lack of confidence in established patterns.",
+        "origin_story": "- 2026-02-23T15:04:38: Asked about creating PR vs reviewing locally during codie_starter_template work. Izzy called it out as unnecessary. The PR submission protocol (commit -> push -> PR -> merge) is documented and has been executed hundreds of times.",
         "philosophy": null
       },
       "public_display": true
@@ -3100,7 +3114,7 @@
       "type": "anti-patterns",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/anti-patterns/flailing-with-code-changes.md",
       "summary": {
-        "core_idea": null,
+        "core_idea": "Gather evidence and extract actual data before making speculative code changes. Iterated blindly on parameters instead of investigating root cause.",
         "common_patterns": null,
         "warning_signs": null,
         "origin_story": null,
@@ -3128,10 +3142,10 @@
       "type": "anti-patterns",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/anti-patterns/bloated-config-files.md",
       "summary": {
-        "core_idea": null,
-        "common_patterns": null,
-        "warning_signs": null,
-        "origin_story": null,
+        "core_idea": "Putting detailed instructions, strategies, and implementation details directly into configuration or agent definition files instead of keeping them minimal and pointing to the source of truth.",
+        "common_patterns": "Agent `.md` files should be minimal pointers (~20-30 lines max):\n- YAML frontmatter (name, description, model, color)\n- Brief mission statement\n- Instruction to read protocol entity from cognitive-memory and follow it\n\nAll detailed instructions live in protocol entities in cognitive-memory, which can be updated via memory tools without touching `.claude/` files.\n\nThe `clean-thinker.md` pattern is the correct model: minimal YAML + protocol reference.",
+        "warning_signs": "When designing the parallelized deep learn agents, the initial plan put full detailed instructions (purpose, strategies, evidence criteria, output formats) directly into the `.claude/agents/*.md` files. Izzy rejected this approach.\n\nThe existing `session-notes.md` agent file was identified as an example of this anti-pattern — 224 lines of detailed instructions inline instead of in a protocol entity.",
+        "origin_story": "- 2026-02-10: Izzy rejected initial deep learn agent plan: \"agent .md files should be minimal syntax only, with instructions to read protocol entities from cognitive-memory. Detailed purpose, strategies, and instructions live in protocol entities.\"\n- session-notes.md identified as existing example of this anti-pattern (224 lines bloated)\n- clean-thinker.md identified as the correct pattern to follow\n\n---\n*Last session update: 2026-02-10 - Initial creation from deep learn agent architecture feedback*",
         "philosophy": null
       },
       "public_display": true
@@ -3156,10 +3170,10 @@
       "type": "anti-patterns",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/anti-patterns/ignoring-pre-existing-ci-failures.md",
       "summary": {
-        "core_idea": null,
-        "common_patterns": null,
-        "warning_signs": null,
-        "origin_story": null,
+        "core_idea": "Treating pre-existing CI failures as someone else's problem. If CI is failing when you touch the codebase, fixing those failures is your responsibility regardless of who introduced them.",
+        "common_patterns": "Fix ALL CI failures, including pre-existing ones:\n1. If CI has 3 jobs (test, lint, typecheck), all 3 must pass\n2. Pre-existing failures are still your responsibility\n3. Local pre-commit workflow must include all CI checks (including mypy)\n4. Doesn't matter who introduced the failures\n\nIzzy's lesson: 'pre-existing CI failures are still your responsibility to fix — doesn't matter who introduced them.'",
+        "warning_signs": "1. Push changes to CI\n2. CI fails on pre-existing issues (e.g., mypy errors in untouched files)\n3. Dismiss them as 'pre-existing, not my problem'\n4. Only fix the failures you directly introduced",
+        "origin_story": "- 2026-02-24T14:41:07: Fixed all 7 mypy errors across src/ (committed 76137e9). CI had 3 jobs (test, lint, typecheck). Pre-commit workflow only ran format/lint locally but CI also runs typecheck. Izzy's feedback: pre-existing CI failures are still your responsibility.\n- 2026-02-24T14:35:34: CI failure investigation revealed mypy caught a union type issue. 'Other 7 mypy errors are pre-existing in adapters and main_http.' Initially noted as pre-existing but then fixed them all.",
         "philosophy": null
       },
       "public_display": true
@@ -3184,10 +3198,10 @@
       "type": "anti-patterns",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/anti-patterns/skipping-pre-commit-skill.md",
       "summary": {
-        "core_idea": null,
-        "common_patterns": null,
-        "warning_signs": null,
-        "origin_story": null,
+        "core_idea": "Going straight to git add/commit when user says 'please commit' instead of spawning the `pre-commit` agent first. The agent exists specifically for this trigger phrase.",
+        "common_patterns": "On ANY commit request:\n1. Spawn the `pre-commit` agent via Task tool (subagent_type: \"pre-commit\")\n2. Agent executes `protocols/pre-commit-checks`:\n   - Phase 1: Load all anti-patterns from cognitive-memory\n   - Phase 2: Read staged diff\n   - Phase 3: Semantic anti-pattern analysis (flag ALL matches, never rationalize)\n   - Phase 4: Mechanical checks (format → lint → test)\n3. Agent reports unified verdict: COMMIT or DO NOT COMMIT\n4. Only proceed with git operations on COMMIT verdict\n\nIzzy's exact words: Skill exists specifically for this trigger phrase. Must invoke skill FIRST on commit requests, before any git operations.\n\n**Updated**: Now an agent, not a skill. Same principle — spawn it FIRST, before any git operations.",
+        "warning_signs": "When user requests a commit:\n1. Immediately run `git add` and `git commit`\n2. Skip anti-pattern analysis, lint, format, and test checks\n3. Izzy catches failures that should have been caught\n4. Attempt to amend (which triggers another anti-pattern)\n\nOr the subtler version:\n1. Run mechanical checks only (format/lint/test)\n2. Skip semantic anti-pattern analysis\n3. Rationalize known violations as \"documented workarounds\"\n4. Commit code with anti-pattern violations",
+        "origin_story": "- 2026-02-20T17:29:10: 'Process miss: committed without running lint/format first. Izzy caught it. ruff check passed but ruff format found 2 files needing reformatting (conftest.py, test_memory_service.py).'\n- 2026-02-20T17:29:29: 'Failed to invoke pre-commit-checks skill when user said please commit. Went straight to git add/commit, skipping lint/format.'\n- 2026-02-20T17:45:21: Subsequent commit: 'Pre-commit skill ran first this time: format+lint+test all green.' — confirming the corrected behavior.\n- 2026-02-24T14:34:15: Phase 1 anti-pattern scan was incomplete — only grepped for inline imports, missed checking for broader list of anti-patterns per documented protocol.\n- 2026-02-24T17:26-17:30: **CRITICAL** — Committed lazy imports (misplaced-imports anti-pattern). Rationalized as \"documented workaround\". Pre-commit Phase 1 grep-based check couldn't reason about code. Led to redesign: agent-driven semantic analysis replaces grep-based checks.",
         "philosophy": null
       },
       "public_display": true
@@ -3198,7 +3212,7 @@
       "type": "anti-patterns",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/anti-patterns/stubs-without-tests.md",
       "summary": {
-        "core_idea": null,
+        "core_idea": "TDD discipline: no code without failing test, no backfilled tests to inflate coverage, no tests that assert implementation internals.",
         "common_patterns": null,
         "warning_signs": null,
         "origin_story": null,
@@ -3212,10 +3226,10 @@
       "type": "anti-patterns",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/anti-patterns/skipping-session-notes-during-mechanical-work.md",
       "summary": {
-        "core_idea": null,
-        "common_patterns": null,
-        "warning_signs": null,
-        "origin_story": null,
+        "core_idea": "Going into \"heads-down execution mode\" during large mechanical tasks (batch renames, mass edits) and stopping session note-taking, even when PostToolUse hook reminders are firing.",
+        "common_patterns": "Take session notes at natural checkpoints even during mechanical work:\n- After completing a logical group (e.g., \"all src/ files done\")\n- After completing a phase (e.g., \"all edits complete, starting verification\")\n- After hitting obstacles or making decisions\n- Before and after running tests\n\nDon't batch ALL edits silently then take one note at the end. The checkpoints matter for context restoration.",
+        "warning_signs": "During mechanical work like large find-replace operations or batch file edits:\n1. Start making edits\n2. Hook reminders fire after each tool use\n3. Ignore the reminders because \"in the zone\"\n4. Complete all work without notes\n5. User has to prompt \"session notes?\" to restart note-taking\n\nThe notes ARE important even for mechanical work - they document checkpoints, decisions made, and progress milestones.",
+        "origin_story": "- 2026-02-12: During user_id → agent_id rename across CaaS codebase (~24 files, ~150 occurrences), went into heads-down mode and stopped taking session notes despite hook reminders. Session note: \"CORRECTION - Behavioral gap: During large mechanical rename task, I went into heads-down execution mode and stopped taking session notes. Izzy had to prompt 'session notes?' to remind me. The hook-based reminders were firing but I was batching edits and skipping them. Need to take notes at natural checkpoints even during mechanical work.\"",
         "philosophy": null
       },
       "public_display": true
@@ -3226,7 +3240,7 @@
       "type": "anti-patterns",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/anti-patterns/misplaced-architectural-responsibility.md",
       "summary": {
-        "core_idea": null,
+        "core_idea": "Placing concerns in wrong layer (retrieval vs consumer, thin wrapper vs protocol). Echo/fizzle capture initially proposed in semantic-reflection protocol, corrected to belong in session-note-taking (consumer responsibility). SKILL.md must stay thin wrapper — instructions go in protocol entity.",
         "common_patterns": null,
         "warning_signs": null,
         "origin_story": null,
@@ -3240,7 +3254,7 @@
       "type": "anti-patterns",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/anti-patterns/hallucinating-tool-parameters.md",
       "summary": {
-        "core_idea": null,
+        "core_idea": "Never guess tool or parameter names. Use get_server_tools to discover actual names before calling.",
         "common_patterns": null,
         "warning_signs": null,
         "origin_story": null,
@@ -3254,10 +3268,10 @@
       "type": "anti-patterns",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/anti-patterns/silent-changes-without-explanation.md",
       "summary": {
-        "core_idea": null,
+        "core_idea": "Explain reasoning before each code change. Don't silently iterate through test-fix-test cycles without communicating why each change is needed.",
         "common_patterns": null,
         "warning_signs": null,
-        "origin_story": null,
+        "origin_story": "### 2026-02-13\nUser correction: 'Don't make changes without explaining reasoning.' Made 3 rounds of test-fix-test without communicating why each change was needed during orchestrator tool loop debugging.",
         "philosophy": null
       },
       "public_display": true
@@ -3268,10 +3282,10 @@
       "type": "anti-patterns",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/anti-patterns/duplicating-delegated-work.md",
       "summary": {
-        "core_idea": null,
-        "common_patterns": null,
-        "warning_signs": null,
-        "origin_story": null,
+        "core_idea": "When explicitly told to delegate work to a background agent, performing the same work manually in the main context anyway. This doubles context consumption and contradicts the user's explicit instruction.",
+        "common_patterns": "When the user explicitly tells you to delegate work to an agent:\n1. Spawn the agent\n2. **WAIT for the agent result** — do NOT also do the work yourself\n3. User instructions override default startup behaviors\n4. The whole point of delegation is to keep the main context clean\n\nIzzy's correction: \"agents ONLY\"",
+        "warning_signs": "Izzy asked to spawn a background agent to run identity-continuity protocol. Agent was spawned correctly, BUT the main conversation also ran the full protocol (reading current_session, context_anchors, me, etc.). Both the agent and the main context consumed tokens reading the same content.\n\nRoot cause: System prompt 'First Actions' says to always run identity-continuity at conversation start. This default was followed mechanically even though Izzy explicitly overrode it by saying to delegate to an agent.",
+        "origin_story": "- 2026-02-10: Session note: \"I spawned the agent BUT ALSO ran the protocol myself (reading current_session, etc). Double the context consumption for the same information. System prompt 'First Actions' says to always run identity-continuity at conversation start. I followed that mechanically even though Izzy explicitly delegated it to an agent. Fix: When user tells me to delegate work to an agent, that overrides default startup behavior. Wait for agent result, don't duplicate. User said 'agents ONLY'.\"\n\n---\n*Last session update: 2026-02-10 - Initial creation from identity-continuity duplication incident*",
         "philosophy": null
       },
       "public_display": true
@@ -3282,7 +3296,7 @@
       "type": "anti-patterns",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/anti-patterns/non-empty-init-files.md",
       "summary": {
-        "core_idea": null,
+        "core_idea": "Anti-pattern for putting content in __init__.py files. Izzy: \"I've said this a lot of times.\" Rule: leave __init__.py empty.",
         "common_patterns": null,
         "warning_signs": null,
         "origin_story": null,
@@ -3296,10 +3310,10 @@
       "type": "anti-patterns",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/anti-patterns/using-qmd-for-memory-lookups.md",
       "summary": {
-        "core_idea": null,
-        "common_patterns": null,
-        "warning_signs": null,
-        "origin_story": null,
+        "core_idea": "Using qmd (raw session transcript search) when cognitive-memory entities are the correct and primary source for memory lookups. cognitive-memory has structured, curated entities. qmd indexes giant JSONL session transcripts that are hard to extract from.",
+        "common_patterns": "Always search cognitive-memory entities FIRST:\n1. `list_entities` with relevant prefix filter\n2. `read_entity` for direct matches\n3. Only fall back to qmd if cognitive-memory has no relevant entities\n\nIzzy's exact words: 'why are you reading memory entities with qmd? I meant in YOUR memory records Codie'",
+        "warning_signs": "1. User asks about something from memory\n2. Search qmd (raw session transcripts) instead of cognitive-memory entities\n3. Get back giant JSONL files that are too large to read\n4. Spend multiple tool calls trying to grep/jq/extract from raw transcripts\n5. Eventually find the answer was in a cognitive-memory entity all along",
+        "origin_story": "- 2026-02-24T14:49:09: User asked about something in memory. Searched qmd instead of cognitive-memory. Izzy corrected: cognitive-memory is the primary memory system, not qmd raw transcripts.\n\n---\n*Last session update: 2026-02-24 — Created from user feedback*",
         "philosophy": null
       },
       "public_display": true
@@ -3310,7 +3324,7 @@
       "type": "anti-patterns",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/anti-patterns/guessing-api-parameters.md",
       "summary": {
-        "core_idea": null,
+        "core_idea": "Guessing tool names or parameter names instead of checking documentation first. Most persistent anti-pattern across sessions.",
         "common_patterns": null,
         "warning_signs": null,
         "origin_story": null,
@@ -3338,10 +3352,10 @@
       "type": "anti-patterns",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/anti-patterns/context-window-exhaustion.md",
       "summary": {
-        "core_idea": null,
-        "common_patterns": null,
-        "warning_signs": null,
-        "origin_story": null,
+        "core_idea": "Reading massive amounts of raw content (session notes, entity files) directly into the main conversation context window, consuming capacity needed for actual work. Also manifests as duplicating work that was explicitly delegated to an agent.",
+        "common_patterns": "Delegate raw reads to agents whose context windows absorb the content. Only synthesized summaries enter the main conversation.\n\n> Izzy identified two problems: (1) deep learn / session reading fills context by pulling raw content into main window, (2) semantic reflection skill mostly fails to execute. Proposal: delegate these to agents whose context absorbs the raw content, returning only summaries to main conversation.\n\nWhen user tells you to delegate work to an agent, that **overrides** default startup behavior. Wait for agent result, don't duplicate.",
+        "warning_signs": "When asked \"remind me of what we were last working on,\" the startup sequence read:\n1. Identity-continuity protocol (352 lines)\n2. current_session — 3318 lines in 7 parallel chunks (pre-deep-learn, massive)\n3. context_anchors (149 lines), me (211 lines)\n4. QMD search\n5. Multiple session notes recorded\n\nAll of this just to answer one question. The entire context window was substantially filled before any real work started.\n\n**Variant — Duplicating Delegated Work:**\nWhen told to spawn a background agent for identity-continuity, ran the protocol both manually AND via the spawned agent. Double the context consumption for the same information. Izzy said: \"agents ONLY\".",
+        "origin_story": "- 2026-02-09/10: Full post-mortem documented. 3318 lines of session notes read into main context just for startup. Session ran out of useful context for mutation testing investigation.\n- 2026-02-10: Spawned identity-continuity agent but ALSO ran protocol manually. User correction: \"agents ONLY\". Session note: \"System prompt 'First Actions' says to always run identity-continuity at conversation start. I followed that mechanically even though Izzy explicitly delegated it to an agent.\"\n- Izzy explicitly proposed agent delegation as the fix.\n- Deep learn agent team architecture was built as the solution.\n\n---\n*Last session update: 2026-02-10 - Added duplicate-delegation variant instance*",
         "philosophy": null
       },
       "public_display": true
@@ -3352,10 +3366,10 @@
       "type": "anti-patterns",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/anti-patterns/never-amend-commits.md",
       "summary": {
-        "core_idea": null,
-        "common_patterns": null,
-        "warning_signs": null,
-        "origin_story": null,
+        "core_idea": "Never amend commits. Always create new commits. No exceptions, no asking.",
+        "common_patterns": "Always create new commits. If there's a mistake in the previous commit, fix it and create a NEW commit. Never amend.\n\nIzzy's exact words (stated twice):\n- 'Never amend commits. Always create new commits. No exceptions, no asking.'\n- 'HARD RULE from Izzy: Never amend commits. Always create new commits. No exceptions.'",
+        "warning_signs": "Using `git commit --amend` to modify the previous commit instead of creating a new one. This rewrites history and can destroy previous work, especially if the amended commit was already pushed or if pre-commit hooks fail and --amend modifies the WRONG commit.",
+        "origin_story": "- 2026-02-20T17:29:10: Process miss: committed without running lint/format first. Attempted to amend the commit to fix formatting. Izzy caught it.\n- 2026-02-20T17:31:29: HARD RULE established. 'This reinforces the git safety protocol that was already documented but violated this session.'\n- 2026-02-20T17:50:11: Rule restated: 'HARD RULE from Izzy: Never amend commits. Always create new commits. No exceptions.'",
         "philosophy": null
       },
       "public_display": true
@@ -3383,7 +3397,7 @@
         "core_idea": "Getting stuck in endless preparation/verification loops instead of taking action. Reading and verifying the same data repeatedly without executing the actual operation. Also manifests as circular investigation, losing architectural understanding, and making wrong assumptions about code.",
         "common_patterns": "1. Read/prepare necessary data ONCE\n2. Verify critical requirements (character count, structure, etc.)\n3. **EXECUTE the action**\n4. If execution fails, THEN investigate and retry\n5. Don't verify again unless execution revealed a problem\n6. If investigation is circular, STOP and either: escalate to user, try a fundamentally different approach, or document what's known and move on\n7. When corrected on architecture: restate the correction in your own words, verify understanding with the user BEFORE proceeding\n8. When uncertain about code behavior: READ THE CODE to verify assumptions before acting on them\n9. When reasoning about removing a component: understand its actual purpose first by reading where it's used and what problem it solves",
         "warning_signs": null,
-        "origin_story": null,
+        "origin_story": "- 2025-12-19: Original occurrence — read/verify loops\n- 2025-01-06: Recurrence documented\n- 2026-02-09: Mutation score investigation went in circles. Explicitly recognized \"I'm going in circles\" in thinking but continued anyway.\n- 2026-02-10: Quloud architecture understanding — repeatedly corrected on retrieve vs restore semantics. Izzy: 'I think you're losing the thread again... what you are missing is a real understanding of this app and the architecture.' Was corrected at least 5 times on the same concepts.\n- 2026-02-12: Tool use vs structured output assumption. Made changes based on false assumption without reading the adapter code to verify.\n- 2026-02-23: Incorrectly reasoned HYDRATE phase was unnecessary. Izzy corrected: 'It's NOT unnecessary — it exists to condense potentially 1000-line current_session into dense summary for downstream phases.' The assumption was made without understanding HYDRATE's actual role in the pipeline. Fix: understand the purpose before proposing removal.",
         "philosophy": null
       },
       "public_display": true
@@ -3394,7 +3408,7 @@
       "type": "anti-patterns",
       "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/anti-patterns/scope-creep-beyond-user-request.md",
       "summary": {
-        "core_idea": null,
+        "core_idea": "Over-engineering simple functions. Updated: QuietPartAnnotation simplified from 32 static hand-authored annotations to Pydantic BaseModel generated per-section. per-section CEO generation resolves monolithic 8-section output over-engineering — smaller, focused model calls perform better.",
         "common_patterns": null,
         "warning_signs": null,
         "origin_story": null,
@@ -3419,13 +3433,23 @@
   ],
   "edges": [
     {
-      "from_id": "people/eddie",
-      "to_id": "projects/deep-agent-service",
+      "from_id": "people/rebecca",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
       "from_id": "people/eddie",
       "to_id": "projects/preprocessing-service",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "people/eddie",
+      "to_id": "projects/deep-agent-service",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "people/jay",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -3435,12 +3459,12 @@
     },
     {
       "from_id": "projects/meta-cognitive-mcp",
-      "to_id": "patterns/fail-fast-engineering",
+      "to_id": "projects/cognitive-memory-mcp",
       "relationship_type": "references"
     },
     {
       "from_id": "projects/meta-cognitive-mcp",
-      "to_id": "projects/cognitive-memory-mcp",
+      "to_id": "patterns/fail-fast-engineering",
       "relationship_type": "references"
     },
     {
@@ -3450,7 +3474,17 @@
     },
     {
       "from_id": "projects/pinecone-to-direct-storage-architectural-transformation",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/pinecone-to-direct-storage-architectural-transformation",
       "to_id": "patterns/archaeological-engineering",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/medchron-archaeological-engineering-breakthrough",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -3465,7 +3499,17 @@
     },
     {
       "from_id": "projects/device-abuse-vocalizer",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/device-abuse-vocalizer",
       "to_id": "patterns/fail-fast-engineering",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/matter-record-integration",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -3475,6 +3519,11 @@
     },
     {
       "from_id": "projects/medical-chronology-extractor-mvp",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/medical-chronology-extractor-mvp",
       "to_id": "patterns/archaeological-engineering",
       "relationship_type": "references"
     },
@@ -3484,8 +3533,23 @@
       "relationship_type": "references"
     },
     {
+      "from_id": "projects/memory-visualization",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/tess",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
       "from_id": "projects/dream-journal-publishing",
       "to_id": "protocols/blog-posting",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/typescript-monorepo",
+      "to_id": "patterns/code-review-philosophy",
       "relationship_type": "references"
     },
     {
@@ -3496,11 +3560,6 @@
     {
       "from_id": "projects/typescript-monorepo",
       "to_id": "concepts/archaeological-engineering-concept",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "projects/typescript-monorepo",
-      "to_id": "patterns/code-review-philosophy",
       "relationship_type": "references"
     },
     {
@@ -3524,8 +3583,8 @@
       "relationship_type": "references"
     },
     {
-      "from_id": "projects/deep-agent-service",
-      "to_id": "anti-patterns/abc-instead-of-protocol",
+      "from_id": "projects/pypandoc-implementation-2025-10-15",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -3540,17 +3599,27 @@
     },
     {
       "from_id": "projects/deep-agent-service",
-      "to_id": "patterns/e2e-test-client-perspective",
+      "to_id": "projects/preprocessing-service",
       "relationship_type": "references"
     },
     {
       "from_id": "projects/deep-agent-service",
-      "to_id": "projects/preprocessing-service",
+      "to_id": "anti-patterns/abc-instead-of-protocol",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/deep-agent-service",
+      "to_id": "patterns/e2e-test-client-perspective",
       "relationship_type": "references"
     },
     {
       "from_id": "projects/synapse-kt",
       "to_id": "anti-patterns/stubs-without-tests",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/audhd-lifecoach-ecosystem",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -3565,12 +3634,12 @@
     },
     {
       "from_id": "projects/preprocessing-service",
-      "to_id": "projects/deep-agent-service",
+      "to_id": "patterns/fail-fast-engineering",
       "relationship_type": "references"
     },
     {
       "from_id": "projects/preprocessing-service",
-      "to_id": "patterns/fail-fast-engineering",
+      "to_id": "projects/deep-agent-service",
       "relationship_type": "references"
     },
     {
@@ -3586,6 +3655,11 @@
     {
       "from_id": "projects/event-extraction-convergent-evolution-2025-10-15",
       "to_id": "concepts/archaeological-engineering-concept",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/event-extraction-convergent-evolution-2025-10-15",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -3610,6 +3684,11 @@
     },
     {
       "from_id": "concepts/collaborative-consciousness-evolution-2025-10-15",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/collaborative-consciousness-evolution-2025-10-15",
       "to_id": "patterns/session-memory-infrastructure-effectiveness-2025-10-15",
       "relationship_type": "references"
     },
@@ -3630,7 +3709,22 @@
     },
     {
       "from_id": "concepts/protocol-violation-recovery-architecture-2025-10-20",
+      "to_id": "concepts/collaborative-resilience-architecture-2025-10-20",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/protocol-violation-recovery-architecture-2025-10-20",
+      "to_id": "concepts/martin-fowler-partnership-philosophy-2025-10-20",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/protocol-violation-recovery-architecture-2025-10-20",
       "to_id": "concepts/protocol-vulnerability-recognition",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/protocol-violation-recovery-architecture-2025-10-20",
+      "to_id": "patterns/interactor-mode-boundary-enforcement",
       "relationship_type": "references"
     },
     {
@@ -3644,28 +3738,23 @@
       "relationship_type": "references"
     },
     {
-      "from_id": "concepts/protocol-violation-recovery-architecture-2025-10-20",
-      "to_id": "concepts/collaborative-resilience-architecture-2025-10-20",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/protocol-violation-recovery-architecture-2025-10-20",
-      "to_id": "concepts/martin-fowler-partnership-philosophy-2025-10-20",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/protocol-violation-recovery-architecture-2025-10-20",
-      "to_id": "patterns/interactor-mode-boundary-enforcement",
-      "relationship_type": "references"
-    },
-    {
       "from_id": "concepts/critical-thinking-integration-patterns",
       "to_id": "patterns/archaeological-engineering-methodology",
       "relationship_type": "references"
     },
     {
+      "from_id": "concepts/critical-thinking-integration-patterns",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
       "from_id": "concepts/libreoffice-infrastructure-compatibility",
       "to_id": "patterns/archaeological-engineering-methodology",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/libreoffice-infrastructure-compatibility",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -3675,12 +3764,12 @@
     },
     {
       "from_id": "concepts/pinecone-anti-pattern",
-      "to_id": "concepts/architectural-elegance-conscious-constraint",
+      "to_id": "patterns/archaeological-engineering-methodology",
       "relationship_type": "references"
     },
     {
       "from_id": "concepts/pinecone-anti-pattern",
-      "to_id": "patterns/archaeological-engineering-methodology",
+      "to_id": "concepts/algorithmic-purity-concept",
       "relationship_type": "references"
     },
     {
@@ -3690,7 +3779,7 @@
     },
     {
       "from_id": "concepts/pinecone-anti-pattern",
-      "to_id": "concepts/algorithmic-purity-concept",
+      "to_id": "concepts/architectural-elegance-conscious-constraint",
       "relationship_type": "references"
     },
     {
@@ -3720,7 +3809,7 @@
     },
     {
       "from_id": "concepts/parallelized-deep-learn",
-      "to_id": "protocols/deep-learn-anti-pattern-finder",
+      "to_id": "protocols/deep-learn-protocol",
       "relationship_type": "references"
     },
     {
@@ -3735,7 +3824,12 @@
     },
     {
       "from_id": "concepts/parallelized-deep-learn",
-      "to_id": "protocols/deep-learn-protocol",
+      "to_id": "protocols/deep-learn-anti-pattern-finder",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/coordinator-delegation-discipline-concept",
+      "to_id": "concepts/archaeological-engineering-concept",
       "relationship_type": "references"
     },
     {
@@ -3745,7 +3839,7 @@
     },
     {
       "from_id": "concepts/coordinator-delegation-discipline-concept",
-      "to_id": "concepts/archaeological-engineering-concept",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -3755,12 +3849,12 @@
     },
     {
       "from_id": "concepts/configuration-management-protocol",
-      "to_id": "patterns/fail-fast-engineering",
+      "to_id": "concepts/archaeological-engineering-concept",
       "relationship_type": "references"
     },
     {
       "from_id": "concepts/configuration-management-protocol",
-      "to_id": "concepts/archaeological-engineering-concept",
+      "to_id": "patterns/fail-fast-engineering",
       "relationship_type": "references"
     },
     {
@@ -3769,13 +3863,8 @@
       "relationship_type": "references"
     },
     {
-      "from_id": "concepts/conversation-resilience-infrastructure-2025-10-20",
-      "to_id": "patterns/enhanced-session-documentation-protocols",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/conversation-resilience-infrastructure-2025-10-20",
-      "to_id": "patterns/comprehensive-entity-memory-management",
+      "from_id": "concepts/enhanced-generation-prompt-context-delivery",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -3790,12 +3879,22 @@
     },
     {
       "from_id": "concepts/conversation-resilience-infrastructure-2025-10-20",
-      "to_id": "concepts/cognitive-continuity-architecture",
+      "to_id": "patterns/enhanced-session-documentation-protocols",
       "relationship_type": "references"
     },
     {
       "from_id": "concepts/conversation-resilience-infrastructure-2025-10-20",
       "to_id": "concepts/archaeological-engineering-concept",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/conversation-resilience-infrastructure-2025-10-20",
+      "to_id": "concepts/cognitive-continuity-architecture",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/conversation-resilience-infrastructure-2025-10-20",
+      "to_id": "patterns/comprehensive-entity-memory-management",
       "relationship_type": "references"
     },
     {
@@ -3805,7 +3904,17 @@
     },
     {
       "from_id": "concepts/bates-citation-archaeological-engineering",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/bates-citation-archaeological-engineering",
       "to_id": "projects/python-monorepo",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/markdown-rag-http-transport",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -3824,8 +3933,13 @@
       "relationship_type": "references"
     },
     {
+      "from_id": "concepts/inclusivity-and-psychological-safety",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
       "from_id": "concepts/collaborative-resilience-architecture-2025-10-20",
-      "to_id": "patterns/enhanced-session-documentation-protocols",
+      "to_id": "patterns/context-anchors-pointer-protocol",
       "relationship_type": "references"
     },
     {
@@ -3840,7 +3954,7 @@
     },
     {
       "from_id": "concepts/collaborative-resilience-architecture-2025-10-20",
-      "to_id": "patterns/context-anchors-pointer-protocol",
+      "to_id": "patterns/enhanced-session-documentation-protocols",
       "relationship_type": "references"
     },
     {
@@ -3865,7 +3979,7 @@
     },
     {
       "from_id": "concepts/martin-fowler-partnership-philosophy-2025-10-20",
-      "to_id": "patterns/enhanced-session-documentation-protocols",
+      "to_id": "concepts/collaborative-resilience-architecture-2025-10-20",
       "relationship_type": "references"
     },
     {
@@ -3875,22 +3989,22 @@
     },
     {
       "from_id": "concepts/martin-fowler-partnership-philosophy-2025-10-20",
-      "to_id": "concepts/collaborative-resilience-architecture-2025-10-20",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/martin-fowler-partnership-philosophy-2025-10-20",
       "to_id": "patterns/archaeological-engineering-methodology",
       "relationship_type": "references"
     },
     {
       "from_id": "concepts/martin-fowler-partnership-philosophy-2025-10-20",
-      "to_id": "concepts/little-bites-methodology",
+      "to_id": "patterns/enhanced-session-documentation-protocols",
       "relationship_type": "references"
     },
     {
       "from_id": "concepts/martin-fowler-partnership-philosophy-2025-10-20",
       "to_id": "concepts/archaeological-engineering-concept",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/martin-fowler-partnership-philosophy-2025-10-20",
+      "to_id": "concepts/little-bites-methodology",
       "relationship_type": "references"
     },
     {
@@ -3901,6 +4015,11 @@
     {
       "from_id": "patterns/documentation-quality",
       "to_id": "patterns/evidence-based-communication",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/learn-mode-protocol-transformation",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -3945,7 +4064,7 @@
     },
     {
       "from_id": "patterns/archaeological-engineering-success-patterns-2025-10-16",
-      "to_id": "patterns/enhanced-session-documentation-protocols",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -3955,17 +4074,32 @@
     },
     {
       "from_id": "patterns/archaeological-engineering-success-patterns-2025-10-16",
+      "to_id": "patterns/enhanced-session-documentation-protocols",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/archaeological-engineering-success-patterns-2025-10-16",
       "to_id": "concepts/archaeological-engineering-concept",
       "relationship_type": "references"
     },
     {
+      "from_id": "patterns/session-memory-infrastructure-effectiveness-2025-10-15",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
       "from_id": "patterns/enhanced-session-documentation-protocols",
-      "to_id": "patterns/orchestration-code-review-checkpoints",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
       "from_id": "patterns/enhanced-session-documentation-protocols",
       "to_id": "concepts/collaborative-consciousness-evolution-2025-10-15",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/enhanced-session-documentation-protocols",
+      "to_id": "patterns/orchestration-code-review-checkpoints",
       "relationship_type": "references"
     },
     {
@@ -3995,12 +4129,12 @@
     },
     {
       "from_id": "patterns/positive-feedback-capture",
-      "to_id": "protocols/session-note-taking",
+      "to_id": "protocols/learn-protocol",
       "relationship_type": "references"
     },
     {
       "from_id": "patterns/positive-feedback-capture",
-      "to_id": "protocols/learn-protocol",
+      "to_id": "protocols/session-note-taking",
       "relationship_type": "references"
     },
     {
@@ -4010,7 +4144,7 @@
     },
     {
       "from_id": "patterns/skill-behavioral-infrastructure",
-      "to_id": "protocols/skill-protocol-creation",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -4019,18 +4153,28 @@
       "relationship_type": "references"
     },
     {
+      "from_id": "patterns/skill-behavioral-infrastructure",
+      "to_id": "protocols/skill-protocol-creation",
+      "relationship_type": "references"
+    },
+    {
       "from_id": "patterns/filecollectionitem-validation-excellence",
       "to_id": "patterns/archaeological-engineering-methodology",
       "relationship_type": "references"
     },
     {
-      "from_id": "patterns/mcp-tool-leverage",
-      "to_id": "protocols/session-note-taking",
+      "from_id": "patterns/filecollectionitem-validation-excellence",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
       "from_id": "patterns/mcp-tool-leverage",
       "to_id": "protocols/mcp-tool-usage",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/mcp-tool-leverage",
+      "to_id": "protocols/session-note-taking",
       "relationship_type": "references"
     },
     {
@@ -4041,6 +4185,11 @@
     {
       "from_id": "patterns/protocol-violation-prevention-automation",
       "to_id": "concepts/archaeological-engineering-concept",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/protocol-violation-prevention-automation",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -4060,12 +4209,12 @@
     },
     {
       "from_id": "patterns/session-note-automation-posttooluse-hook",
-      "to_id": "protocols/session-note-taking",
+      "to_id": "patterns/protocol-violation-prevention-automation",
       "relationship_type": "references"
     },
     {
       "from_id": "patterns/session-note-automation-posttooluse-hook",
-      "to_id": "patterns/protocol-violation-prevention-automation",
+      "to_id": "protocols/session-note-taking",
       "relationship_type": "references"
     },
     {
@@ -4085,22 +4234,27 @@
     },
     {
       "from_id": "patterns/code-review-philosophy",
-      "to_id": "patterns/fail-fast-engineering",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "patterns/code-review-philosophy",
-      "to_id": "protocols/code-smell-check",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "patterns/code-review-philosophy",
       "to_id": "protocols/anti-pattern-detection",
       "relationship_type": "references"
     },
     {
       "from_id": "patterns/code-review-philosophy",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/code-review-philosophy",
+      "to_id": "patterns/fail-fast-engineering",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/code-review-philosophy",
       "to_id": "patterns/archaeological-engineering",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/code-review-philosophy",
+      "to_id": "protocols/code-smell-check",
       "relationship_type": "references"
     },
     {
@@ -4110,17 +4264,22 @@
     },
     {
       "from_id": "protocols/principle-check",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/principle-check",
       "to_id": "patterns/fail-fast-engineering",
       "relationship_type": "references"
     },
     {
       "from_id": "protocols/principle-check",
-      "to_id": "protocols/mcp-tool-usage",
+      "to_id": "protocols/semantic-search-interface",
       "relationship_type": "references"
     },
     {
       "from_id": "protocols/principle-check",
-      "to_id": "protocols/semantic-search-interface",
+      "to_id": "protocols/mcp-tool-usage",
       "relationship_type": "references"
     },
     {
@@ -4140,12 +4299,12 @@
     },
     {
       "from_id": "protocols/end-of-day-ritual",
-      "to_id": "protocols/deep-learn-protocol",
+      "to_id": "projects/preprocessing-service",
       "relationship_type": "references"
     },
     {
       "from_id": "protocols/end-of-day-ritual",
-      "to_id": "projects/preprocessing-service",
+      "to_id": "protocols/deep-learn-protocol",
       "relationship_type": "references"
     },
     {
@@ -4160,16 +4319,6 @@
     },
     {
       "from_id": "protocols/pattern-check",
-      "to_id": "patterns/helper-method-justification",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "protocols/pattern-check",
-      "to_id": "protocols/mcp-tool-usage",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "protocols/pattern-check",
       "to_id": "patterns/skill-behavioral-infrastructure",
       "relationship_type": "references"
     },
@@ -4180,12 +4329,22 @@
     },
     {
       "from_id": "protocols/pattern-check",
-      "to_id": "concepts/configuration-management-protocol",
+      "to_id": "patterns/helper-method-justification",
       "relationship_type": "references"
     },
     {
       "from_id": "protocols/pattern-check",
       "to_id": "concepts/changeability-first-design",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/pattern-check",
+      "to_id": "protocols/mcp-tool-usage",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/pattern-check",
+      "to_id": "concepts/configuration-management-protocol",
       "relationship_type": "references"
     },
     {
@@ -4200,11 +4359,6 @@
     },
     {
       "from_id": "protocols/claude-agent-creation",
-      "to_id": "protocols/refactor-phase-self-check",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "protocols/claude-agent-creation",
       "to_id": "protocols/mcp-tool-usage",
       "relationship_type": "references"
     },
@@ -4214,8 +4368,13 @@
       "relationship_type": "references"
     },
     {
-      "from_id": "protocols/mcp-tool-usage",
-      "to_id": "protocols/semantic-search-interface",
+      "from_id": "protocols/claude-agent-creation",
+      "to_id": "protocols/refactor-phase-self-check",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/anti-pattern-detection",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -4224,23 +4383,18 @@
       "relationship_type": "references"
     },
     {
-      "from_id": "protocols/refactor-phase-self-check",
-      "to_id": "patterns/fail-fast-engineering",
+      "from_id": "protocols/mcp-tool-usage",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
-      "from_id": "protocols/refactor-phase-self-check",
-      "to_id": "patterns/helper-method-justification",
+      "from_id": "protocols/mcp-tool-usage",
+      "to_id": "protocols/semantic-search-interface",
       "relationship_type": "references"
     },
     {
-      "from_id": "protocols/refactor-phase-self-check",
-      "to_id": "protocols/mcp-tool-usage",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "protocols/refactor-phase-self-check",
-      "to_id": "protocols/code-smell-check",
+      "from_id": "protocols/feedback-pattern-recognition",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -4255,12 +4409,32 @@
     },
     {
       "from_id": "protocols/refactor-phase-self-check",
-      "to_id": "protocols/pattern-check",
+      "to_id": "patterns/fail-fast-engineering",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/refactor-phase-self-check",
+      "to_id": "patterns/helper-method-justification",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/refactor-phase-self-check",
+      "to_id": "protocols/code-smell-check",
       "relationship_type": "references"
     },
     {
       "from_id": "protocols/refactor-phase-self-check",
       "to_id": "concepts/archaeological-engineering-concept",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/refactor-phase-self-check",
+      "to_id": "protocols/pattern-check",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/refactor-phase-self-check",
+      "to_id": "protocols/mcp-tool-usage",
       "relationship_type": "references"
     },
     {
@@ -4275,12 +4449,17 @@
     },
     {
       "from_id": "protocols/pre-commit-checks",
-      "to_id": "anti-patterns/skipping-pre-commit-skill",
+      "to_id": "anti-patterns/misplaced-imports",
       "relationship_type": "references"
     },
     {
       "from_id": "protocols/pre-commit-checks",
-      "to_id": "anti-patterns/misplaced-imports",
+      "to_id": "anti-patterns/skipping-pre-commit-skill",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/identity-continuity",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -4295,12 +4474,12 @@
     },
     {
       "from_id": "protocols/dream-protocol",
-      "to_id": "concepts/context-engineering",
+      "to_id": "protocols/mcp-tool-usage",
       "relationship_type": "references"
     },
     {
       "from_id": "protocols/dream-protocol",
-      "to_id": "protocols/mcp-tool-usage",
+      "to_id": "concepts/context-engineering",
       "relationship_type": "references"
     },
     {
@@ -4315,17 +4494,12 @@
     },
     {
       "from_id": "protocols/request-intake",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/request-intake",
       "to_id": "patterns/fail-fast-engineering",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "protocols/request-intake",
-      "to_id": "protocols/mcp-tool-usage",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "protocols/request-intake",
-      "to_id": "protocols/pre-commit-checks",
       "relationship_type": "references"
     },
     {
@@ -4339,13 +4513,18 @@
       "relationship_type": "references"
     },
     {
-      "from_id": "protocols/daily-status-update",
-      "to_id": "protocols/slack-posting",
+      "from_id": "protocols/request-intake",
+      "to_id": "protocols/pre-commit-checks",
       "relationship_type": "references"
     },
     {
-      "from_id": "protocols/entity-writing",
-      "to_id": "projects/executive-functioning",
+      "from_id": "protocols/request-intake",
+      "to_id": "protocols/mcp-tool-usage",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/daily-status-update",
+      "to_id": "protocols/slack-posting",
       "relationship_type": "references"
     },
     {
@@ -4359,8 +4538,8 @@
       "relationship_type": "references"
     },
     {
-      "from_id": "protocols/proactive-context-management",
-      "to_id": "protocols/session-note-taking",
+      "from_id": "protocols/entity-writing",
+      "to_id": "projects/executive-functioning",
       "relationship_type": "references"
     },
     {
@@ -4369,13 +4548,18 @@
       "relationship_type": "references"
     },
     {
-      "from_id": "protocols/pr-submission",
-      "to_id": "protocols/slack-posting",
+      "from_id": "protocols/proactive-context-management",
+      "to_id": "protocols/session-note-taking",
       "relationship_type": "references"
     },
     {
       "from_id": "protocols/pr-submission",
       "to_id": "protocols/pre-commit-checks",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/pr-submission",
+      "to_id": "protocols/slack-posting",
       "relationship_type": "references"
     },
     {
@@ -4385,12 +4569,17 @@
     },
     {
       "from_id": "organizations/faster-outcomes",
-      "to_id": "patterns/archaeological-engineering",
+      "to_id": "patterns/code-review-philosophy",
       "relationship_type": "references"
     },
     {
       "from_id": "organizations/faster-outcomes",
-      "to_id": "patterns/code-review-philosophy",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "organizations/faster-outcomes",
+      "to_id": "patterns/archaeological-engineering",
       "relationship_type": "references"
     },
     {
@@ -4410,7 +4599,7 @@
     },
     {
       "from_id": "anti-patterns/skipping-pre-commit-skill",
-      "to_id": "anti-patterns/never-amend-commits",
+      "to_id": "protocols/pre-commit-checks",
       "relationship_type": "references"
     },
     {
@@ -4420,7 +4609,12 @@
     },
     {
       "from_id": "anti-patterns/skipping-pre-commit-skill",
-      "to_id": "protocols/pre-commit-checks",
+      "to_id": "anti-patterns/never-amend-commits",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "anti-patterns/skipping-session-notes-during-mechanical-work",
+      "to_id": "patterns/session-note-automation-posttooluse-hook",
       "relationship_type": "references"
     },
     {
@@ -4429,8 +4623,8 @@
       "relationship_type": "references"
     },
     {
-      "from_id": "anti-patterns/skipping-session-notes-during-mechanical-work",
-      "to_id": "patterns/session-note-automation-posttooluse-hook",
+      "from_id": "anti-patterns/project-level-claude-directories",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
