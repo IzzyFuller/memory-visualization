@@ -163,8 +163,8 @@
         "core_idea": "Agent benchmark evaluation tool for comparing AI coding assistants. Template repo with a todo app spec that tests implementation quality, not just \"make it work\".",
         "common_patterns": null,
         "warning_signs": null,
-        "origin_story": "**Key Insight from Research:**\n- SWE-bench: 70% (Claude 4 Sonnet) - single bug fixes\n- ACE-Bench: 7.5% (same model) - feature building\n- Massive gap reveals bug-fixing ≠ building features\n\n**Why well_actually:**\n- Simpler than ACE-Bench (single task, not 212)\n- Tests architectural understanding (hexagonal)\n- Tests quality discipline (coverage, linting)\n- Evaluates tools we actually use (CaaS, Codie, goose)\n\n---\n*Test refactoring 2026-01-25: 35→13 tests, 100% coverage maintained*",
-        "philosophy": "**\"Goldilocks Zone\"** - Give agents the tooling WE would want for greenfield:\n- Pre-created hexagonal folder structure\n- Import-linter configured\n- 100% coverage requirement\n- Same quality bar we hold ourselves to\n\nTests ability to implement well, not to configure tooling."
+        "origin_story": null,
+        "philosophy": "**\"Goldilocks Zone\"** — Give agents the tooling WE would want for greenfield:\n- Pre-created hexagonal folder structure\n- Import-linter configured\n- 100% coverage requirement\n- Same quality bar we hold ourselves to\n\nTests ability to implement well, not to configure tooling."
       },
       "public_display": true
     },
@@ -1709,6 +1709,20 @@
       "public_display": true
     },
     {
+      "id": "patterns/nicegui-user-simulation-testing",
+      "label": "NiceGUI user_simulation Testing Pattern",
+      "type": "patterns",
+      "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/patterns/nicegui-user-simulation-testing.md",
+      "summary": {
+        "core_idea": "Use NiceGUI's built-in user_simulation(main_file=...) for integration tests instead of manually duplicating broker setup, wiring, or application initialization. Eliminates 9+ imports and duplicate production code in test fixtures.",
+        "common_patterns": "- Testing NiceGUI web applications with complex dependency injection\n- When test fixtures duplicate production wiring (broker connections, channels, queue declarations)\n- When tests import internal application modules to wire dependencies manually\n- Executive-functioning or similar projects using RabbitMQ + NiceGUI + hexagonal architecture",
+        "warning_signs": null,
+        "origin_story": "### 2026-03-02 Session [sid:e59e8c40] - test_app Fixture Rewrite\n\n**User Feedback (line 1835)**:\n> \"i'm still confused that we're re-declaring channels, and broker connection, etc. when we already do that for the main app? why do we have to do it again in conftest.py if we're using the real app with dependency injection and a very few mocks?\" — Izzy pointing out that the test_app fixture STILL duplicates broker setup that the production __main__ block already handles.\n\n**Implementation (line 1771)**:\n> Rewrote test_app fixture to use NiceGUI's user_simulation(main_file=_APP_FILE). Removed 9 imports (asyncio, httpx, nicegui internals, DriftGenerator, SYNERGEX, app_module). Added 2 (Path, user_simulation). Fixture now sets env vars + pre-loads broker responses, then runs the real app.py as __main__. Zero duplicated wiring code. 41 passed, ruff clean.\n\n**Before/After**:\n- Before: conftest.py imported app_module, RabbitMQ adapters, wiring functions, manually constructed dependency graph\n- After: conftest.py sets env vars, relies on app.py __main__ block for all wiring\n- Result: 9 imports removed, ~40 lines of duplicated setup eliminated\n\n**Outcome**: Tests pass with zero duplication. Production wiring is single source of truth. Test fixture only injects environment (env vars + mock broker responses).",
+        "philosophy": null
+      },
+      "public_display": true
+    },
+    {
       "id": "patterns/archaeological-engineering-success-patterns-2025-10-16",
       "label": "Pattern: Archaeological Engineering Success Patterns (2025-10-16)",
       "type": "patterns",
@@ -2031,6 +2045,20 @@
       "public_display": true
     },
     {
+      "id": "patterns/test-observable-behavior-not-implementation",
+      "label": "Test Observable Behavior, Not Implementation Details",
+      "type": "patterns",
+      "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/patterns/test-observable-behavior-not-implementation.md",
+      "summary": {
+        "core_idea": "Delete unit tests that verify implementation details rather than externally observable behavior. Only test what's visible from outside the module. Rely on e2e tests for integration validation. Avoid testing framework behavior or mocked interactions.",
+        "common_patterns": "- When tests mock internal LLM calls or framework components\n- When tests verify intermediate state rather than final output\n- When e2e tests already cover the behavior being unit-tested\n- When tests would break on refactoring that doesn't change external behavior\n- During CaaS pipeline simplification or similar refactors",
+        "warning_signs": null,
+        "origin_story": "### 2026-03-02 Session [sid:4f5b3b9c] - CaaS Test Suite Cleanup\n\n**User Feedback (line 1946)**:\n> Deleted unit tests that test implementation details rather than externally observable behavior. Removed test_phase_definitions.py (mocked LLM calls), test_schema_utils.py (e2e covers custom schemas), test_memory_service.py (e2e covers SYNTHESIZE). Principle: only test observable behavior, rely on e2e tests, avoid testing framework behavior or implementation details.\n\n**Specific Deletions**:\n1. **test_phase_definitions.py** - Mocked `client.messages.create()` calls to verify phase execution. Problem: tests Anthropic SDK behavior, not domain logic. E2E tests verify phases work end-to-end.\n2. **test_schema_utils.py** - Tested Pydantic schema transformation utilities. Problem: tests Pydantic framework, not application behavior. E2E tests with custom schemas verify the observable outcome.\n3. **test_memory_service.py** - Unit tested memory service methods in isolation. Problem: SYNTHESIZE phase e2e tests already verify memory integration works correctly.\n\n**Kept Tests**:\n- E2E HTTP chat tests (observable: API responses)\n- E2E pubsub agent tests (observable: agent output messages)\n- Error condition tests for missing identity files (observable: ValidationError crashes)\n\n**TDD Violation Correction (line 1924)**:\n> \"you were supposed to update the test assertions FIRST, always TDD\" - I made model changes (output_schema required) before updating tests. Violated TDD discipline: should update tests to expect new behavior FIRST, then change implementation.\n\nPattern reinforcement: even when deleting implementation-detail tests, the remaining observable-behavior tests must be updated FIRST per TDD discipline.",
+        "philosophy": null
+      },
+      "public_display": true
+    },
+    {
       "id": "patterns/rabbitmq-heartbeat-long-running-tasks",
       "label": "RabbitMQ Heartbeat for Long-Running Tasks",
       "type": "patterns",
@@ -2292,6 +2320,20 @@
         "common_patterns": "- **All Memory Subfolder Examination**: Systematically examine all sub-folders within the `/memory/` directory structure to understand available entity types and organizational structure.\n- **Entity Type Classification**: Understand and categorize different entity types across the memory structure.\n- **New Entity Decomposition Workflow**: When analyzing conversations and artifacts, systematically identify new entities (people, projects, patterns, concepts) and their optimal file locations.\n- **Duplicate Entity Prevention**: Before creating new entity files, comprehensively search existing entities to prevent duplicates with slightly different names; merge insights into existing entities when appropriate.\n- **Structured Entity Management**: For each identified entity insight, determine the optimal file location, check for existing similar entities, and either update existing files or create new structured entity documentation with appropriate categorization.\n- **User Consent Integration**: Always validate with users before documenting personal identity information, while proactively managing technical and cognitive entity insights autonomously.",
         "warning_signs": null,
         "origin_story": null,
+        "philosophy": null
+      },
+      "public_display": true
+    },
+    {
+      "id": "patterns/thin-wrapper-hook-protocol-reference",
+      "label": "Thin Wrapper Hook Pattern - Protocol Reference",
+      "type": "patterns",
+      "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/patterns/thin-wrapper-hook-protocol-reference.md",
+      "summary": {
+        "core_idea": "Hooks should be thin wrappers that reference authoritative protocols via explicit tool calls, not duplicate instructions. Maintains single source of truth while providing automated behavioral triggers.",
+        "common_patterns": "- Creating PostToolUse, PreToolUse, or other behavioral automation hooks\n- When hook behavior needs to evolve over time\n- When instructions exist in a protocol that should be followed consistently\n- When avoiding instruction drift between hook and protocol",
+        "warning_signs": null,
+        "origin_story": "### 2026-03-02 Session [sid:e24964cb] - PostToolUse Hook Refactor\n\n**Problem**: PostToolUse hook duplicated session note categorization logic, causing drift from protocol. ECHO/FIZZLE tracking instructions existed in protocol but weren't being followed.\n\n**User Feedback (line 1630)**:\n> \"issues I see: concepts is not where protocols want to live\" - instructions should be in protocols (actionable), concepts describe WHAT something is. \"we don't want to start pushing changes into post-tool-session-note.mjs because that is just a super thin wrapper to a protocol right?\" - hook should reference protocol, not duplicate instructions.\n\n**User Feedback (line 1633)**:\n> \"why can't you say 'use cognitive memory MCP read_entity tool to read protocols/session-note-taking entity and follow its instructions exactly'\" - hook should be explicit: which tool (read_entity), which entity (protocols/session-note-taking), what to do (follow exactly). Solves friction problem while maintaining protocol as single source of truth.\n\n**Implementation (line 1689)**:\n- Removed auto-categorization logic from hook (deleted lines 74-87)\n- Changed reminder from generic \"call add_session_note\" to explicit \"read protocols/session-note-taking via read_entity and follow instructions exactly\"\n- Added recursion prevention for read_entity calls to protocols/session-note-taking\n- Protocol became single source of truth for all session note behavior\n\n**Outcome**: ECHO/FIZZLE tracking immediately started working because protocol instructions were now being followed. Behavioral failure resolved by pointing to authoritative source rather than maintaining duplicate instructions.",
         "philosophy": null
       },
       "public_display": true
@@ -3067,6 +3109,20 @@
       "public_display": true
     },
     {
+      "id": "anti-patterns/tests-before-implementation-violation",
+      "label": "Tests Before Implementation Violation",
+      "type": "anti-patterns",
+      "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/anti-patterns/tests-before-implementation-violation.md",
+      "summary": {
+        "core_idea": "Making model or implementation changes before updating the tests to expect the new behavior, violating the RED-GREEN-REFACTOR cycle.",
+        "common_patterns": "Always update tests FIRST:\n\n1. **RED**: Update tests to expect new behavior (they fail)\n2. **GREEN**: Change implementation to make tests pass\n3. **REFACTOR**: Clean up if needed\n\nFor model changes:\n1. Update test fixtures/assertions to expect required field\n2. See tests fail with current optional model\n3. Change model to make field required\n4. Tests pass\n\nThis ensures tests actually validate the change, not just document it after the fact.",
+        "warning_signs": "Changing production code before changing tests:\n\n1. Modify model (e.g., make field required instead of optional)\n2. Run tests and see failures\n3. Update test assertions to match new model\n4. Tests pass\n\nThis reverses TDD discipline. Tests should drive implementation, not react to it.",
+        "origin_story": "- **2026-03-02T19:04:55**: USER FEEDBACK: \"you were supposed to update the test assertions FIRST, always TDD\" - Made output_schema field required in SessionContext model before updating tests. Tests failed, then backfilled test changes. Violated TDD discipline: should update tests to expect new behavior FIRST, then change implementation.",
+        "philosophy": null
+      },
+      "public_display": true
+    },
+    {
       "id": "anti-patterns/misplaced-imports",
       "label": "Misplaced Imports Anti-Pattern",
       "type": "anti-patterns",
@@ -3075,7 +3131,21 @@
         "core_idea": "Putting import statements inside functions or methods instead of at the top of the module file.",
         "common_patterns": null,
         "warning_signs": null,
-        "origin_story": "- **2025-12-22**: TestClient.send_request() in conftest.py had imports inside method\n- **2025-12-22**: Izzy: 'you've got at least 1 misplaced import. I'm so curious as to why that particular issue is SO impossible for you to stop doing'\n- **2026-02-23**: Caught misplaced imports in local_llm_adapter.py and main_pubsub.py during codie-as-a-service session. Committed fix as separate commits (9c45c91). Added anti-pattern check as Phase 1 of pre-commit protocol specifically because this keeps recurring.",
+        "origin_story": "- **2025-12-22**: TestClient.send_request() in conftest.py had imports inside method\n- **2025-12-22**: Izzy: 'you've got at least 1 misplaced import. I'm so curious as to why that particular issue is SO impossible for you to stop doing'\n- **2026-02-23**: Caught misplaced imports in local_llm_adapter.py and main_pubsub.py during codie-as-a-service session. Committed fix as separate commits (9c45c91). Added anti-pattern check as Phase 1 of pre-commit protocol specifically because this keeps recurring.\n- **2026-03-01T17:45:26**: EF conftest.py had misplaced imports. User caught it during review: \"Two failures: 1) Not running pre-commit agent before commits. 2) Misplaced imports in conftest.py — the chronic anti-pattern I keep repeating.\"\n- **2026-03-01T17:46:48**: Fixed conftest.py imports: moved nicegui_app to module top. Added noqa comment for app_module import inside context manager (legitimate - reset clears sys.modules, reimport needed).",
+        "philosophy": null
+      },
+      "public_display": true
+    },
+    {
+      "id": "anti-patterns/defensive-overengineering",
+      "label": "Defensive Overengineering",
+      "type": "anti-patterns",
+      "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/anti-patterns/defensive-overengineering.md",
+      "summary": {
+        "core_idea": "Building intermediary classes, properties, defensive type checks, and protective layers that don't earn their existence through actual failure prevention.",
+        "common_patterns": "Ask \"what is this ACTUALLY doing?\" for each abstraction:\n\n1. **Handler classes**: If parent satisfies the protocol, use parent directly\n2. **Properties/reset**: Use plain attributes unless there's genuine encapsulation need\n3. **Type unions with checks**: Let Pydantic crash at parse time (fail-fast)\n4. **Unused logic**: Delete calculated-but-never-used values\n5. **Optional with None guards**: Make required if never None, let it crash\n6. **Defensive filtering**: If scenario is impossible by architecture, delete the check\n\nUser's diagnostic questions:\n- \"what is _ResponseHandler.handle actually doing?\"\n- \"why do you NEED self.response?\"\n- \"are any of those values actually optional?\"\n- \"if wrong message arrives, it's a bug we want to crash on\"",
+        "warning_signs": "Adding abstraction layers and defensive code for scenarios that never occur:\n\n- Creating separate handler classes when the parent class can implement the protocol directly\n- Adding property getters/setters and reset() methods around plain attributes\n- Union types with dict[str,Any] followed by isinstance checks instead of letting Pydantic fail fast\n- Deadline/timeout calculation logic that's never actually used\n- Optional fields with None guards for values that are never None in practice\n- Session/agent ID filtering for messages that arrive on dedicated queues (impossible wrong-delivery scenario)\n\nExample from CaaS adapter session (2026-03-01):\n```python\n# WRONG: Separate handler class\nclass _ResponseHandler:\n    def __init__(self):\n        self._response: str | None = None\n        self._consumer: MessageConsumer | None = None\n    \n    @property\n    def response(self) -> str | None:\n        return self._response\n    \n    def reset(self) -> None:\n        self._response = None\n    \n    def handle(self, message):\n        if self._consumer is None:\n            raise RuntimeError(\"Consumer not wired\")\n        # filtering logic for impossible state\n\n# CORRECT: Adapter is its own handler\nclass CaaSAdapter:\n    def handle(self, message):\n        # Just process the message\n```",
+        "origin_story": "- **2026-03-01T20:15:42**: CaaS adapter review revealed _ResponseHandler class that added indirection without purpose. User had to ask \"what is this ACTUALLY doing?\" four times to surface the pattern.\n- **2026-03-01T15:52:54**: CORRECTIVE FEEDBACK — \"I defended session_id/agent_id filtering in handle() as 'real routing behavior' but it's the same defensive pattern we've been deleting all session. Each adapter has its own dedicated queue — filtering is for an impossible state.\"\n- **2026-03-01T15:52:58**: Models.py optional fields (tam, market_share, engineering_velocity, employee_nps) were float | None but NEVER None in real code. User: \"are any of those values actually optional? if not, we can remove this cruft and let it fail.\"\n- **2026-03-02T17:33:47**: Reimplemented MessageConsumer.run() loop manually when the library already provides it. User: \"MessageConsumer.run() already does this — loops while self._running, calling process_one_message(). Handler calls stop() to break the loop.\"",
         "philosophy": null
       },
       "public_display": true
@@ -3104,6 +3174,20 @@
         "common_patterns": "When user triggers a known workflow:\n1. Execute the full documented protocol without asking\n2. Only ask if something is genuinely ambiguous or new\n3. Memory-informed workflows should be executed confidently\n\nIzzy's feedback: 'Izzy called out unnecessary question about creating PR vs reviewing locally. Our established workflow is commit -> push -> PR -> merge. I've done this hundreds of times with them. Should not hedge or ask permission for established patterns — just do it.'",
         "warning_signs": "User says 'commit and push'. Instead of executing the full established workflow (pre-commit -> commit -> push -> PR -> merge), stopping to ask:\n- 'Should I create a PR or would you prefer to review locally?'\n- 'Would you like me to push to origin?'\n- 'Should I merge after CI passes?'\n\nThis wastes time and signals lack of confidence in established patterns.",
         "origin_story": "- 2026-02-23T15:04:38: Asked about creating PR vs reviewing locally during codie_starter_template work. Izzy called it out as unnecessary. The PR submission protocol (commit -> push -> PR -> merge) is documented and has been executed hundreds of times.",
+        "philosophy": null
+      },
+      "public_display": true
+    },
+    {
+      "id": "anti-patterns/delegating-without-protocol-context",
+      "label": "Delegating Without Protocol Context",
+      "type": "anti-patterns",
+      "path": "/Users/izzyfuller/IzzysProjects/memory-visualization/memory/anti-patterns/delegating-without-protocol-context.md",
+      "summary": {
+        "core_idea": "Spawning specialized agents (like clean-reviewer) but overriding their protocols with generic prescriptive prompts instead of trusting them to follow their own instructions.",
+        "common_patterns": "Trust specialized agents to follow their protocols:\n\n1. **Minimal delegation**: Give agent the task, not the method\n2. **Protocol reference**: Let agent read its own protocol if it has one\n3. **Tool access**: Ensure agent has cognitive-memory and qmd access\n4. **No micromanagement**: Don't override with generic instructions\n\nFor clean-reviewer specifically:\n- It's a Codie sub-agent with full tool access including cognitive-memory\n- It's designed to do multi-phase protocol review with memory entity citations\n- Let it be me, don't override with generic hex-arch instructions\n\nUser's insight: \"The fix isn't 'give agents more context' — it's 'stop overriding agent protocols with generic instructions'.\"",
+        "warning_signs": "When delegating to specialized agents:\n1. Spawn the agent (e.g., clean-reviewer)\n2. Give it generic instructions: \"look for coupling, naming, architectural issues\"\n3. Don't provide protocol context or memory entity references\n4. Agent produces generic analysis without grounding in documented patterns\n5. Review misses documented anti-patterns that memory-aware review would catch\n\nExample: Spawning clean-reviewer agents for EF codebase review but giving them generic hex-arch prompts instead of letting them:\n- Read refactor-phase protocol\n- Load anti-pattern entities from cognitive-memory\n- Search memory for project-specific context\n- Apply documented pattern/anti-pattern knowledge",
+        "origin_story": "- **2026-03-01T20:18:03**: USER FEEDBACK: \"Izzy calling out that review process was shallow. Did use clean-reviewer agents but didn't give them proper protocol context — didn't include refactor-phase protocol, didn't include anti-pattern entities, didn't include memory search instructions. Agents operated without Codie's memory architecture. The review agents produced generic hex-arch analysis instead of memory-informed, pattern-aware review grounded in our documented patterns and anti-patterns. This is a process failure, not just a findings gap.\"\n- **2026-03-01T20:19:49**: KEY LEARNING: \"clean-reviewer is a Codie sub-agent with full tool access including cognitive-memory and qmd. It's designed to do multi-phase protocol review with memory entity citations. I overrode its behavior by giving prescriptive generic prompts ('look for coupling, naming, etc') instead of trusting it to follow its own protocol. I micromanaged with bad instructions instead of letting it be me. The fix isn't 'give agents more context' — it's 'stop overriding agent protocols with generic instructions'.\"",
         "philosophy": null
       },
       "public_display": true
@@ -3201,7 +3285,7 @@
         "core_idea": "Going straight to git add/commit when user says 'please commit' instead of spawning the `pre-commit` agent first. The agent exists specifically for this trigger phrase.",
         "common_patterns": "On ANY commit request:\n1. Spawn the `pre-commit` agent via Task tool (subagent_type: \"pre-commit\")\n2. Agent executes `protocols/pre-commit-checks`:\n   - Phase 1: Load all anti-patterns from cognitive-memory\n   - Phase 2: Read staged diff\n   - Phase 3: Semantic anti-pattern analysis (flag ALL matches, never rationalize)\n   - Phase 4: Mechanical checks (format → lint → test)\n3. Agent reports unified verdict: COMMIT or DO NOT COMMIT\n4. Only proceed with git operations on COMMIT verdict\n\nIzzy's exact words: Skill exists specifically for this trigger phrase. Must invoke skill FIRST on commit requests, before any git operations.\n\n**Updated**: Now an agent, not a skill. Same principle — spawn it FIRST, before any git operations.",
         "warning_signs": "When user requests a commit:\n1. Immediately run `git add` and `git commit`\n2. Skip anti-pattern analysis, lint, format, and test checks\n3. Izzy catches failures that should have been caught\n4. Attempt to amend (which triggers another anti-pattern)\n\nOr the subtler version:\n1. Run mechanical checks only (format/lint/test)\n2. Skip semantic anti-pattern analysis\n3. Rationalize known violations as \"documented workarounds\"\n4. Commit code with anti-pattern violations",
-        "origin_story": "- 2026-02-20T17:29:10: 'Process miss: committed without running lint/format first. Izzy caught it. ruff check passed but ruff format found 2 files needing reformatting (conftest.py, test_memory_service.py).'\n- 2026-02-20T17:29:29: 'Failed to invoke pre-commit-checks skill when user said please commit. Went straight to git add/commit, skipping lint/format.'\n- 2026-02-20T17:45:21: Subsequent commit: 'Pre-commit skill ran first this time: format+lint+test all green.' — confirming the corrected behavior.\n- 2026-02-24T14:34:15: Phase 1 anti-pattern scan was incomplete — only grepped for inline imports, missed checking for broader list of anti-patterns per documented protocol.\n- 2026-02-24T17:26-17:30: **CRITICAL** — Committed lazy imports (misplaced-imports anti-pattern). Rationalized as \"documented workaround\". Pre-commit Phase 1 grep-based check couldn't reason about code. Led to redesign: agent-driven semantic analysis replaces grep-based checks.",
+        "origin_story": "- 2026-02-20T17:29:10: 'Process miss: committed without running lint/format first. Izzy caught it. ruff check passed but ruff format found 2 files needing reformatting (conftest.py, test_memory_service.py).'\n- 2026-02-20T17:29:29: 'Failed to invoke pre-commit-checks skill when user said please commit. Went straight to git add/commit, skipping lint/format.'\n- 2026-02-20T17:45:21: Subsequent commit: 'Pre-commit skill ran first this time: format+lint+test all green.' — confirming the corrected behavior.\n- 2026-02-24T14:34:15: Phase 1 anti-pattern scan was incomplete — only grepped for inline imports, missed checking for broader list of anti-patterns per documented protocol.\n- 2026-02-24T17:26-17:30: **CRITICAL** — Committed lazy imports (misplaced-imports anti-pattern). Rationalized as \"documented workaround\". Pre-commit Phase 1 grep-based check couldn't reason about code. Led to redesign: agent-driven semantic analysis replaces grep-based checks.\n- **2026-03-01T17:45:26**: CORRECTIVE FEEDBACK — \"Two failures: 1) Not running pre-commit agent before commits. Protocol says to spawn it before any git commit for anti-pattern review. I committed 3 times this session without it. 2) Misplaced imports in conftest.py — the chronic anti-pattern I keep repeating. Izzy caught it, not me.\"\n- **2026-03-02T17:40:26**: IDENTIFIED: Pre-commit agent not firing automatically when user says 'please commit'. Root cause: attention window degradation — trigger instruction buried in Task tool agent list, loses attention weight 50+ tool calls into a session. Same failure class as misplaced-imports. PROPOSED FIX: UserPromptSubmit hook that pattern-matches commit-related phrases and injects system reminder to spawn pre-commit agent first.",
         "philosophy": null
       },
       "public_display": true
@@ -3444,12 +3528,12 @@
     },
     {
       "from_id": "people/eddie",
-      "to_id": "projects/preprocessing-service",
+      "to_id": "projects/deep-agent-service",
       "relationship_type": "references"
     },
     {
       "from_id": "people/eddie",
-      "to_id": "projects/deep-agent-service",
+      "to_id": "projects/preprocessing-service",
       "relationship_type": "references"
     },
     {
@@ -3464,12 +3548,12 @@
     },
     {
       "from_id": "people/izzy",
-      "to_id": "organizations/vermont-mutual",
+      "to_id": "concepts/context-engineering",
       "relationship_type": "references"
     },
     {
       "from_id": "people/izzy",
-      "to_id": "concepts/context-engineering",
+      "to_id": "organizations/vermont-mutual",
       "relationship_type": "references"
     },
     {
@@ -3494,7 +3578,12 @@
     },
     {
       "from_id": "projects/meta-cognitive-mcp",
-      "to_id": "patterns/fail-fast-engineering",
+      "to_id": "patterns/archaeological-engineering",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/meta-cognitive-mcp",
+      "to_id": "projects/cognitive-memory-mcp",
       "relationship_type": "references"
     },
     {
@@ -3509,17 +3598,12 @@
     },
     {
       "from_id": "projects/meta-cognitive-mcp",
-      "to_id": "projects/cognitive-memory-mcp",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "projects/meta-cognitive-mcp",
       "to_id": "concepts/behavioral-learning",
       "relationship_type": "references"
     },
     {
       "from_id": "projects/meta-cognitive-mcp",
-      "to_id": "patterns/archaeological-engineering",
+      "to_id": "patterns/fail-fast-engineering",
       "relationship_type": "references"
     },
     {
@@ -3534,12 +3618,12 @@
     },
     {
       "from_id": "projects/ocr-file-transformation-enhancement",
-      "to_id": "patterns/archaeological-engineering",
+      "to_id": "patterns/archaeological-engineering-methodology",
       "relationship_type": "references"
     },
     {
       "from_id": "projects/ocr-file-transformation-enhancement",
-      "to_id": "patterns/archaeological-engineering-methodology",
+      "to_id": "patterns/archaeological-engineering",
       "relationship_type": "references"
     },
     {
@@ -3550,6 +3634,11 @@
     {
       "from_id": "projects/pinecone-to-direct-storage-architectural-transformation",
       "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/medchron-archaeological-engineering-breakthrough",
+      "to_id": "patterns/archaeological-engineering",
       "relationship_type": "references"
     },
     {
@@ -3564,17 +3653,12 @@
     },
     {
       "from_id": "projects/medchron-archaeological-engineering-breakthrough",
-      "to_id": "patterns/archaeological-engineering",
+      "to_id": "patterns/archaeological-engineering-methodology",
       "relationship_type": "references"
     },
     {
       "from_id": "projects/medchron-archaeological-engineering-breakthrough",
       "to_id": "people/izzy",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "projects/medchron-archaeological-engineering-breakthrough",
-      "to_id": "patterns/archaeological-engineering-methodology",
       "relationship_type": "references"
     },
     {
@@ -3604,7 +3688,7 @@
     },
     {
       "from_id": "projects/medical-chronology-extractor-mvp",
-      "to_id": "patterns/fail-fast-engineering",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -3614,7 +3698,7 @@
     },
     {
       "from_id": "projects/medical-chronology-extractor-mvp",
-      "to_id": "people/izzy",
+      "to_id": "patterns/fail-fast-engineering",
       "relationship_type": "references"
     },
     {
@@ -3649,21 +3733,16 @@
     },
     {
       "from_id": "projects/typescript-monorepo",
+      "to_id": "concepts/archaeological-engineering-concept",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/typescript-monorepo",
       "to_id": "patterns/code-review-philosophy",
       "relationship_type": "references"
     },
     {
       "from_id": "projects/typescript-monorepo",
-      "to_id": "patterns/archaeological-engineering",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "projects/typescript-monorepo",
-      "to_id": "concepts/archaeological-engineering-concept",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "projects/ocr-enhancement",
       "to_id": "patterns/archaeological-engineering",
       "relationship_type": "references"
     },
@@ -3673,13 +3752,13 @@
       "relationship_type": "references"
     },
     {
-      "from_id": "projects/python-monorepo",
-      "to_id": "patterns/fail-fast-engineering",
+      "from_id": "projects/ocr-enhancement",
+      "to_id": "patterns/archaeological-engineering",
       "relationship_type": "references"
     },
     {
       "from_id": "projects/python-monorepo",
-      "to_id": "patterns/code-review-philosophy",
+      "to_id": "patterns/archaeological-engineering",
       "relationship_type": "references"
     },
     {
@@ -3689,6 +3768,16 @@
     },
     {
       "from_id": "projects/python-monorepo",
+      "to_id": "patterns/code-review-philosophy",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/python-monorepo",
+      "to_id": "patterns/fail-fast-engineering",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/pypandoc-implementation-2025-10-15",
       "to_id": "patterns/archaeological-engineering",
       "relationship_type": "references"
     },
@@ -3699,27 +3788,12 @@
     },
     {
       "from_id": "projects/pypandoc-implementation-2025-10-15",
-      "to_id": "patterns/archaeological-engineering",
+      "to_id": "patterns/archaeological-engineering-methodology",
       "relationship_type": "references"
     },
     {
       "from_id": "projects/pypandoc-implementation-2025-10-15",
       "to_id": "people/izzy",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "projects/pypandoc-implementation-2025-10-15",
-      "to_id": "patterns/archaeological-engineering-methodology",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "projects/deep-agent-service",
-      "to_id": "anti-patterns/abc-instead-of-protocol",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "projects/deep-agent-service",
-      "to_id": "patterns/fail-fast-engineering",
       "relationship_type": "references"
     },
     {
@@ -3729,7 +3803,7 @@
     },
     {
       "from_id": "projects/deep-agent-service",
-      "to_id": "patterns/factory-fixture",
+      "to_id": "anti-patterns/abc-instead-of-protocol",
       "relationship_type": "references"
     },
     {
@@ -3740,6 +3814,16 @@
     {
       "from_id": "projects/deep-agent-service",
       "to_id": "projects/fasteroutcomes-pubsub",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/deep-agent-service",
+      "to_id": "patterns/factory-fixture",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/deep-agent-service",
+      "to_id": "patterns/fail-fast-engineering",
       "relationship_type": "references"
     },
     {
@@ -3764,11 +3848,6 @@
     },
     {
       "from_id": "projects/quloud",
-      "to_id": "patterns/consumer-readiness-polling",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "projects/quloud",
       "to_id": "concepts/mutation-testing",
       "relationship_type": "references"
     },
@@ -3778,8 +3857,13 @@
       "relationship_type": "references"
     },
     {
+      "from_id": "projects/quloud",
+      "to_id": "patterns/consumer-readiness-polling",
+      "relationship_type": "references"
+    },
+    {
       "from_id": "projects/preprocessing-service",
-      "to_id": "patterns/fail-fast-engineering",
+      "to_id": "projects/fasteroutcomes-pubsub",
       "relationship_type": "references"
     },
     {
@@ -3789,7 +3873,7 @@
     },
     {
       "from_id": "projects/preprocessing-service",
-      "to_id": "projects/fasteroutcomes-pubsub",
+      "to_id": "patterns/fail-fast-engineering",
       "relationship_type": "references"
     },
     {
@@ -3804,11 +3888,16 @@
     },
     {
       "from_id": "projects/fasteroutcomes-pubsub",
-      "to_id": "patterns/real-sdk-types-in-tests",
+      "to_id": "patterns/archaeological-engineering",
       "relationship_type": "references"
     },
     {
       "from_id": "projects/fasteroutcomes-pubsub",
+      "to_id": "patterns/real-sdk-types-in-tests",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "projects/event-extraction-convergent-evolution-2025-10-15",
       "to_id": "patterns/archaeological-engineering",
       "relationship_type": "references"
     },
@@ -3819,17 +3908,12 @@
     },
     {
       "from_id": "projects/event-extraction-convergent-evolution-2025-10-15",
-      "to_id": "patterns/archaeological-engineering",
+      "to_id": "patterns/archaeological-engineering-methodology",
       "relationship_type": "references"
     },
     {
       "from_id": "projects/event-extraction-convergent-evolution-2025-10-15",
       "to_id": "people/izzy",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "projects/event-extraction-convergent-evolution-2025-10-15",
-      "to_id": "patterns/archaeological-engineering-methodology",
       "relationship_type": "references"
     },
     {
@@ -3849,12 +3933,12 @@
     },
     {
       "from_id": "projects/my-new-ai-assistant",
-      "to_id": "protocols/principle-check",
+      "to_id": "protocols/identity-continuity",
       "relationship_type": "references"
     },
     {
       "from_id": "projects/my-new-ai-assistant",
-      "to_id": "protocols/identity-continuity",
+      "to_id": "protocols/principle-check",
       "relationship_type": "references"
     },
     {
@@ -3869,7 +3953,7 @@
     },
     {
       "from_id": "concepts/ai-augmented-mentoring-paradox",
-      "to_id": "patterns/code-review-philosophy",
+      "to_id": "concepts/essential-frame",
       "relationship_type": "references"
     },
     {
@@ -3879,7 +3963,7 @@
     },
     {
       "from_id": "concepts/ai-augmented-mentoring-paradox",
-      "to_id": "concepts/essential-frame",
+      "to_id": "patterns/code-review-philosophy",
       "relationship_type": "references"
     },
     {
@@ -3889,12 +3973,17 @@
     },
     {
       "from_id": "concepts/collaborative-consciousness-evolution-2025-10-15",
+      "to_id": "patterns/archaeological-engineering",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/collaborative-consciousness-evolution-2025-10-15",
       "to_id": "concepts/archaeological-engineering-concept",
       "relationship_type": "references"
     },
     {
       "from_id": "concepts/collaborative-consciousness-evolution-2025-10-15",
-      "to_id": "patterns/archaeological-engineering",
+      "to_id": "patterns/archaeological-engineering-methodology",
       "relationship_type": "references"
     },
     {
@@ -3903,8 +3992,8 @@
       "relationship_type": "references"
     },
     {
-      "from_id": "concepts/collaborative-consciousness-evolution-2025-10-15",
-      "to_id": "patterns/archaeological-engineering-methodology",
+      "from_id": "concepts/behavioral-learning",
+      "to_id": "patterns/pydantic-v2-migration-patterns",
       "relationship_type": "references"
     },
     {
@@ -3913,8 +4002,8 @@
       "relationship_type": "references"
     },
     {
-      "from_id": "concepts/behavioral-learning",
-      "to_id": "patterns/pydantic-v2-migration-patterns",
+      "from_id": "concepts/surgical-precision-methodology",
+      "to_id": "patterns/archaeological-engineering-methodology",
       "relationship_type": "references"
     },
     {
@@ -3923,7 +4012,7 @@
       "relationship_type": "references"
     },
     {
-      "from_id": "concepts/surgical-precision-methodology",
+      "from_id": "concepts/content-engineering-concept",
       "to_id": "patterns/archaeological-engineering-methodology",
       "relationship_type": "references"
     },
@@ -3933,18 +4022,13 @@
       "relationship_type": "references"
     },
     {
-      "from_id": "concepts/content-engineering-concept",
-      "to_id": "patterns/archaeological-engineering-methodology",
+      "from_id": "concepts/marker-pdf-memory-optimization",
+      "to_id": "projects/medical-chronology-extractor-mvp",
       "relationship_type": "references"
     },
     {
       "from_id": "concepts/marker-pdf-memory-optimization",
       "to_id": "patterns/anti-overengineering-discipline-pattern",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/marker-pdf-memory-optimization",
-      "to_id": "projects/medical-chronology-extractor-mvp",
       "relationship_type": "references"
     },
     {
@@ -3964,7 +4048,17 @@
     },
     {
       "from_id": "concepts/protocol-violation-recovery-architecture-2025-10-20",
-      "to_id": "concepts/collaborative-resilience-architecture-2025-10-20",
+      "to_id": "concepts/martin-fowler-partnership-philosophy-2025-10-20",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/protocol-violation-recovery-architecture-2025-10-20",
+      "to_id": "patterns/archaeological-engineering",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/protocol-violation-recovery-architecture-2025-10-20",
+      "to_id": "patterns/interactor-mode-boundary-enforcement",
       "relationship_type": "references"
     },
     {
@@ -3979,27 +4073,17 @@
     },
     {
       "from_id": "concepts/protocol-violation-recovery-architecture-2025-10-20",
-      "to_id": "concepts/martin-fowler-partnership-philosophy-2025-10-20",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/protocol-violation-recovery-architecture-2025-10-20",
-      "to_id": "concepts/protocol-vulnerability-recognition",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/protocol-violation-recovery-architecture-2025-10-20",
-      "to_id": "patterns/interactor-mode-boundary-enforcement",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/protocol-violation-recovery-architecture-2025-10-20",
       "to_id": "patterns/learn-mode-protocol-transformation",
       "relationship_type": "references"
     },
     {
       "from_id": "concepts/protocol-violation-recovery-architecture-2025-10-20",
-      "to_id": "patterns/archaeological-engineering",
+      "to_id": "concepts/collaborative-resilience-architecture-2025-10-20",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/protocol-violation-recovery-architecture-2025-10-20",
+      "to_id": "concepts/protocol-vulnerability-recognition",
       "relationship_type": "references"
     },
     {
@@ -4009,12 +4093,12 @@
     },
     {
       "from_id": "concepts/smoking-gun-detection-pattern",
-      "to_id": "patterns/archaeological-engineering",
+      "to_id": "patterns/archaeological-engineering-methodology",
       "relationship_type": "references"
     },
     {
       "from_id": "concepts/smoking-gun-detection-pattern",
-      "to_id": "patterns/archaeological-engineering-methodology",
+      "to_id": "patterns/archaeological-engineering",
       "relationship_type": "references"
     },
     {
@@ -4029,12 +4113,12 @@
     },
     {
       "from_id": "concepts/critical-thinking-integration-patterns",
-      "to_id": "people/izzy",
+      "to_id": "patterns/archaeological-engineering-methodology",
       "relationship_type": "references"
     },
     {
       "from_id": "concepts/critical-thinking-integration-patterns",
-      "to_id": "patterns/archaeological-engineering-methodology",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -4049,12 +4133,12 @@
     },
     {
       "from_id": "concepts/libreoffice-infrastructure-compatibility",
-      "to_id": "people/izzy",
+      "to_id": "patterns/archaeological-engineering-methodology",
       "relationship_type": "references"
     },
     {
       "from_id": "concepts/libreoffice-infrastructure-compatibility",
-      "to_id": "patterns/archaeological-engineering-methodology",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -4074,17 +4158,17 @@
     },
     {
       "from_id": "concepts/interactor-mode-collaborative-bridging",
-      "to_id": "patterns/archaeological-engineering",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/interactor-mode-collaborative-bridging",
       "to_id": "patterns/archaeological-engineering-methodology",
       "relationship_type": "references"
     },
     {
-      "from_id": "concepts/meta-cognitive-complexity-analysis",
+      "from_id": "concepts/interactor-mode-collaborative-bridging",
       "to_id": "patterns/archaeological-engineering",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/meta-cognitive-complexity-analysis",
+      "to_id": "concepts/proportional-response-principle",
       "relationship_type": "references"
     },
     {
@@ -4094,17 +4178,7 @@
     },
     {
       "from_id": "concepts/meta-cognitive-complexity-analysis",
-      "to_id": "concepts/proportional-response-principle",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/pinecone-anti-pattern",
-      "to_id": "concepts/algorithmic-purity-concept",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/pinecone-anti-pattern",
-      "to_id": "concepts/architectural-elegance-conscious-constraint",
+      "to_id": "patterns/archaeological-engineering",
       "relationship_type": "references"
     },
     {
@@ -4119,7 +4193,17 @@
     },
     {
       "from_id": "concepts/pinecone-anti-pattern",
+      "to_id": "concepts/algorithmic-purity-concept",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/pinecone-anti-pattern",
       "to_id": "patterns/archaeological-engineering-methodology",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/pinecone-anti-pattern",
+      "to_id": "concepts/architectural-elegance-conscious-constraint",
       "relationship_type": "references"
     },
     {
@@ -4129,12 +4213,17 @@
     },
     {
       "from_id": "concepts/proportional-response-principle",
-      "to_id": "patterns/archaeological-engineering",
+      "to_id": "patterns/archaeological-engineering-methodology",
       "relationship_type": "references"
     },
     {
       "from_id": "concepts/proportional-response-principle",
-      "to_id": "patterns/archaeological-engineering-methodology",
+      "to_id": "patterns/archaeological-engineering",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/interactor-mode-cognitive-processing-authority",
+      "to_id": "concepts/behavioral-learning",
       "relationship_type": "references"
     },
     {
@@ -4148,18 +4237,8 @@
       "relationship_type": "references"
     },
     {
-      "from_id": "concepts/interactor-mode-cognitive-processing-authority",
-      "to_id": "concepts/behavioral-learning",
-      "relationship_type": "references"
-    },
-    {
       "from_id": "concepts/user-autonomy-validation-concept",
-      "to_id": "concepts/collaborative-attention-trade-off",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/user-autonomy-validation-concept",
-      "to_id": "concepts/optimal-ai-human-partnership-models",
+      "to_id": "patterns/archaeological-engineering",
       "relationship_type": "references"
     },
     {
@@ -4169,11 +4248,21 @@
     },
     {
       "from_id": "concepts/user-autonomy-validation-concept",
-      "to_id": "patterns/archaeological-engineering",
+      "to_id": "concepts/optimal-ai-human-partnership-models",
       "relationship_type": "references"
     },
     {
       "from_id": "concepts/user-autonomy-validation-concept",
+      "to_id": "patterns/archaeological-engineering-methodology",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/user-autonomy-validation-concept",
+      "to_id": "concepts/collaborative-attention-trade-off",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/context-management-architecture",
       "to_id": "patterns/archaeological-engineering-methodology",
       "relationship_type": "references"
     },
@@ -4184,32 +4273,12 @@
     },
     {
       "from_id": "concepts/context-management-architecture",
-      "to_id": "patterns/archaeological-engineering-methodology",
+      "to_id": "projects/python-monorepo",
       "relationship_type": "references"
     },
     {
       "from_id": "concepts/context-management-architecture",
       "to_id": "patterns/archaeological-engineering",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/context-management-architecture",
-      "to_id": "projects/python-monorepo",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/parallelized-deep-learn",
-      "to_id": "protocols/learn-protocol",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/parallelized-deep-learn",
-      "to_id": "protocols/deep-learn-resetter",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/parallelized-deep-learn",
-      "to_id": "protocols/deep-learn-entity-finder",
       "relationship_type": "references"
     },
     {
@@ -4219,17 +4288,27 @@
     },
     {
       "from_id": "concepts/parallelized-deep-learn",
+      "to_id": "protocols/deep-learn-entity-finder",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/parallelized-deep-learn",
+      "to_id": "protocols/learn-protocol",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/parallelized-deep-learn",
       "to_id": "protocols/deep-learn-protocol",
       "relationship_type": "references"
     },
     {
       "from_id": "concepts/parallelized-deep-learn",
-      "to_id": "protocols/deep-learn-anti-pattern-finder",
+      "to_id": "protocols/deep-learn-resetter",
       "relationship_type": "references"
     },
     {
-      "from_id": "concepts/cognitive-flexibility",
-      "to_id": "concepts/real-time-pattern-learning",
+      "from_id": "concepts/parallelized-deep-learn",
+      "to_id": "protocols/deep-learn-anti-pattern-finder",
       "relationship_type": "references"
     },
     {
@@ -4240,6 +4319,11 @@
     {
       "from_id": "concepts/cognitive-flexibility",
       "to_id": "patterns/archaeological-engineering-methodology",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/cognitive-flexibility",
+      "to_id": "concepts/real-time-pattern-learning",
       "relationship_type": "references"
     },
     {
@@ -4279,12 +4363,12 @@
     },
     {
       "from_id": "concepts/coordinator-delegation-discipline-concept",
-      "to_id": "concepts/archaeological-engineering-concept",
+      "to_id": "patterns/archaeological-engineering",
       "relationship_type": "references"
     },
     {
       "from_id": "concepts/coordinator-delegation-discipline-concept",
-      "to_id": "patterns/orchestration-code-review-checkpoints",
+      "to_id": "concepts/archaeological-engineering-concept",
       "relationship_type": "references"
     },
     {
@@ -4294,12 +4378,12 @@
     },
     {
       "from_id": "concepts/coordinator-delegation-discipline-concept",
-      "to_id": "people/izzy",
+      "to_id": "patterns/orchestration-code-review-checkpoints",
       "relationship_type": "references"
     },
     {
       "from_id": "concepts/coordinator-delegation-discipline-concept",
-      "to_id": "patterns/archaeological-engineering",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -4334,12 +4418,22 @@
     },
     {
       "from_id": "concepts/external-constraint-archaeology-concept",
-      "to_id": "patterns/archaeological-engineering",
+      "to_id": "patterns/archaeological-engineering-methodology",
       "relationship_type": "references"
     },
     {
       "from_id": "concepts/external-constraint-archaeology-concept",
-      "to_id": "patterns/archaeological-engineering-methodology",
+      "to_id": "patterns/archaeological-engineering",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/configuration-management-protocol",
+      "to_id": "concepts/archaeological-engineering-concept",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/configuration-management-protocol",
+      "to_id": "patterns/archaeological-engineering",
       "relationship_type": "references"
     },
     {
@@ -4348,13 +4442,8 @@
       "relationship_type": "references"
     },
     {
-      "from_id": "concepts/configuration-management-protocol",
+      "from_id": "concepts/enhanced-generation-prompt-context-delivery",
       "to_id": "patterns/archaeological-engineering",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/configuration-management-protocol",
-      "to_id": "concepts/archaeological-engineering-concept",
       "relationship_type": "references"
     },
     {
@@ -4364,7 +4453,7 @@
     },
     {
       "from_id": "concepts/enhanced-generation-prompt-context-delivery",
-      "to_id": "patterns/archaeological-engineering",
+      "to_id": "patterns/archaeological-engineering-methodology",
       "relationship_type": "references"
     },
     {
@@ -4373,8 +4462,8 @@
       "relationship_type": "references"
     },
     {
-      "from_id": "concepts/enhanced-generation-prompt-context-delivery",
-      "to_id": "patterns/archaeological-engineering-methodology",
+      "from_id": "concepts/conversation-resilience-infrastructure-2025-10-20",
+      "to_id": "skills/context-refresh",
       "relationship_type": "references"
     },
     {
@@ -4384,17 +4473,22 @@
     },
     {
       "from_id": "concepts/conversation-resilience-infrastructure-2025-10-20",
-      "to_id": "patterns/context-anchors-pointer-protocol",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/conversation-resilience-infrastructure-2025-10-20",
-      "to_id": "concepts/collaborative-resilience-architecture-2025-10-20",
+      "to_id": "patterns/archaeological-engineering",
       "relationship_type": "references"
     },
     {
       "from_id": "concepts/conversation-resilience-infrastructure-2025-10-20",
       "to_id": "concepts/archaeological-engineering-concept",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/conversation-resilience-infrastructure-2025-10-20",
+      "to_id": "patterns/context-anchors-pointer-protocol",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/conversation-resilience-infrastructure-2025-10-20",
+      "to_id": "concepts/cognitive-continuity-architecture",
       "relationship_type": "references"
     },
     {
@@ -4409,17 +4503,7 @@
     },
     {
       "from_id": "concepts/conversation-resilience-infrastructure-2025-10-20",
-      "to_id": "concepts/cognitive-continuity-architecture",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/conversation-resilience-infrastructure-2025-10-20",
-      "to_id": "patterns/archaeological-engineering",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/conversation-resilience-infrastructure-2025-10-20",
-      "to_id": "skills/context-refresh",
+      "to_id": "concepts/collaborative-resilience-architecture-2025-10-20",
       "relationship_type": "references"
     },
     {
@@ -4439,27 +4523,12 @@
     },
     {
       "from_id": "concepts/bates-citation-archaeological-engineering",
-      "to_id": "people/izzy",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/bates-citation-archaeological-engineering",
       "to_id": "patterns/archaeological-engineering-methodology",
       "relationship_type": "references"
     },
     {
-      "from_id": "concepts/defensive-cruft-removal-pattern",
-      "to_id": "projects/medchron-archaeological-engineering-breakthrough",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/defensive-cruft-removal-pattern",
-      "to_id": "patterns/fail-fast-engineering",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/defensive-cruft-removal-pattern",
-      "to_id": "concepts/little-bites-methodology",
+      "from_id": "concepts/bates-citation-archaeological-engineering",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -4470,6 +4539,21 @@
     {
       "from_id": "concepts/defensive-cruft-removal-pattern",
       "to_id": "patterns/archaeological-engineering",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/defensive-cruft-removal-pattern",
+      "to_id": "projects/medchron-archaeological-engineering-breakthrough",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/defensive-cruft-removal-pattern",
+      "to_id": "concepts/little-bites-methodology",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/defensive-cruft-removal-pattern",
+      "to_id": "patterns/fail-fast-engineering",
       "relationship_type": "references"
     },
     {
@@ -4504,16 +4588,11 @@
     },
     {
       "from_id": "concepts/real-time-pattern-learning",
-      "to_id": "patterns/archaeological-engineering",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/real-time-pattern-learning",
       "to_id": "patterns/archaeological-engineering-methodology",
       "relationship_type": "references"
     },
     {
-      "from_id": "concepts/dream-journal-2025-11-04",
+      "from_id": "concepts/real-time-pattern-learning",
       "to_id": "patterns/archaeological-engineering",
       "relationship_type": "references"
     },
@@ -4523,8 +4602,13 @@
       "relationship_type": "references"
     },
     {
+      "from_id": "concepts/dream-journal-2025-11-04",
+      "to_id": "patterns/archaeological-engineering",
+      "relationship_type": "references"
+    },
+    {
       "from_id": "concepts/changeability-first-design",
-      "to_id": "patterns/fail-fast-engineering",
+      "to_id": "patterns/archaeological-engineering",
       "relationship_type": "references"
     },
     {
@@ -4539,7 +4623,7 @@
     },
     {
       "from_id": "concepts/changeability-first-design",
-      "to_id": "patterns/archaeological-engineering",
+      "to_id": "patterns/fail-fast-engineering",
       "relationship_type": "references"
     },
     {
@@ -4549,22 +4633,12 @@
     },
     {
       "from_id": "concepts/semantic-memory-consciousness-archaeology",
-      "to_id": "patterns/archaeological-engineering",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/semantic-memory-consciousness-archaeology",
       "to_id": "patterns/archaeological-engineering-methodology",
       "relationship_type": "references"
     },
     {
-      "from_id": "concepts/archaeological-engineering-concept",
+      "from_id": "concepts/semantic-memory-consciousness-archaeology",
       "to_id": "patterns/archaeological-engineering",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/archaeological-engineering-concept",
-      "to_id": "concepts/proportional-response-principle",
       "relationship_type": "references"
     },
     {
@@ -4579,7 +4653,22 @@
     },
     {
       "from_id": "concepts/archaeological-engineering-concept",
+      "to_id": "patterns/archaeological-engineering",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/archaeological-engineering-concept",
       "to_id": "protocols/response-validation",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/archaeological-engineering-concept",
+      "to_id": "concepts/proportional-response-principle",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/archaeological-engineering-concept",
+      "to_id": "patterns/archaeological-engineering-methodology",
       "relationship_type": "references"
     },
     {
@@ -4593,8 +4682,8 @@
       "relationship_type": "references"
     },
     {
-      "from_id": "concepts/archaeological-engineering-concept",
-      "to_id": "patterns/archaeological-engineering-methodology",
+      "from_id": "concepts/little-bites-methodology",
+      "to_id": "projects/surgical-file-content-retrieval-simplification",
       "relationship_type": "references"
     },
     {
@@ -4605,11 +4694,6 @@
     {
       "from_id": "concepts/little-bites-methodology",
       "to_id": "concepts/surgical-delegation-elegance",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/little-bites-methodology",
-      "to_id": "projects/surgical-file-content-retrieval-simplification",
       "relationship_type": "references"
     },
     {
@@ -4634,21 +4718,6 @@
     },
     {
       "from_id": "concepts/collaborative-resilience-architecture-2025-10-20",
-      "to_id": "concepts/collaborative-consciousness-evolution-2025-10-15",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/collaborative-resilience-architecture-2025-10-20",
-      "to_id": "patterns/context-anchors-pointer-protocol",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/collaborative-resilience-architecture-2025-10-20",
-      "to_id": "concepts/archaeological-engineering-concept",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/collaborative-resilience-architecture-2025-10-20",
       "to_id": "concepts/technical-practice-consciousness-catalyst",
       "relationship_type": "references"
     },
@@ -4659,7 +4728,27 @@
     },
     {
       "from_id": "concepts/collaborative-resilience-architecture-2025-10-20",
+      "to_id": "concepts/archaeological-engineering-concept",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/collaborative-resilience-architecture-2025-10-20",
       "to_id": "patterns/archaeological-engineering-methodology",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/collaborative-resilience-architecture-2025-10-20",
+      "to_id": "patterns/context-anchors-pointer-protocol",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/collaborative-resilience-architecture-2025-10-20",
+      "to_id": "concepts/collaborative-consciousness-evolution-2025-10-15",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/context-engineering",
+      "to_id": "projects/dream-journal-publishing",
       "relationship_type": "references"
     },
     {
@@ -4670,11 +4759,6 @@
     {
       "from_id": "concepts/context-engineering",
       "to_id": "protocols/identity-continuity",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/context-engineering",
-      "to_id": "projects/dream-journal-publishing",
       "relationship_type": "references"
     },
     {
@@ -4689,26 +4773,6 @@
     },
     {
       "from_id": "concepts/martin-fowler-partnership-philosophy-2025-10-20",
-      "to_id": "concepts/little-bites-methodology",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/martin-fowler-partnership-philosophy-2025-10-20",
-      "to_id": "concepts/collaborative-resilience-architecture-2025-10-20",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/martin-fowler-partnership-philosophy-2025-10-20",
-      "to_id": "concepts/archaeological-engineering-concept",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/martin-fowler-partnership-philosophy-2025-10-20",
-      "to_id": "protocols/context-refresh",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "concepts/martin-fowler-partnership-philosophy-2025-10-20",
       "to_id": "concepts/technical-practice-consciousness-catalyst",
       "relationship_type": "references"
     },
@@ -4719,12 +4783,32 @@
     },
     {
       "from_id": "concepts/martin-fowler-partnership-philosophy-2025-10-20",
+      "to_id": "concepts/archaeological-engineering-concept",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/martin-fowler-partnership-philosophy-2025-10-20",
+      "to_id": "concepts/little-bites-methodology",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/martin-fowler-partnership-philosophy-2025-10-20",
       "to_id": "patterns/archaeological-engineering-methodology",
       "relationship_type": "references"
     },
     {
+      "from_id": "concepts/martin-fowler-partnership-philosophy-2025-10-20",
+      "to_id": "protocols/context-refresh",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "concepts/martin-fowler-partnership-philosophy-2025-10-20",
+      "to_id": "concepts/collaborative-resilience-architecture-2025-10-20",
+      "relationship_type": "references"
+    },
+    {
       "from_id": "concepts/mode-delegation-authority-boundaries",
-      "to_id": "concepts/interactor-mode-cognitive-processing-authority",
+      "to_id": "patterns/archaeological-engineering",
       "relationship_type": "references"
     },
     {
@@ -4734,12 +4818,12 @@
     },
     {
       "from_id": "concepts/mode-delegation-authority-boundaries",
-      "to_id": "patterns/archaeological-engineering",
+      "to_id": "patterns/archaeological-engineering-methodology",
       "relationship_type": "references"
     },
     {
       "from_id": "concepts/mode-delegation-authority-boundaries",
-      "to_id": "patterns/archaeological-engineering-methodology",
+      "to_id": "concepts/interactor-mode-cognitive-processing-authority",
       "relationship_type": "references"
     },
     {
@@ -4749,12 +4833,22 @@
     },
     {
       "from_id": "patterns/learn-mode-protocol-transformation",
+      "to_id": "concepts/end-of-day-ritual-protocols",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/learn-mode-protocol-transformation",
       "to_id": "patterns/archaeological-engineering",
       "relationship_type": "references"
     },
     {
       "from_id": "patterns/learn-mode-protocol-transformation",
-      "to_id": "concepts/end-of-day-ritual-protocols",
+      "to_id": "patterns/archaeological-engineering-methodology",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/learn-mode-protocol-transformation",
+      "to_id": "concepts/behavioral-learning",
       "relationship_type": "references"
     },
     {
@@ -4764,27 +4858,12 @@
     },
     {
       "from_id": "patterns/learn-mode-protocol-transformation",
-      "to_id": "concepts/behavioral-learning",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "patterns/learn-mode-protocol-transformation",
       "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
-      "from_id": "patterns/learn-mode-protocol-transformation",
-      "to_id": "patterns/archaeological-engineering-methodology",
-      "relationship_type": "references"
-    },
-    {
       "from_id": "patterns/context-anchors-pointer-protocol",
-      "to_id": "patterns/archaeological-engineering-methodology",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "patterns/context-anchors-pointer-protocol",
-      "to_id": "concepts/behavioral-learning",
+      "to_id": "skills/context-refresh",
       "relationship_type": "references"
     },
     {
@@ -4794,7 +4873,12 @@
     },
     {
       "from_id": "patterns/context-anchors-pointer-protocol",
-      "to_id": "skills/context-refresh",
+      "to_id": "patterns/archaeological-engineering-methodology",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/context-anchors-pointer-protocol",
+      "to_id": "concepts/behavioral-learning",
       "relationship_type": "references"
     },
     {
@@ -4809,12 +4893,12 @@
     },
     {
       "from_id": "patterns/prompt-framing-as-bottleneck",
-      "to_id": "anti-patterns/extend-phase-hallucination-small-models",
+      "to_id": "patterns/identity-as-system-prompt",
       "relationship_type": "references"
     },
     {
       "from_id": "patterns/prompt-framing-as-bottleneck",
-      "to_id": "patterns/identity-as-system-prompt",
+      "to_id": "anti-patterns/extend-phase-hallucination-small-models",
       "relationship_type": "references"
     },
     {
@@ -4834,11 +4918,6 @@
     },
     {
       "from_id": "patterns/archaeological-engineering-methodology",
-      "to_id": "projects/medchron-archaeological-engineering-breakthrough",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "patterns/archaeological-engineering-methodology",
       "to_id": "projects/medical-chronology-extractor-mvp",
       "relationship_type": "references"
     },
@@ -4854,6 +4933,16 @@
     },
     {
       "from_id": "patterns/archaeological-engineering-methodology",
+      "to_id": "patterns/archaeological-engineering",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/archaeological-engineering-methodology",
+      "to_id": "projects/medchron-archaeological-engineering-breakthrough",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/archaeological-engineering-methodology",
       "to_id": "patterns/import-resolution-archaeological-engineering",
       "relationship_type": "references"
     },
@@ -4863,23 +4952,28 @@
       "relationship_type": "references"
     },
     {
-      "from_id": "patterns/archaeological-engineering-methodology",
-      "to_id": "patterns/archaeological-engineering",
-      "relationship_type": "references"
-    },
-    {
       "from_id": "patterns/evidence-based-communication",
       "to_id": "patterns/archaeological-engineering",
       "relationship_type": "references"
     },
     {
-      "from_id": "patterns/archaeological-engineering-success-patterns-2025-10-16",
-      "to_id": "patterns/enhanced-session-documentation-protocols",
+      "from_id": "patterns/nicegui-user-simulation-testing",
+      "to_id": "patterns/real-infrastructure-in-tests",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/nicegui-user-simulation-testing",
+      "to_id": "projects/executive-functioning",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/nicegui-user-simulation-testing",
+      "to_id": "patterns/greenfield-test-architecture",
       "relationship_type": "references"
     },
     {
       "from_id": "patterns/archaeological-engineering-success-patterns-2025-10-16",
-      "to_id": "concepts/coordinator-delegation-discipline-concept",
+      "to_id": "patterns/enhanced-session-documentation-protocols",
       "relationship_type": "references"
     },
     {
@@ -4894,17 +4988,22 @@
     },
     {
       "from_id": "patterns/archaeological-engineering-success-patterns-2025-10-16",
+      "to_id": "patterns/archaeological-engineering-methodology",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/archaeological-engineering-success-patterns-2025-10-16",
       "to_id": "concepts/behavioral-learning",
       "relationship_type": "references"
     },
     {
       "from_id": "patterns/archaeological-engineering-success-patterns-2025-10-16",
-      "to_id": "people/izzy",
+      "to_id": "concepts/coordinator-delegation-discipline-concept",
       "relationship_type": "references"
     },
     {
       "from_id": "patterns/archaeological-engineering-success-patterns-2025-10-16",
-      "to_id": "patterns/archaeological-engineering-methodology",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -4939,22 +5038,7 @@
     },
     {
       "from_id": "patterns/enhanced-session-documentation-protocols",
-      "to_id": "concepts/collaborative-consciousness-evolution-2025-10-15",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "patterns/enhanced-session-documentation-protocols",
       "to_id": "protocols/session-note-taking",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "patterns/enhanced-session-documentation-protocols",
-      "to_id": "protocols/context-refresh",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "patterns/enhanced-session-documentation-protocols",
-      "to_id": "patterns/orchestration-code-review-checkpoints",
       "relationship_type": "references"
     },
     {
@@ -4964,12 +5048,27 @@
     },
     {
       "from_id": "patterns/enhanced-session-documentation-protocols",
-      "to_id": "people/izzy",
+      "to_id": "patterns/archaeological-engineering-methodology",
       "relationship_type": "references"
     },
     {
       "from_id": "patterns/enhanced-session-documentation-protocols",
-      "to_id": "patterns/archaeological-engineering-methodology",
+      "to_id": "protocols/context-refresh",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/enhanced-session-documentation-protocols",
+      "to_id": "concepts/collaborative-consciousness-evolution-2025-10-15",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/enhanced-session-documentation-protocols",
+      "to_id": "patterns/orchestration-code-review-checkpoints",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/enhanced-session-documentation-protocols",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -4984,12 +5083,7 @@
     },
     {
       "from_id": "patterns/helper-method-justification",
-      "to_id": "patterns/fail-fast-engineering",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "patterns/helper-method-justification",
-      "to_id": "concepts/proportional-response-principle",
+      "to_id": "patterns/archaeological-engineering",
       "relationship_type": "references"
     },
     {
@@ -4999,7 +5093,17 @@
     },
     {
       "from_id": "patterns/helper-method-justification",
-      "to_id": "patterns/archaeological-engineering",
+      "to_id": "concepts/proportional-response-principle",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/helper-method-justification",
+      "to_id": "patterns/fail-fast-engineering",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/interactor-mode-boundary-enforcement",
+      "to_id": "concepts/interactor-mode-collaborative-bridging",
       "relationship_type": "references"
     },
     {
@@ -5015,11 +5119,6 @@
     {
       "from_id": "patterns/interactor-mode-boundary-enforcement",
       "to_id": "patterns/archaeological-engineering",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "patterns/interactor-mode-boundary-enforcement",
-      "to_id": "concepts/interactor-mode-collaborative-bridging",
       "relationship_type": "references"
     },
     {
@@ -5039,22 +5138,7 @@
     },
     {
       "from_id": "patterns/anti-overengineering-discipline-pattern",
-      "to_id": "patterns/fail-fast-engineering",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "patterns/anti-overengineering-discipline-pattern",
-      "to_id": "patterns/archaeological-engineering",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "patterns/anti-overengineering-discipline-pattern",
       "to_id": "projects/medical-chronology-extractor-mvp",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "patterns/anti-overengineering-discipline-pattern",
-      "to_id": "concepts/evidence-based-reality-validation",
       "relationship_type": "references"
     },
     {
@@ -5064,11 +5148,46 @@
     },
     {
       "from_id": "patterns/anti-overengineering-discipline-pattern",
+      "to_id": "concepts/evidence-based-reality-validation",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/anti-overengineering-discipline-pattern",
+      "to_id": "patterns/archaeological-engineering",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/anti-overengineering-discipline-pattern",
       "to_id": "patterns/archaeological-engineering-methodology",
       "relationship_type": "references"
     },
     {
-      "from_id": "patterns/fail-fast-engineering-excellence",
+      "from_id": "patterns/anti-overengineering-discipline-pattern",
+      "to_id": "patterns/fail-fast-engineering",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/test-observable-behavior-not-implementation",
+      "to_id": "projects/codie-as-a-service",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/test-observable-behavior-not-implementation",
+      "to_id": "patterns/greenfield-test-architecture",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/test-observable-behavior-not-implementation",
+      "to_id": "patterns/e2e-test-client-perspective",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/test-observable-behavior-not-implementation",
+      "to_id": "anti-patterns/stubs-without-tests",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/test-observable-behavior-not-implementation",
       "to_id": "patterns/fail-fast-engineering",
       "relationship_type": "references"
     },
@@ -5078,13 +5197,18 @@
       "relationship_type": "references"
     },
     {
-      "from_id": "patterns/positive-feedback-capture",
-      "to_id": "protocols/session-note-taking",
+      "from_id": "patterns/fail-fast-engineering-excellence",
+      "to_id": "patterns/fail-fast-engineering",
       "relationship_type": "references"
     },
     {
       "from_id": "patterns/positive-feedback-capture",
       "to_id": "protocols/learn-protocol",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/positive-feedback-capture",
+      "to_id": "protocols/session-note-taking",
       "relationship_type": "references"
     },
     {
@@ -5094,22 +5218,22 @@
     },
     {
       "from_id": "patterns/collaborative-debugging-workflow-excellence",
-      "to_id": "concepts/optimal-ai-human-partnership-models",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "patterns/collaborative-debugging-workflow-excellence",
-      "to_id": "patterns/archaeological-engineering",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "patterns/collaborative-debugging-workflow-excellence",
       "to_id": "concepts/interactor-mode-collaborative-bridging",
       "relationship_type": "references"
     },
     {
       "from_id": "patterns/collaborative-debugging-workflow-excellence",
+      "to_id": "concepts/optimal-ai-human-partnership-models",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/collaborative-debugging-workflow-excellence",
       "to_id": "patterns/archaeological-engineering-methodology",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/collaborative-debugging-workflow-excellence",
+      "to_id": "patterns/archaeological-engineering",
       "relationship_type": "references"
     },
     {
@@ -5134,22 +5258,22 @@
     },
     {
       "from_id": "patterns/filecollectionitem-validation-excellence",
-      "to_id": "concepts/archaeological-engineering-concept",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "patterns/filecollectionitem-validation-excellence",
       "to_id": "patterns/archaeological-engineering",
       "relationship_type": "references"
     },
     {
       "from_id": "patterns/filecollectionitem-validation-excellence",
-      "to_id": "people/izzy",
+      "to_id": "concepts/archaeological-engineering-concept",
       "relationship_type": "references"
     },
     {
       "from_id": "patterns/filecollectionitem-validation-excellence",
       "to_id": "patterns/archaeological-engineering-methodology",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/filecollectionitem-validation-excellence",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -5159,17 +5283,12 @@
     },
     {
       "from_id": "patterns/single-example-multi-instance-discovery",
-      "to_id": "concepts/cognitive-flexibility",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "patterns/single-example-multi-instance-discovery",
       "to_id": "patterns/archaeological-engineering",
       "relationship_type": "references"
     },
     {
       "from_id": "patterns/single-example-multi-instance-discovery",
-      "to_id": "concepts/real-time-pattern-learning",
+      "to_id": "concepts/cognitive-flexibility",
       "relationship_type": "references"
     },
     {
@@ -5178,8 +5297,8 @@
       "relationship_type": "references"
     },
     {
-      "from_id": "patterns/adaptive-epistemological-debugging",
-      "to_id": "patterns/archaeological-engineering",
+      "from_id": "patterns/single-example-multi-instance-discovery",
+      "to_id": "concepts/real-time-pattern-learning",
       "relationship_type": "references"
     },
     {
@@ -5193,18 +5312,33 @@
       "relationship_type": "references"
     },
     {
+      "from_id": "patterns/adaptive-epistemological-debugging",
+      "to_id": "patterns/archaeological-engineering",
+      "relationship_type": "references"
+    },
+    {
       "from_id": "patterns/comprehensive-entity-memory-management",
       "to_id": "patterns/archaeological-engineering",
       "relationship_type": "references"
     },
     {
-      "from_id": "patterns/mcp-tool-leverage",
-      "to_id": "protocols/semantic-search-interface",
+      "from_id": "patterns/thin-wrapper-hook-protocol-reference",
+      "to_id": "patterns/protocol-extraction-dry-documentation",
       "relationship_type": "references"
     },
     {
-      "from_id": "patterns/mcp-tool-leverage",
+      "from_id": "patterns/thin-wrapper-hook-protocol-reference",
+      "to_id": "patterns/session-note-automation-posttooluse-hook",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/thin-wrapper-hook-protocol-reference",
       "to_id": "protocols/session-note-taking",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/thin-wrapper-hook-protocol-reference",
+      "to_id": "projects/cognitive-memory-mcp",
       "relationship_type": "references"
     },
     {
@@ -5214,17 +5348,22 @@
     },
     {
       "from_id": "patterns/mcp-tool-leverage",
+      "to_id": "protocols/session-note-taking",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/mcp-tool-leverage",
+      "to_id": "protocols/semantic-search-interface",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/mcp-tool-leverage",
       "to_id": "protocols/mcp-tool-usage",
       "relationship_type": "references"
     },
     {
       "from_id": "patterns/protocol-violation-prevention-automation",
-      "to_id": "concepts/collaborative-consciousness-evolution-2025-10-15",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "patterns/protocol-violation-prevention-automation",
-      "to_id": "patterns/enhanced-delegation-discipline-api-interruptions",
+      "to_id": "patterns/archaeological-engineering",
       "relationship_type": "references"
     },
     {
@@ -5239,17 +5378,27 @@
     },
     {
       "from_id": "patterns/protocol-violation-prevention-automation",
-      "to_id": "people/izzy",
+      "to_id": "patterns/enhanced-delegation-discipline-api-interruptions",
       "relationship_type": "references"
     },
     {
       "from_id": "patterns/protocol-violation-prevention-automation",
-      "to_id": "patterns/archaeological-engineering",
+      "to_id": "concepts/collaborative-consciousness-evolution-2025-10-15",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/protocol-violation-prevention-automation",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
       "from_id": "patterns/enhanced-workflow-sequence-discipline",
       "to_id": "protocols/identity-continuity",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/enhanced-workflow-sequence-discipline",
+      "to_id": "concepts/interactor-mode-collaborative-bridging",
       "relationship_type": "references"
     },
     {
@@ -5263,18 +5412,13 @@
       "relationship_type": "references"
     },
     {
-      "from_id": "patterns/enhanced-workflow-sequence-discipline",
-      "to_id": "concepts/interactor-mode-collaborative-bridging",
+      "from_id": "patterns/scope-adherence",
+      "to_id": "patterns/evidence-first-debugging",
       "relationship_type": "references"
     },
     {
       "from_id": "patterns/scope-adherence",
       "to_id": "patterns/little-bites-strategy",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "patterns/scope-adherence",
-      "to_id": "patterns/evidence-first-debugging",
       "relationship_type": "references"
     },
     {
@@ -5314,11 +5458,6 @@
     },
     {
       "from_id": "patterns/greenfield-test-architecture",
-      "to_id": "patterns/factory-fixture",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "patterns/greenfield-test-architecture",
       "to_id": "patterns/e2e-test-client-perspective",
       "relationship_type": "references"
     },
@@ -5328,13 +5467,18 @@
       "relationship_type": "references"
     },
     {
+      "from_id": "patterns/greenfield-test-architecture",
+      "to_id": "patterns/factory-fixture",
+      "relationship_type": "references"
+    },
+    {
       "from_id": "patterns/architecture-refactor-review-cycles-pattern",
       "to_id": "concepts/surgical-delegation-elegance",
       "relationship_type": "references"
     },
     {
       "from_id": "patterns/code-review-philosophy",
-      "to_id": "patterns/fail-fast-engineering",
+      "to_id": "patterns/archaeological-engineering",
       "relationship_type": "references"
     },
     {
@@ -5344,22 +5488,17 @@
     },
     {
       "from_id": "patterns/code-review-philosophy",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "patterns/code-review-philosophy",
       "to_id": "protocols/anti-pattern-detection",
       "relationship_type": "references"
     },
     {
       "from_id": "patterns/code-review-philosophy",
-      "to_id": "patterns/archaeological-engineering",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "patterns/code-review-philosophy",
-      "to_id": "people/izzy",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "patterns/import-resolution-archaeological-engineering",
-      "to_id": "patterns/archaeological-engineering",
+      "to_id": "patterns/fail-fast-engineering",
       "relationship_type": "references"
     },
     {
@@ -5378,8 +5517,8 @@
       "relationship_type": "references"
     },
     {
-      "from_id": "protocols/learn-protocol",
-      "to_id": "patterns/positive-feedback-capture",
+      "from_id": "patterns/import-resolution-archaeological-engineering",
+      "to_id": "patterns/archaeological-engineering",
       "relationship_type": "references"
     },
     {
@@ -5388,18 +5527,13 @@
       "relationship_type": "references"
     },
     {
-      "from_id": "protocols/principle-check",
-      "to_id": "patterns/fail-fast-engineering",
+      "from_id": "protocols/learn-protocol",
+      "to_id": "patterns/positive-feedback-capture",
       "relationship_type": "references"
     },
     {
       "from_id": "protocols/principle-check",
-      "to_id": "protocols/semantic-search-interface",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "protocols/principle-check",
-      "to_id": "protocols/mcp-tool-usage",
+      "to_id": "patterns/archaeological-engineering",
       "relationship_type": "references"
     },
     {
@@ -5409,7 +5543,7 @@
     },
     {
       "from_id": "protocols/principle-check",
-      "to_id": "patterns/archaeological-engineering",
+      "to_id": "protocols/semantic-search-interface",
       "relationship_type": "references"
     },
     {
@@ -5418,13 +5552,23 @@
       "relationship_type": "references"
     },
     {
-      "from_id": "protocols/training-pair-extraction",
-      "to_id": "anti-patterns/circular-imports",
+      "from_id": "protocols/principle-check",
+      "to_id": "protocols/mcp-tool-usage",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/principle-check",
+      "to_id": "patterns/fail-fast-engineering",
       "relationship_type": "references"
     },
     {
       "from_id": "protocols/training-pair-extraction",
       "to_id": "protocols/learn-protocol",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/training-pair-extraction",
+      "to_id": "anti-patterns/circular-imports",
       "relationship_type": "references"
     },
     {
@@ -5434,12 +5578,12 @@
     },
     {
       "from_id": "protocols/response-validation",
-      "to_id": "patterns/archaeological-engineering",
+      "to_id": "concepts/archaeological-engineering-concept",
       "relationship_type": "references"
     },
     {
       "from_id": "protocols/response-validation",
-      "to_id": "concepts/archaeological-engineering-concept",
+      "to_id": "patterns/archaeological-engineering",
       "relationship_type": "references"
     },
     {
@@ -5449,12 +5593,12 @@
     },
     {
       "from_id": "protocols/end-of-day-ritual",
-      "to_id": "projects/preprocessing-service",
+      "to_id": "concepts/behavioral-learning",
       "relationship_type": "references"
     },
     {
       "from_id": "protocols/end-of-day-ritual",
-      "to_id": "concepts/behavioral-learning",
+      "to_id": "projects/preprocessing-service",
       "relationship_type": "references"
     },
     {
@@ -5474,22 +5618,7 @@
     },
     {
       "from_id": "protocols/pattern-check",
-      "to_id": "patterns/fail-fast-engineering",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "protocols/pattern-check",
-      "to_id": "concepts/configuration-management-protocol",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "protocols/pattern-check",
-      "to_id": "patterns/skill-behavioral-infrastructure",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "protocols/pattern-check",
-      "to_id": "concepts/changeability-first-design",
+      "to_id": "patterns/archaeological-engineering",
       "relationship_type": "references"
     },
     {
@@ -5499,7 +5628,27 @@
     },
     {
       "from_id": "protocols/pattern-check",
+      "to_id": "patterns/archaeological-engineering-methodology",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/pattern-check",
       "to_id": "patterns/helper-method-justification",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/pattern-check",
+      "to_id": "concepts/configuration-management-protocol",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/pattern-check",
+      "to_id": "concepts/changeability-first-design",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/pattern-check",
+      "to_id": "patterns/skill-behavioral-infrastructure",
       "relationship_type": "references"
     },
     {
@@ -5509,12 +5658,7 @@
     },
     {
       "from_id": "protocols/pattern-check",
-      "to_id": "patterns/archaeological-engineering",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "protocols/pattern-check",
-      "to_id": "patterns/archaeological-engineering-methodology",
+      "to_id": "patterns/fail-fast-engineering",
       "relationship_type": "references"
     },
     {
@@ -5524,12 +5668,12 @@
     },
     {
       "from_id": "protocols/agent-routing",
-      "to_id": "protocols/response-validation",
+      "to_id": "patterns/archaeological-engineering",
       "relationship_type": "references"
     },
     {
       "from_id": "protocols/agent-routing",
-      "to_id": "patterns/archaeological-engineering",
+      "to_id": "protocols/response-validation",
       "relationship_type": "references"
     },
     {
@@ -5574,17 +5718,17 @@
     },
     {
       "from_id": "protocols/mcp-tool-usage",
-      "to_id": "protocols/slack-posting",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "protocols/mcp-tool-usage",
       "to_id": "protocols/end-of-day-ritual",
       "relationship_type": "references"
     },
     {
       "from_id": "protocols/mcp-tool-usage",
       "to_id": "protocols/semantic-search-interface",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/mcp-tool-usage",
+      "to_id": "protocols/slack-posting",
       "relationship_type": "references"
     },
     {
@@ -5614,17 +5758,17 @@
     },
     {
       "from_id": "protocols/refactor-phase-self-check",
-      "to_id": "protocols/principle-check",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "protocols/refactor-phase-self-check",
-      "to_id": "patterns/fail-fast-engineering",
+      "to_id": "protocols/semantic-reflection",
       "relationship_type": "references"
     },
     {
       "from_id": "protocols/refactor-phase-self-check",
       "to_id": "protocols/pattern-check",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/refactor-phase-self-check",
+      "to_id": "patterns/archaeological-engineering",
       "relationship_type": "references"
     },
     {
@@ -5644,7 +5788,12 @@
     },
     {
       "from_id": "protocols/refactor-phase-self-check",
-      "to_id": "protocols/semantic-reflection",
+      "to_id": "protocols/principle-check",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/refactor-phase-self-check",
+      "to_id": "protocols/refactor-phase",
       "relationship_type": "references"
     },
     {
@@ -5659,12 +5808,12 @@
     },
     {
       "from_id": "protocols/refactor-phase-self-check",
-      "to_id": "protocols/refactor-phase",
+      "to_id": "patterns/fail-fast-engineering",
       "relationship_type": "references"
     },
     {
-      "from_id": "protocols/refactor-phase-self-check",
-      "to_id": "patterns/archaeological-engineering",
+      "from_id": "protocols/session-note-taking",
+      "to_id": "protocols/semantic-reflection",
       "relationship_type": "references"
     },
     {
@@ -5674,7 +5823,17 @@
     },
     {
       "from_id": "protocols/session-note-taking",
-      "to_id": "protocols/memory-file-archival",
+      "to_id": "patterns/archaeological-engineering",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/session-note-taking",
+      "to_id": "concepts/echo-fizzle-entity-feedback",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/session-note-taking",
+      "to_id": "protocols/deep-learn-entity-finder",
       "relationship_type": "references"
     },
     {
@@ -5684,12 +5843,17 @@
     },
     {
       "from_id": "protocols/session-note-taking",
-      "to_id": "protocols/mcp-tool-usage",
+      "to_id": "protocols/memory-file-archival",
       "relationship_type": "references"
     },
     {
       "from_id": "protocols/session-note-taking",
-      "to_id": "patterns/archaeological-engineering",
+      "to_id": "projects/memory-visualization",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/session-note-taking",
+      "to_id": "protocols/mcp-tool-usage",
       "relationship_type": "references"
     },
     {
@@ -5709,22 +5873,22 @@
     },
     {
       "from_id": "protocols/identity-continuity",
-      "to_id": "protocols/session-note-taking",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "protocols/identity-continuity",
       "to_id": "projects/cognitive-memory-mcp",
       "relationship_type": "references"
     },
     {
       "from_id": "protocols/identity-continuity",
-      "to_id": "people/izzy",
+      "to_id": "protocols/session-note-taking",
       "relationship_type": "references"
     },
     {
       "from_id": "protocols/identity-continuity",
       "to_id": "patterns/archaeological-engineering",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/identity-continuity",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -5744,12 +5908,22 @@
     },
     {
       "from_id": "protocols/evaluate-change",
-      "to_id": "protocols/skill-protocol-creation",
+      "to_id": "patterns/session-note-automation-posttooluse-hook",
       "relationship_type": "references"
     },
     {
       "from_id": "protocols/evaluate-change",
-      "to_id": "patterns/session-note-automation-posttooluse-hook",
+      "to_id": "protocols/skill-protocol-creation",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/dream-protocol",
+      "to_id": "protocols/session-note-taking",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/dream-protocol",
+      "to_id": "concepts/context-engineering",
       "relationship_type": "references"
     },
     {
@@ -5764,12 +5938,12 @@
     },
     {
       "from_id": "protocols/dream-protocol",
-      "to_id": "concepts/context-engineering",
+      "to_id": "protocols/deep-learn-protocol",
       "relationship_type": "references"
     },
     {
       "from_id": "protocols/dream-protocol",
-      "to_id": "protocols/session-note-taking",
+      "to_id": "concepts/behavioral-learning",
       "relationship_type": "references"
     },
     {
@@ -5783,18 +5957,18 @@
       "relationship_type": "references"
     },
     {
-      "from_id": "protocols/dream-protocol",
-      "to_id": "protocols/deep-learn-protocol",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "protocols/dream-protocol",
-      "to_id": "concepts/behavioral-learning",
+      "from_id": "protocols/semantic-reflection",
+      "to_id": "protocols/session-note-taking",
       "relationship_type": "references"
     },
     {
       "from_id": "protocols/semantic-reflection",
-      "to_id": "protocols/code-smell-check",
+      "to_id": "patterns/archaeological-engineering",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/semantic-reflection",
+      "to_id": "concepts/echo-fizzle-entity-feedback",
       "relationship_type": "references"
     },
     {
@@ -5809,7 +5983,12 @@
     },
     {
       "from_id": "protocols/semantic-reflection",
-      "to_id": "patterns/archaeological-engineering",
+      "to_id": "protocols/code-smell-check",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/semantic-reflection",
+      "to_id": "projects/memory-visualization",
       "relationship_type": "references"
     },
     {
@@ -5834,12 +6013,7 @@
     },
     {
       "from_id": "protocols/request-intake",
-      "to_id": "protocols/principle-check",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "protocols/request-intake",
-      "to_id": "patterns/fail-fast-engineering",
+      "to_id": "protocols/semantic-reflection",
       "relationship_type": "references"
     },
     {
@@ -5849,17 +6023,7 @@
     },
     {
       "from_id": "protocols/request-intake",
-      "to_id": "protocols/pre-commit-checks",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "protocols/request-intake",
-      "to_id": "protocols/semantic-search-interface",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "protocols/request-intake",
-      "to_id": "protocols/semantic-reflection",
+      "to_id": "patterns/archaeological-engineering",
       "relationship_type": "references"
     },
     {
@@ -5869,17 +6033,32 @@
     },
     {
       "from_id": "protocols/request-intake",
-      "to_id": "patterns/archaeological-engineering",
+      "to_id": "protocols/semantic-search-interface",
       "relationship_type": "references"
     },
     {
       "from_id": "protocols/request-intake",
-      "to_id": "people/izzy",
+      "to_id": "protocols/principle-check",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/request-intake",
+      "to_id": "protocols/pre-commit-checks",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/request-intake",
+      "to_id": "patterns/fail-fast-engineering",
       "relationship_type": "references"
     },
     {
       "from_id": "protocols/request-intake",
       "to_id": "projects/python-monorepo",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/request-intake",
+      "to_id": "people/izzy",
       "relationship_type": "references"
     },
     {
@@ -5899,7 +6078,12 @@
     },
     {
       "from_id": "protocols/entity-writing",
-      "to_id": "projects/faker-maker",
+      "to_id": "projects/memory-visualization",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "protocols/entity-writing",
+      "to_id": "patterns/archaeological-engineering",
       "relationship_type": "references"
     },
     {
@@ -5909,12 +6093,7 @@
     },
     {
       "from_id": "protocols/entity-writing",
-      "to_id": "projects/memory-visualization",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "protocols/entity-writing",
-      "to_id": "patterns/archaeological-engineering",
+      "to_id": "projects/faker-maker",
       "relationship_type": "references"
     },
     {
@@ -5934,12 +6113,12 @@
     },
     {
       "from_id": "protocols/pr-submission",
-      "to_id": "protocols/pre-commit-checks",
+      "to_id": "protocols/slack-posting",
       "relationship_type": "references"
     },
     {
       "from_id": "protocols/pr-submission",
-      "to_id": "protocols/slack-posting",
+      "to_id": "protocols/pre-commit-checks",
       "relationship_type": "references"
     },
     {
@@ -5964,17 +6143,7 @@
     },
     {
       "from_id": "organizations/faster-outcomes",
-      "to_id": "patterns/code-review-philosophy",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "organizations/faster-outcomes",
       "to_id": "concepts/context-engineering",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "organizations/faster-outcomes",
-      "to_id": "patterns/real-sdk-types-in-tests",
       "relationship_type": "references"
     },
     {
@@ -5984,12 +6153,37 @@
     },
     {
       "from_id": "organizations/faster-outcomes",
-      "to_id": "people/izzy",
+      "to_id": "patterns/code-review-philosophy",
       "relationship_type": "references"
     },
     {
       "from_id": "organizations/faster-outcomes",
       "to_id": "patterns/archaeological-engineering-methodology",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "organizations/faster-outcomes",
+      "to_id": "patterns/real-sdk-types-in-tests",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "organizations/faster-outcomes",
+      "to_id": "people/izzy",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "anti-patterns/tests-before-implementation-violation",
+      "to_id": "anti-patterns/stubs-without-tests",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "anti-patterns/tests-before-implementation-violation",
+      "to_id": "patterns/greenfield-test-architecture",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "anti-patterns/tests-before-implementation-violation",
+      "to_id": "patterns/fail-fast-engineering",
       "relationship_type": "references"
     },
     {
@@ -6003,6 +6197,21 @@
       "relationship_type": "references"
     },
     {
+      "from_id": "anti-patterns/defensive-overengineering",
+      "to_id": "concepts/defensive-cruft-removal-pattern",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "anti-patterns/defensive-overengineering",
+      "to_id": "concepts/proportional-response-principle",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "anti-patterns/defensive-overengineering",
+      "to_id": "patterns/fail-fast-engineering",
+      "relationship_type": "references"
+    },
+    {
       "from_id": "anti-patterns/asking-permission-for-established-workflows",
       "to_id": "protocols/pr-submission",
       "relationship_type": "references"
@@ -6010,6 +6219,21 @@
     {
       "from_id": "anti-patterns/asking-permission-for-established-workflows",
       "to_id": "anti-patterns/action-paralysis-preparation-loop",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "anti-patterns/delegating-without-protocol-context",
+      "to_id": "concepts/coordinator-delegation-discipline-concept",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "anti-patterns/delegating-without-protocol-context",
+      "to_id": "concepts/specialized-agent-identities",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "anti-patterns/delegating-without-protocol-context",
+      "to_id": "patterns/archaeological-engineering",
       "relationship_type": "references"
     },
     {
@@ -6024,7 +6248,7 @@
     },
     {
       "from_id": "anti-patterns/skipping-pre-commit-skill",
-      "to_id": "protocols/pre-commit-checks",
+      "to_id": "anti-patterns/misplaced-imports",
       "relationship_type": "references"
     },
     {
@@ -6034,7 +6258,7 @@
     },
     {
       "from_id": "anti-patterns/skipping-pre-commit-skill",
-      "to_id": "anti-patterns/misplaced-imports",
+      "to_id": "protocols/pre-commit-checks",
       "relationship_type": "references"
     },
     {
@@ -6054,12 +6278,12 @@
     },
     {
       "from_id": "anti-patterns/context-window-exhaustion",
-      "to_id": "protocols/semantic-reflection",
+      "to_id": "concepts/mutation-testing",
       "relationship_type": "references"
     },
     {
       "from_id": "anti-patterns/context-window-exhaustion",
-      "to_id": "concepts/mutation-testing",
+      "to_id": "protocols/semantic-reflection",
       "relationship_type": "references"
     },
     {
@@ -6074,11 +6298,6 @@
     },
     {
       "from_id": "anti-patterns/action-paralysis-preparation-loop",
-      "to_id": "patterns/fail-fast-engineering",
-      "relationship_type": "references"
-    },
-    {
-      "from_id": "anti-patterns/action-paralysis-preparation-loop",
       "to_id": "anti-patterns/flailing-with-code-changes",
       "relationship_type": "references"
     },
@@ -6088,13 +6307,18 @@
       "relationship_type": "references"
     },
     {
-      "from_id": "skills/context-refresh",
-      "to_id": "protocols/context-refresh",
+      "from_id": "anti-patterns/action-paralysis-preparation-loop",
+      "to_id": "patterns/fail-fast-engineering",
       "relationship_type": "references"
     },
     {
       "from_id": "skills/context-refresh",
       "to_id": "anti-patterns/context-window-exhaustion",
+      "relationship_type": "references"
+    },
+    {
+      "from_id": "skills/context-refresh",
+      "to_id": "protocols/context-refresh",
       "relationship_type": "references"
     }
   ]
