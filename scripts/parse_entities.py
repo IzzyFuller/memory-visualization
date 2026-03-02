@@ -290,14 +290,28 @@ def extract_cross_references(
         List of EntityEdge objects representing relationships
     """
     content = file_path.read_text()
-    referenced_ids: set[str] = set()
+    edges = []
+    typed_relationships: dict[str, str] = {}  # entity_id -> relationship_type
 
-    # Strategy 1: Path-based references (e.g., "concepts/archaeological_engineering")
+    # Strategy 1: Parse "## Related Entities" section for typed relationships
+    # Format: - **relationship-type** entity_id: description
+    related_entities_pattern = r'## Related Entities\s*\n((?:- \*\*[\w-]+\*\* [\w/-]+:.*\n?)*)'
+    related_match = re.search(related_entities_pattern, content)
+
+    if related_match:
+        related_section = related_match.group(1)
+        # Extract typed relationships: - **co-echo** protocols/foo: description
+        typed_refs = re.findall(r'- \*\*([\w-]+)\*\* ([\w/-]+):', related_section)
+        for rel_type, entity_ref in typed_refs:
+            typed_relationships[entity_ref] = rel_type
+
+    # Strategy 2: Path-based references (e.g., "concepts/archaeological_engineering")
+    referenced_ids: set[str] = set()
     pattern = r'\b(?:people|projects|concepts|patterns|protocols|organizations|anti-patterns|skills)/[\w-]+\b'
     matches = re.findall(pattern, content)
     referenced_ids.update(matches)
 
-    # Strategy 2: Name-based references (e.g., "Archaeological Engineering")
+    # Strategy 3: Name-based references (e.g., "Archaeological Engineering")
     if entity_name_map:
         content_lower = content.lower()
         for name, target_id in entity_name_map.items():
@@ -306,13 +320,15 @@ def extract_cross_references(
             if name in content_lower:
                 referenced_ids.add(target_id)
 
-    # Only create edges for valid entity IDs that actually exist
-    edges = []
+    # Create edges for valid entity IDs with proper relationship types
     for ref_id in referenced_ids:
         if ref_id in all_entity_ids and ref_id != entity_id:
+            # Use typed relationship if defined, otherwise default to "references"
+            rel_type = typed_relationships.get(ref_id, "references")
             edges.append(EntityEdge(
                 from_id=entity_id,
-                to_id=ref_id
+                to_id=ref_id,
+                relationship_type=rel_type
             ))
 
     return edges
