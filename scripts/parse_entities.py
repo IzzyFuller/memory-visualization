@@ -291,10 +291,11 @@ def extract_cross_references(
     """
     content = file_path.read_text()
     edges = []
-    typed_relationships: dict[str, str] = {}  # entity_id -> relationship_type
+    typed_relationships: list[tuple[str, str]] = []  # List of (entity_id, relationship_type)
 
     # Strategy 1: Parse "## Related Entities" section for typed relationships
     # Format: - **relationship-type** entity_id: description
+    # Supports multiple relationship types to the same entity
     related_entities_pattern = r'## Related Entities\s*\n((?:- \*\*[\w-]+\*\* [\w/-]+:.*\n?)*)'
     related_match = re.search(related_entities_pattern, content)
 
@@ -303,7 +304,7 @@ def extract_cross_references(
         # Extract typed relationships: - **co-echo** protocols/foo: description
         typed_refs = re.findall(r'- \*\*([\w-]+)\*\* ([\w/-]+):', related_section)
         for rel_type, entity_ref in typed_refs:
-            typed_relationships[entity_ref] = rel_type
+            typed_relationships.append((entity_ref, rel_type))
 
     # Strategy 2: Path-based references (e.g., "concepts/archaeological_engineering")
     referenced_ids: set[str] = set()
@@ -320,15 +321,24 @@ def extract_cross_references(
             if name in content_lower:
                 referenced_ids.add(target_id)
 
-    # Create edges for valid entity IDs with proper relationship types
-    for ref_id in referenced_ids:
+    # Create edges for typed relationships first
+    typed_entity_ids = set()
+    for ref_id, rel_type in typed_relationships:
         if ref_id in all_entity_ids and ref_id != entity_id:
-            # Use typed relationship if defined, otherwise default to "references"
-            rel_type = typed_relationships.get(ref_id, "references")
             edges.append(EntityEdge(
                 from_id=entity_id,
                 to_id=ref_id,
                 relationship_type=rel_type
+            ))
+            typed_entity_ids.add(ref_id)
+
+    # Create edges for untyped references (not already covered by typed relationships)
+    for ref_id in referenced_ids:
+        if ref_id in all_entity_ids and ref_id != entity_id and ref_id not in typed_entity_ids:
+            edges.append(EntityEdge(
+                from_id=entity_id,
+                to_id=ref_id,
+                relationship_type="references"
             ))
 
     return edges
